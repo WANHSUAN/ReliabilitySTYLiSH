@@ -123,13 +123,31 @@ function ProductVariants({ product }) {
     product.colors[0].code
   );
   const [selectedSize, setSelectedSize] = useState();
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0);
   const { cartItems, setCartItems } = useContext(CartContext);
 
   function getStock(colorCode, size) {
-    return product.variants.find(
+    const stock = product.variants.find(
       (variant) => variant.color_code === colorCode && variant.size === size
     ).stock;
+    return stock;
+  }
+
+  function getCartItemNum(colorCode, size) {
+    const cartQty = cartItems.find(
+      (item) => item.color.code === colorCode && item.size === size
+    );
+
+    if (cartQty) {
+      return cartQty.qty;
+    }
+    return 0;
+  }
+
+  function getPurchaseQtyLimit(colorCode, size) {
+    const purchaseNumLimit =
+      getStock(colorCode, size) - getCartItemNum(colorCode, size);
+    return purchaseNumLimit;
   }
 
   const existingItem = cartItems.find(
@@ -176,6 +194,9 @@ function ProductVariants({ product }) {
       setCartItems(newCartItems);
       window.alert('已加入商品');
     }
+    setSelectedColorCode(product.colors[0].code);
+    setSelectedSize();
+    setQuantity(0);
   }
   return (
     <>
@@ -189,7 +210,7 @@ function ProductVariants({ product }) {
             onClick={() => {
               setSelectedColorCode(color.code);
               setSelectedSize();
-              setQuantity(1);
+              setQuantity(0);
             }}
           />
         ))}
@@ -202,12 +223,12 @@ function ProductVariants({ product }) {
             <Size
               key={size}
               $isSelected={size === selectedSize}
-              $isDisabled={stock === 0}
+              $isDisabled={stock === 0 || !selectedColorCode}
               onClick={() => {
                 const stock = getStock(selectedColorCode, size);
                 if (stock === 0) return;
                 setSelectedSize(size);
-                if (stock < quantity) setQuantity(1);
+                if (stock < quantity) setQuantity(0);
               }}>
               {size}
             </Size>
@@ -226,14 +247,22 @@ function ProductVariants({ product }) {
           <Quantity>{quantity}</Quantity>
           <IncrementButton
             onClick={() => {
-              const stock = getStock(selectedColorCode, selectedSize);
+              const stock = getPurchaseQtyLimit(
+                selectedColorCode,
+                selectedSize
+              );
               if (!selectedSize || quantity === stock) return;
               setQuantity(quantity + 1);
+              getCartItemNum(selectedColorCode, selectedSize);
             }}
           />
         </QuantitySelector>
       </Option>
-      <AddToCart onClick={addToCart}>
+      <AddToCart
+        onClick={() => {
+          addToCart();
+          setQuantity(0);
+        }}>
         {selectedSize ? '加入購物車' : '請選擇尺寸'}
       </AddToCart>
     </>
