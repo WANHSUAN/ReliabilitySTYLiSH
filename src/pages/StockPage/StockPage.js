@@ -1,8 +1,15 @@
 import styled from 'styled-components/macro';
 import stock from './stock.png';
+import SideMenu from '../../components/SideMenu';
 
 const Wrapper = styled.div`
-  max-width: 1200px;
+  width: 100vw;
+  display: flex;
+`;
+
+const Container = styled.div`
+  max-width: 1000px;
+  width: 70%;
   min-height: calc(100vh - 115px);
   margin: 0 auto 100px;
 `;
@@ -83,115 +90,118 @@ const StockTableTitleItem = styled.li`
 `;
 const StockTableItem = styled.li`
   width: 300px;
+  line-height: 20px;
 `;
 
 function Stock() {
   return (
     <Wrapper>
-      <StockTitleSection>
-        <StockTitle>
-          Hi, Sharon!
-          <StockText>準備好管理您的訂單了嗎？</StockText>
-        </StockTitle>
+      <SideMenu />
+      <Container>
+        <StockTitleSection>
+          <StockTitle>
+            Hi, Sharon!
+            <StockText>準備好管理您的訂單了嗎？</StockText>
+          </StockTitle>
+          <StockImage src={stock} />
+        </StockTitleSection>
 
-        <StockImage src={stock} />
-      </StockTitleSection>
-
-      <StockTable>
-        <OrderStatus>未完成訂單</OrderStatus>
-        <OrderSection>
-          <StockTableTitle>
-            <StockTableTitleItem>會員名稱</StockTableTitleItem>
-            <StockTableTitleItem>聯絡電話</StockTableTitleItem>
-            <StockTableTitleItem>聯絡地址</StockTableTitleItem>
-            <StockTableTitleItem>Email</StockTableTitleItem>
-            <StockTableTitleItem>商品名稱</StockTableTitleItem>
-            <StockTableTitleItem>商品數量</StockTableTitleItem>
-            <StockTableTitleItem>總金額</StockTableTitleItem>
-          </StockTableTitle>
-          <StockTableSection>
-            <StockTableItemGroup>
-              <StockTableItem>Sharon</StockTableItem>
-              <StockTableItem>0918888888</StockTableItem>
-              <StockTableItem>台北市 xx 區 xxx 路 xx 樓</StockTableItem>
-              <StockTableItem>ekasdksjl@gmail.com</StockTableItem>
-              <StockTableItem>前開衩扭結洋裝</StockTableItem>
-              <StockTableItem>3</StockTableItem>
-              <StockTableItem>NT$ 3000</StockTableItem>
-            </StockTableItemGroup>
-            <StockTableItemGroup>
-              <StockTableItem>Sharon</StockTableItem>
-              <StockTableItem>0918888888</StockTableItem>
-              <StockTableItem>台北市 xx 區 xxx 路 xx 樓</StockTableItem>
-              <StockTableItem>ekasdksjl@gmail.com</StockTableItem>
-              <StockTableItem>前開衩扭結洋裝</StockTableItem>
-              <StockTableItem>3</StockTableItem>
-              <StockTableItem>NT$ 3000</StockTableItem>
-            </StockTableItemGroup>
-            <StockTableItemGroup>
-              <StockTableItem>Sharon</StockTableItem>
-              <StockTableItem>0918888888</StockTableItem>
-              <StockTableItem>台北市 xx 區 xxx 路 xx 樓</StockTableItem>
-              <StockTableItem>ekasdksjl@gmail.com</StockTableItem>
-              <StockTableItem>前開衩扭結洋裝</StockTableItem>
-              <StockTableItem>3</StockTableItem>
-              <StockTableItem>NT$ 3000</StockTableItem>
-            </StockTableItemGroup>
-          </StockTableSection>
-        </OrderSection>
-      </StockTable>
-      <StockTable>
-        <OrderStatus>已完成訂單</OrderStatus>
-        <OrderSection>
-          <StockTableTitle>
-            <StockTableTitleItem>會員名稱</StockTableTitleItem>
-            <StockTableTitleItem>聯絡電話</StockTableTitleItem>
-            <StockTableTitleItem>聯絡地址</StockTableTitleItem>
-            <StockTableTitleItem>Email</StockTableTitleItem>
-            <StockTableTitleItem>商品名稱</StockTableTitleItem>
-            <StockTableTitleItem>商品數量</StockTableTitleItem>
-            <StockTableTitleItem>總金額</StockTableTitleItem>
-          </StockTableTitle>
-          <StockTableSection>
-            <StockTableItemGroup>
-              <StockTableItem>Yumy</StockTableItem>
-              <StockTableItem>0999999999</StockTableItem>
-              <StockTableItem>台北市 xx 區 xxx 路 xx 樓</StockTableItem>
-              <StockTableItem>sdfkjlsdf@gmail.com</StockTableItem>
-              <StockTableItem>小扇紋質感上衣</StockTableItem>
-              <StockTableItem>5</StockTableItem>
-              <StockTableItem>NT$ 9000</StockTableItem>
-            </StockTableItemGroup>
-            <StockTableItemGroup>
-              <StockTableItem>Yumy</StockTableItem>
-              <StockTableItem>0999999999</StockTableItem>
-              <StockTableItem>台北市 xx 區 xxx 路 xx 樓</StockTableItem>
-              <StockTableItem>sdfkjlsdf@gmail.com</StockTableItem>
-              <StockTableItem>小扇紋質感上衣</StockTableItem>
-              <StockTableItem>5</StockTableItem>
-              <StockTableItem>NT$ 9000</StockTableItem>
-            </StockTableItemGroup>
-            <StockTableItemGroup>
-              <StockTableItem>Yumy</StockTableItem>
-              <StockTableItem>0999999999</StockTableItem>
-              <StockTableItem>台北市 xx 區 xxx 路 xx 樓</StockTableItem>
-              <StockTableItem>sdfkjlsdf@gmail.com</StockTableItem>
-              <StockTableItem>小扇紋質感上衣</StockTableItem>
-              <StockTableItem>5</StockTableItem>
-              <StockTableItem>NT$ 9000</StockTableItem>
-            </StockTableItemGroup>
-            <StockTableItemGroup>
-              <StockTableItem>Yumy</StockTableItem>
-              <StockTableItem>0999999999</StockTableItem>
-              <StockTableItem>台北市 xx 區 xxx 路 xx 樓</StockTableItem>
-              <StockTableItem>sdfkjlsdf@gmail.com</StockTableItem>
-              <StockTableItem>小扇紋質感上衣</StockTableItem>
-              <StockTableItem>5</StockTableItem>
-              <StockTableItem>NT$ 9000</StockTableItem>
-            </StockTableItemGroup>
-          </StockTableSection>
-        </OrderSection>
-      </StockTable>
+        <StockTable>
+          <OrderStatus>未完成訂單</OrderStatus>
+          <OrderSection>
+            <StockTableTitle>
+              <StockTableTitleItem>會員名稱</StockTableTitleItem>
+              <StockTableTitleItem>聯絡電話</StockTableTitleItem>
+              <StockTableTitleItem>聯絡地址</StockTableTitleItem>
+              <StockTableTitleItem>Email</StockTableTitleItem>
+              <StockTableTitleItem>商品名稱</StockTableTitleItem>
+              <StockTableTitleItem>商品數量</StockTableTitleItem>
+              <StockTableTitleItem>總金額</StockTableTitleItem>
+            </StockTableTitle>
+            <StockTableSection>
+              <StockTableItemGroup>
+                <StockTableItem>Sharon</StockTableItem>
+                <StockTableItem>0918888888</StockTableItem>
+                <StockTableItem>台北市 xx 區 xxx 路 xx 樓</StockTableItem>
+                <StockTableItem>ekasdksjl@gmail.com</StockTableItem>
+                <StockTableItem>前開衩扭結洋裝</StockTableItem>
+                <StockTableItem>3</StockTableItem>
+                <StockTableItem>NT$ 3000</StockTableItem>
+              </StockTableItemGroup>
+              <StockTableItemGroup>
+                <StockTableItem>Sharon</StockTableItem>
+                <StockTableItem>0918888888</StockTableItem>
+                <StockTableItem>台北市 xx 區 xxx 路 xx 樓</StockTableItem>
+                <StockTableItem>ekasdksjl@gmail.com</StockTableItem>
+                <StockTableItem>前開衩扭結洋裝</StockTableItem>
+                <StockTableItem>3</StockTableItem>
+                <StockTableItem>NT$ 3000</StockTableItem>
+              </StockTableItemGroup>
+              <StockTableItemGroup>
+                <StockTableItem>Sharon</StockTableItem>
+                <StockTableItem>0918888888</StockTableItem>
+                <StockTableItem>台北市 xx 區 xxx 路 xx 樓</StockTableItem>
+                <StockTableItem>ekasdksjl@gmail.com</StockTableItem>
+                <StockTableItem>前開衩扭結洋裝</StockTableItem>
+                <StockTableItem>3</StockTableItem>
+                <StockTableItem>NT$ 3000</StockTableItem>
+              </StockTableItemGroup>
+            </StockTableSection>
+          </OrderSection>
+        </StockTable>
+        <StockTable>
+          <OrderStatus>已完成訂單</OrderStatus>
+          <OrderSection>
+            <StockTableTitle>
+              <StockTableTitleItem>會員名稱</StockTableTitleItem>
+              <StockTableTitleItem>聯絡電話</StockTableTitleItem>
+              <StockTableTitleItem>聯絡地址</StockTableTitleItem>
+              <StockTableTitleItem>Email</StockTableTitleItem>
+              <StockTableTitleItem>商品名稱</StockTableTitleItem>
+              <StockTableTitleItem>商品數量</StockTableTitleItem>
+              <StockTableTitleItem>總金額</StockTableTitleItem>
+            </StockTableTitle>
+            <StockTableSection>
+              <StockTableItemGroup>
+                <StockTableItem>Yumy</StockTableItem>
+                <StockTableItem>0999999999</StockTableItem>
+                <StockTableItem>台北市 xx 區 xxx 路 xx 樓</StockTableItem>
+                <StockTableItem>sdfkjlsdf@gmail.com</StockTableItem>
+                <StockTableItem>小扇紋質感上衣</StockTableItem>
+                <StockTableItem>5</StockTableItem>
+                <StockTableItem>NT$ 9000</StockTableItem>
+              </StockTableItemGroup>
+              <StockTableItemGroup>
+                <StockTableItem>Yumy</StockTableItem>
+                <StockTableItem>0999999999</StockTableItem>
+                <StockTableItem>台北市 xx 區 xxx 路 xx 樓</StockTableItem>
+                <StockTableItem>sdfkjlsdf@gmail.com</StockTableItem>
+                <StockTableItem>小扇紋質感上衣</StockTableItem>
+                <StockTableItem>5</StockTableItem>
+                <StockTableItem>NT$ 9000</StockTableItem>
+              </StockTableItemGroup>
+              <StockTableItemGroup>
+                <StockTableItem>Yumy</StockTableItem>
+                <StockTableItem>0999999999</StockTableItem>
+                <StockTableItem>台北市 xx 區 xxx 路 xx 樓</StockTableItem>
+                <StockTableItem>sdfkjlsdf@gmail.com</StockTableItem>
+                <StockTableItem>小扇紋質感上衣</StockTableItem>
+                <StockTableItem>5</StockTableItem>
+                <StockTableItem>NT$ 9000</StockTableItem>
+              </StockTableItemGroup>
+              <StockTableItemGroup>
+                <StockTableItem>Yumy</StockTableItem>
+                <StockTableItem>0999999999</StockTableItem>
+                <StockTableItem>台北市 xx 區 xxx 路 xx 樓</StockTableItem>
+                <StockTableItem>sdfkjlsdf@gmail.com</StockTableItem>
+                <StockTableItem>小扇紋質感上衣</StockTableItem>
+                <StockTableItem>5</StockTableItem>
+                <StockTableItem>NT$ 9000</StockTableItem>
+              </StockTableItemGroup>
+            </StockTableSection>
+          </OrderSection>
+        </StockTable>
+      </Container>
     </Wrapper>
   );
 }
