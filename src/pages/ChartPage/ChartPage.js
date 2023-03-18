@@ -2,6 +2,9 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import './reset.css';
 import GlobalStyle from './GobalStyle';
+import top from './top.png';
+import down from './down.png';
+import maintain from './maintain.png';
 import 'c3/c3.css';
 import c3 from 'c3';
 import SideMenu from '../../components/SideMenu';
@@ -16,9 +19,9 @@ const Wrapper = styled.div`
 /*/////////////Pie/////////////*/
 const ClickRateContainer = styled.ul`
   display: grid;
-  margin-top: 50px;
   gap: 15px;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
 `;
 
 const ClickRate = styled.li`
@@ -27,6 +30,9 @@ const ClickRate = styled.li`
   border-radius: 15px;
   height: 250px;
   padding: 20px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 `;
 
 const ClickRateNumber = styled.p`
@@ -48,12 +54,20 @@ const MainContainer = styled.div`
   flex-direction: column;
   gap: 50px;
   width: 70%;
+  margin-top: 50px;
+  margin-bottom: 150px;
 `;
 
 const ChartTitle = styled.p`
   font-weight: 600;
   font-size: 24px;
   margin-bottom: 30px;
+  background-color: #ff5733;
+  color: white;
+  padding: 10px;
+  border-radius: 25px;
+  width: 200px;
+  text-align: center;
 `;
 const ChartImg = styled.div`
   padding: 20px;
@@ -64,12 +78,43 @@ const RankItems = styled.div`
   display: flex;
   gap: 50px;
 `;
+const RankTopItems = styled.div`
+  padding: 20px;
+  font-size: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 30px;
+  span {
+    margin-right: 20px;
+    color: #ff5733;
+    font-weight: 600;
+  }
+`;
+const RankTopItems2 = styled(RankTopItems)`
+  font-size: 20px;
+`;
 const Rank = styled.div``;
 const RankItem = styled.p`
-  margin-bottom: 15px;
+  display: flex;
+  border-bottom: 1px solid #DFDFDF;
+  padding-bottom: 15px;
+  p {
+    margin-left: 20px;
+  }
 `;
-const RankItemTop3 = styled(RankItem)`
-  font-size: 24px;
+const RankImg = styled.div`
+  margin-top: 5px;
+  margin-left: 40px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 30px;
+  width: 30px;
+  background-image: url(${(props) => props.rankUrl});
+`;
+const RankImg2 = styled(RankImg)`
+  height: 15px;
+  margin-top: 3px;
 `;
 
 /*/////////////Chart/////////////*/
@@ -131,7 +176,10 @@ const Chart3 = () => {
         },
       },
       size: {
-        height: 200,
+        width:280,
+      },
+      legend: {
+        position: 'right',
       },
     });
   }, []);
@@ -139,15 +187,16 @@ const Chart3 = () => {
   return <div id="chart3" />;
 };
 
+
 function ChartPage() {
   return (
     <>
-      <GlobalStyle />
+      {/* <GlobalStyle /> */}
       <Wrapper>
         <SideMenu />
         <MainContainer>
           <ClickRateContainer>
-            <ClickRate color={`#e6422b`}>
+            <ClickRate color={`#000`}>
               <ClickRateNumber color={`#fff`}>100</ClickRateNumber>
               <ClickRateTitle color={`#fff`}>全站點擊率</ClickRateTitle>
             </ClickRate>
@@ -172,26 +221,45 @@ function ChartPage() {
           <Rank>
             <ChartTitle>銷售排行</ChartTitle>
             <RankItems>
-              <div>
-                <RankItemTop3>
-                  <span>TOP1</span> 前開扭結洋裝
-                </RankItemTop3>
-                <RankItemTop3>
-                  <span>TOP2</span> 前開扭結洋裝
-                </RankItemTop3>
-                <RankItemTop3>
-                  <span>TOP3</span> 前開扭結洋裝
-                </RankItemTop3>
-              </div>
-              <div>
-                <RankItem>前開扭結洋裝</RankItem>
-                <RankItem>前開扭結洋裝</RankItem>
-                <RankItem>前開扭結洋裝</RankItem>
-                <RankItem>前開扭結洋裝</RankItem>
-                <RankItem>前開扭結洋裝</RankItem>
-                <RankItem>前開扭結洋裝</RankItem>
-                <RankItem>前開扭結洋裝</RankItem>
-              </div>
+              <RankTopItems>
+                <RankItem>
+                  <span>TOP1</span>前開扭結洋裝
+                  <p>40件</p>
+                  <RankImg rankUrl={top} />
+                </RankItem>
+                <RankItem>
+                  <span>TOP1</span>前開扭結洋裝
+                  <p>40件</p>
+                  <RankImg rankUrl={down} />
+                </RankItem>
+                <RankItem>
+                  <span>TOP1</span>前開扭結洋裝
+                  <p>40件</p>
+                  <RankImg rankUrl={maintain} />
+                </RankItem>
+              </RankTopItems>
+              <RankTopItems2>
+                <RankItem>
+                  <span>4</span>前開扭結洋裝
+                  <p>40件</p>
+                  <RankImg2 rankUrl={maintain} />
+                </RankItem>
+                <RankItem>
+                  <span>4</span>前開扭結洋裝
+                  <p>40件</p>
+                  <RankImg2 rankUrl={maintain} />
+                </RankItem>
+                <RankItem>
+                  <span>4</span>前開扭結洋裝
+                  <p>40件</p>
+                  <RankImg2 rankUrl={maintain} />
+                </RankItem>
+                <RankItem>
+                  <span>4</span>前開扭結洋裝
+                  <p>40件</p>
+                  <RankImg2 rankUrl={maintain} />
+                </RankItem>
+              </RankTopItems2>
             </RankItems>
           </Rank>
         </MainContainer>
