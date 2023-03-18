@@ -14,6 +14,7 @@ const Wrapper = styled.div`
   justify-content: space-between;
   width: 100vw;
   min-height: calc(100vh - 115px);
+  background-color: #f7f7f7;
 `;
 
 /*/////////////Pie/////////////*/
@@ -26,19 +27,33 @@ const ClickRateContainer = styled.ul`
 
 const ClickRate = styled.li`
   list-style: none;
-  background-color: ${(props) => props.color};
+  background-color: #fff;
   border-radius: 15px;
   height: 250px;
-  padding: 20px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  padding: 50px;
+  display: flex;
+  gap: 30px;
+  justify-content: space-between;
+`;
+const Category = styled(ClickRate)`
+  padding: 0px;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ClickRateNumber = styled.p`
   color: ${(props) => props.color};
-  font-size: 40px;
+  font-size: 65px;
   font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  span {
+    padding-top: 15px;
+    font-size: 20px;
+    color: #343434;
+  }
 `;
 
 const ClickRateTitle = styled.p`
@@ -72,11 +87,25 @@ const ChartTitle = styled.p`
 const ChartImg = styled.div`
   padding: 20px;
 `;
-const Timeseries = styled.div``;
+const Timeseries = styled.div`
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 15px;
+`;
+const TimeseriesHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+const ChartSelect = styled.select`
+  height: 20px;
+  margin-right: 50px;
+`;
 /*/////////////Rank/////////////*/
 const RankItems = styled.div`
   display: flex;
-  gap: 50px;
+  justify-content: space-between;
+  padding: 0 50px;
 `;
 const RankTopItems = styled.div`
   padding: 20px;
@@ -94,10 +123,14 @@ const RankTopItems = styled.div`
 const RankTopItems2 = styled(RankTopItems)`
   font-size: 20px;
 `;
-const Rank = styled.div``;
+const Rank = styled.div`
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 15px;
+`;
 const RankItem = styled.p`
   display: flex;
-  border-bottom: 1px solid #DFDFDF;
+  border-bottom: 1px solid #dfdfdf;
   padding-bottom: 15px;
   p {
     margin-left: 20px;
@@ -132,6 +165,9 @@ const Chart = () => {
       size: {
         height: 300,
       },
+      legend: {
+        position: 'right',
+      },
     });
   }, []);
 
@@ -152,12 +188,14 @@ const Chart2 = () => {
       size: {
         height: 300,
       },
+      legend: {
+        position: 'right',
+      },
     });
   }, []);
 
   return <div id="chart2" />;
 };
-
 const Chart3 = () => {
   React.useEffect(() => {
     c3.generate({
@@ -176,7 +214,7 @@ const Chart3 = () => {
         },
       },
       size: {
-        width:280,
+        width: 280,
       },
       legend: {
         position: 'right',
@@ -186,7 +224,62 @@ const Chart3 = () => {
 
   return <div id="chart3" />;
 };
+const Chart4 = () => {
+  React.useEffect(() => {
+    c3.generate({
+      bindto: '#chart4',
+      data: {
+        columns: [
+          ['衣服', 10],
+          ['衣服2', 20],
+          ['衣服3', 5],
+        ],
+        type: 'pie',
+        colors: {
+          衣服: '#E68618',
+          衣服2: '#F280CA',
+          衣服3: '#26BFC7',
+        },
+      },
+      size: {
+        width: 280,
+      },
+      legend: {
+        position: 'right',
+      },
+    });
+  }, []);
 
+  return <div id="chart4" />;
+};
+const Chart5 = () => {
+  React.useEffect(() => {
+    c3.generate({
+      bindto: '#chart5',
+      data: {
+        columns: [
+          ['衣服', 10],
+          ['衣服2', 20],
+          ['衣服3', 5],
+        ],
+        type: 'pie',
+        colors: {
+          衣服: '#E68618',
+          衣服2: '#F280CA',
+          衣服3: '#26BFC7',
+        },
+      },
+      size: {
+        width: 280,
+      },
+      legend: {
+        position: 'right',
+      },
+    });
+  }, []);
+
+  return <div id="chart5" />;
+};
 
 function ChartPage() {
   return (
@@ -196,18 +289,34 @@ function ChartPage() {
         <SideMenu />
         <MainContainer>
           <ClickRateContainer>
-            <ClickRate color={`#000`}>
-              <ClickRateNumber color={`#fff`}>100</ClickRateNumber>
-              <ClickRateTitle color={`#fff`}>全站點擊率</ClickRateTitle>
+            <ClickRate>
+              <ClickRateNumber color={`#ff5733`}>
+                100<span>全站點擊率</span>
+              </ClickRateNumber>
+              <ClickRateNumber color={`#ff5733`}>
+                60%<span>轉換率</span>
+              </ClickRateNumber>
             </ClickRate>
-            <ClickRate color={`#EFA35F`}>
+            <Category>
               <Chart3 />
-            </ClickRate>
-            <ClickRate color={`#F3E3D4`}></ClickRate>
-            <ClickRate color={`#95C6B6`}></ClickRate>
+            </Category>
+            <Category>
+              <Chart4 />
+            </Category>
+            <Category>
+              <Chart5 />
+            </Category>
           </ClickRateContainer>
           <Timeseries>
-            <ChartTitle>30 天銷售金額</ChartTitle>
+            <TimeseriesHeader>
+              <ChartTitle>30 天銷售金額</ChartTitle>
+              <ChartSelect>
+                <option>30天內</option>
+                <option>60天內</option>
+                <option>90天內</option>
+                <option>120天內</option>
+              </ChartSelect>
+            </TimeseriesHeader>
             <ChartImg>
               <Chart />
             </ChartImg>
