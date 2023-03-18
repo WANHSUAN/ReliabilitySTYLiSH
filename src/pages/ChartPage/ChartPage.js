@@ -1,43 +1,118 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import ReactLoading from 'react-loading';
+import analysis from './analysis.png';
+import stock from './packages.png';
+import checkList from './checklist.png';
+import user from './user.png';
+import goldMedal from './goldMedal.png';
+import silverMedal from './silverMedal.png';
+import copperMedal from './copperMedal.png';
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  display: flex;
+  width: 100vw;
+  min-height: calc(100vh - 115px);
+`;
 
-const SideMenu = styled.div``;
+const SideMenu = styled.div`
+  background-color: bisque;
+  width: 20%;
+  text-align: center;
+`;
 
-const SideMenuList = styled.ul``;
+const SideMenuItem = styled.a`
+  display: flex;
+  height: 130px;
+  padding-left: 20px;
+  align-items: center;
+`;
 
-const SideMenuListItem = styled.li``;
+const SideMenuListImage = styled.img`
+  width: 10%;
+  height: 20%;
+  margin-right: 15px;
+`;
 
-const SideMenuListImage = styled.img``;
+const SideMenuListTitle = styled.p`
+  font-size: 25px;
+`;
 
-const SideMenuListTitle = styled.p``;
+const MainContainer = styled.div`
+  width: 1200px;
+  margin: 0 100px;
+`;
 
-const MainContainer = styled.div``;
+const ClickRateContainer = styled.ul`
+  display: flex;
+  gap: 38px;
+  margin-top: 50px;
+`;
 
-const ClickRateContainer = styled.div``;
+const ClickRate = styled.li`
+  width: 25%;
+  height: 30%;
+  list-style: none;
+  background-color: ${(props) => props.color};
+  border-radius: 20px;
+  padding: 30px;
+`;
 
-const ClickRate = styled.li``;
+const ClickRateNumber = styled.p`
+  color: ${(props) => props.color};
+  font-size: 40px;
+  font-weight: 600;
+`;
 
-const ClickRateTitle = styled.p``;
+const ClickRateTitle = styled.p`
+  color: ${(props) => props.color};
+  margin-top: 20px;
+  font-size: 20px;
+`;
 
-const ClickRateImage = styled.img``;
+const ClickRateImage = styled.img`
+  width: 45px;
+  height: 45px;
+  margin-top: 80px;
+`;
 
-const ClickRateNumber = styled.p``;
+const ThritySalesChartSection = styled.div`
+  width: 1000px;
+  height: 500px;
+  margin: 0 auto;
+`;
 
-const ThritySalesChartSection = styled.div``;
+const ThritySaleChartTitle = styled.p`
+  font-size: 25px;
+  padding: 20px;
+`;
 
-const ThritySalesChart = styled.div``;
+const ThritySalesChart = styled.div`
+  width: 1000px;
+  height: 500px;
+  background-color: lemonchiffon;
+`;
 
-const ThritySaleChartTitle = styled.p``;
+const EveryMonthChartSection = styled.div`
+  width: 1000px;
+  height: 500px;
+  margin: 0 auto;
+`;
 
-const EveryMonthChartSection = styled.div``;
+const EveryMonthChartTitle = styled.div`
+  font-size: 25px;
+  padding: 20px;
+`;
 
-const EveryMonthChartTitle = styled.div``;
+const EveryMonthChart = styled.div`
+  width: 1000px;
+  height: 500px;
+  background-color: lemonchiffon;
+`;
 
-const EveryMonthChart = styled.div``;
-
-const CategoryChartSection = styled.ul``;
+const CategoryChartSection = styled.ul`
+  background-color: darkorange;
+  width: 500px;
+`;
 
 const CategoryChartItem = styled.li``;
 
@@ -49,46 +124,44 @@ function ChartPage() {
   return (
     <Wrapper>
       <SideMenu>
-        <SideMenuList>
-          <SideMenuListItem>
-            <SideMenuListImage />
-            <SideMenuListTitle>報表總覽</SideMenuListTitle>
-          </SideMenuListItem>
-          <SideMenuListItem>
-            <SideMenuListImage />
-            <SideMenuListTitle>庫存查詢</SideMenuListTitle>
-          </SideMenuListItem>
-          <SideMenuListItem>
-            <SideMenuListImage />
-            <SideMenuListTitle>訂單資料</SideMenuListTitle>
-          </SideMenuListItem>
-        </SideMenuList>
+        <SideMenuItem>
+          <SideMenuListImage src={analysis} />
+          <SideMenuListTitle>報表總覽</SideMenuListTitle>
+        </SideMenuItem>
+        <SideMenuItem>
+          <SideMenuListImage src={stock} />
+          <SideMenuListTitle>庫存查詢</SideMenuListTitle>
+        </SideMenuItem>
+        <SideMenuItem>
+          <SideMenuListImage src={checkList} />
+          <SideMenuListTitle>訂單資料</SideMenuListTitle>
+        </SideMenuItem>
       </SideMenu>
       <MainContainer>
         <ClickRateContainer>
-          <ClickRate>
-            <ClickRateNumber>10000</ClickRateNumber>
-            <ClickRateTitle>全站點擊率</ClickRateTitle>
-            <ClickRateImage />
+          <ClickRate color={`#e6422b`}>
+            <ClickRateNumber color={`#fff`}>100</ClickRateNumber>
+            <ClickRateTitle color={`#fff`}>全站點擊率</ClickRateTitle>
+            <ClickRateImage src={user} />
           </ClickRate>
-          <ClickRate>
-            <ClickRateNumber>5000</ClickRateNumber>
+          <ClickRate color={`#EFA35F`}>
+            <ClickRateNumber>50</ClickRateNumber>
             <ClickRateTitle>第一名點擊率</ClickRateTitle>
-            <ClickRateImage />
+            <ClickRateImage src={goldMedal} />
           </ClickRate>
-          <ClickRate>
-            <ClickRateNumber>3000</ClickRateNumber>
+          <ClickRate color={`#F3E3D4`}>
+            <ClickRateNumber>30</ClickRateNumber>
             <ClickRateTitle>第二名點擊率</ClickRateTitle>
-            <ClickRateImage />
+            <ClickRateImage src={silverMedal} />
           </ClickRate>
-          <ClickRate>
-            <ClickRateNumber>1000</ClickRateNumber>
-            <ClickRateTitle>第三名點擊率</ClickRateTitle>
-            <ClickRateImage />
+          <ClickRate color={`#95C6B6`}>
+            <ClickRateNumber color={`#fff`}>10</ClickRateNumber>
+            <ClickRateTitle color={`#fff`}>第三名點擊率</ClickRateTitle>
+            <ClickRateImage src={copperMedal} />
           </ClickRate>
         </ClickRateContainer>
         <ThritySalesChartSection>
-          <ThritySaleChartTitle>30 天內銷售金額</ThritySaleChartTitle>
+          <ThritySaleChartTitle>30 天銷售金額</ThritySaleChartTitle>
           <ThritySalesChart></ThritySalesChart>
         </ThritySalesChartSection>
         <EveryMonthChartSection>
