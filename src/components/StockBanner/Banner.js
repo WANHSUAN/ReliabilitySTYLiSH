@@ -1,10 +1,11 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 const StockTitleSection = styled.div`
   background-color: #f5eef8;
   border-radius: 10px;
   height: 200px;
   position: relative;
+  margin-top: 100px;
 `;
 
 const StockImage = styled.img`
@@ -19,7 +20,6 @@ const StockTitle = styled.div`
   font-size: 40px;
   font-weight: 500;
   padding: 70px;
-  margin-top: 100px;
 `;
 
 const StockText = styled.p`

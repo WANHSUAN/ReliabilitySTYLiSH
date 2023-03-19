@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import './reset.css';
 import top from './top.png';
 import down from './down.png';
 import maintain from './maintain.png';
+import bannerImg from './bannerImg.png';
 import 'c3/c3.css';
 import c3 from 'c3';
 import SideMenu from '../../components/SideMenu';
+import StockBanner from '../../components/StockBanner';
 
 const Wrapper = styled.div`
   display: flex;
@@ -70,7 +71,6 @@ const MainContainer = styled.div`
   flex-direction: column;
   gap: 50px;
   width: 70%;
-  margin-top: 50px;
   margin-bottom: 150px;
 `;
 
@@ -150,7 +150,6 @@ const RankImg2 = styled(RankImg)`
   height: 15px;
   margin-top: 3px;
 `;
-
 
 /*/////////////ChartPie/////////////*/
 const Chart3 = () => {
@@ -253,14 +252,12 @@ const Chart = () => {
     c3.generate({
       bindto: '#chart',
       data: {
-        columns: [
-          ['data1', 30, 200, 100, 400, 150, 250],
-        ],
+        columns: [['data1', 30, 200, 100, 400, 150, 250]],
         type: 'area-spline',
       },
       color: {
-        pattern: ['#FABF62']
-    },
+        pattern: ['#FABF62'],
+      },
       size: {
         height: 300,
       },
@@ -269,12 +266,12 @@ const Chart = () => {
       },
       grid: {
         x: {
-            show: true
+          show: true,
         },
         y: {
-            show: true
-        }
-    }
+          show: true,
+        },
+      },
     });
   }, []);
 
@@ -285,19 +282,17 @@ const Chart2 = () => {
     c3.generate({
       bindto: '#chart2',
       data: {
-        columns: [
-            ['data1', 30, 200, 100, 400, 150, 250],
-        ],
-        type: 'bar'
+        columns: [['data1', 30, 200, 100, 400, 150, 250]],
+        type: 'bar',
       },
       bar: {
         width: {
-            ratio: 0.5
-        }
+          ratio: 0.5,
+        },
       },
       color: {
-        pattern: ['#FABF62']
-    },
+        pattern: ['#FABF62'],
+      },
       size: {
         height: 300,
       },
@@ -310,14 +305,13 @@ const Chart2 = () => {
   return <div id="chart2" />;
 };
 
-
-
 function ChartPage() {
   return (
     <>
       <Wrapper>
         <SideMenu />
         <MainContainer>
+          <StockBanner stock={bannerImg} />
           <ClickRateContainer>
             <ClickRate>
               <ClickRateNumber color={`#ff5733`}>
