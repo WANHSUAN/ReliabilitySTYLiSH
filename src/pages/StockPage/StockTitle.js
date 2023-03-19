@@ -4,7 +4,17 @@ const StockTableTitleItem = styled.li`
   width: 300px;
 `;
 
-function stockTitle() {
+const StockTableTitle = styled.ul`
+  display: flex;
+  background-color: #fbe4ae;
+  color: #000;
+  font-weight: 600;
+  padding: 10px 0;
+  text-align: center;
+  border-radius: 3px 3px 0 0;
+`;
+
+function StockTitle() {
   return (
     <StockTableTitle>
       <StockTableTitleItem>會員名稱</StockTableTitleItem>
@@ -18,4 +28,4 @@ function stockTitle() {
   );
 }
 
-export default stockTitle;
+export default StockTitle;
