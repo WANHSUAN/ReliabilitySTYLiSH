@@ -1,6 +1,7 @@
 import styled from 'styled-components/macro';
-import stock from './stock.png';
 import SideMenu from '../../components/SideMenu';
+import Banner from '../../components/StockBanner';
+import BannerImg from '../StockPage/stock.png';
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -12,33 +13,6 @@ const Container = styled.div`
   width: 70%;
   min-height: calc(100vh - 115px);
   margin: 0 auto 100px;
-`;
-
-const StockTitleSection = styled.div`
-  background-color: #f5eef8;
-  border-radius: 10px;
-  height: 200px;
-  position: relative;
-`;
-
-const StockImage = styled.img`
-  width: 550px;
-  height: 350px;
-  position: absolute;
-  top: -53%;
-  right: -3%;
-`;
-
-const StockTitle = styled.div`
-  font-size: 40px;
-  font-weight: 500;
-  padding: 70px;
-  margin-top: 100px;
-`;
-
-const StockText = styled.p`
-  font-size: 20px;
-  padding-top: 20px;
 `;
 
 const StockTable = styled.div`
@@ -98,14 +72,7 @@ function Stock() {
     <Wrapper>
       <SideMenu />
       <Container>
-        <StockTitleSection>
-          <StockTitle>
-            Hi, Sharon!
-            <StockText>準備好管理您的訂單了嗎？</StockText>
-          </StockTitle>
-          <StockImage src={stock} />
-        </StockTitleSection>
-
+        <Banner stock={BannerImg} />
         <StockTable>
           <OrderStatus>未完成訂單</OrderStatus>
           <OrderSection>
