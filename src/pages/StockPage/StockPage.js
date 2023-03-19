@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components/macro';
 import SideMenu from '../../components/SideMenu';
 import Banner from '../../components/StockBanner';
@@ -9,11 +10,25 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
-  max-width: 1000px;
+  max-width: 1200px;
   width: 70%;
   min-height: calc(100vh - 115px);
   margin: 0 auto 100px;
 `;
+
+const StockStatusSection = styled.div``;
+
+const StockStatus = styled.select`
+  border: 1px solid #f6c43e;
+  width: 130px;
+  height: 32px;
+  border-radius: 8px;
+  background-color: #faf8e9;
+  text-align: center;
+  margin-top: 50px;
+`;
+
+const StockOption = styled.option``;
 
 const StockTable = styled.div`
   padding: 10px 0 40px 0;
@@ -68,11 +83,31 @@ const StockTableItem = styled.li`
 `;
 
 function Stock() {
+  // const [selectedStatus, setSelectedStatus] = useState();
+  function handleChange(e) {
+    // console.log(e.target.value);
+  }
+
   return (
     <Wrapper>
       <SideMenu />
       <Container>
-        <Banner stock={BannerImg} />
+        <Banner
+          backgroundColor={`#f5eef8`}
+          title={'Sharon'}
+          message={'準備好管理您的訂單了嗎？'}
+          stock={BannerImg}
+        />
+        <StockStatusSection>
+          <StockStatus onChange={handleChange}>
+            <StockOption>訂單總覽</StockOption>
+            <StockOption>已成立訂單</StockOption>
+            <StockOption>撿貨</StockOption>
+            <StockOption>出貨</StockOption>
+            <StockOption>送達</StockOption>
+            <StockOption>訂單已完成</StockOption>
+          </StockStatus>
+        </StockStatusSection>
         <StockTable>
           <OrderStatus>未完成訂單</OrderStatus>
           <OrderSection>
@@ -89,25 +124,7 @@ function Stock() {
               <StockTableItemGroup>
                 <StockTableItem>Sharon</StockTableItem>
                 <StockTableItem>0918888888</StockTableItem>
-                <StockTableItem>台北市 xx 區 xxx 路 xx 樓</StockTableItem>
-                <StockTableItem>ekasdksjl@gmail.com</StockTableItem>
-                <StockTableItem>前開衩扭結洋裝</StockTableItem>
-                <StockTableItem>3</StockTableItem>
-                <StockTableItem>NT$ 3000</StockTableItem>
-              </StockTableItemGroup>
-              <StockTableItemGroup>
-                <StockTableItem>Sharon</StockTableItem>
-                <StockTableItem>0918888888</StockTableItem>
-                <StockTableItem>台北市 xx 區 xxx 路 xx 樓</StockTableItem>
-                <StockTableItem>ekasdksjl@gmail.com</StockTableItem>
-                <StockTableItem>前開衩扭結洋裝</StockTableItem>
-                <StockTableItem>3</StockTableItem>
-                <StockTableItem>NT$ 3000</StockTableItem>
-              </StockTableItemGroup>
-              <StockTableItemGroup>
-                <StockTableItem>Sharon</StockTableItem>
-                <StockTableItem>0918888888</StockTableItem>
-                <StockTableItem>台北市 xx 區 xxx 路 xx 樓</StockTableItem>
+                <StockTableItem>台北市xx區 xxx 路 xx 樓</StockTableItem>
                 <StockTableItem>ekasdksjl@gmail.com</StockTableItem>
                 <StockTableItem>前開衩扭結洋裝</StockTableItem>
                 <StockTableItem>3</StockTableItem>
@@ -132,34 +149,7 @@ function Stock() {
               <StockTableItemGroup>
                 <StockTableItem>Yumy</StockTableItem>
                 <StockTableItem>0999999999</StockTableItem>
-                <StockTableItem>台北市 xx 區 xxx 路 xx 樓</StockTableItem>
-                <StockTableItem>sdfkjlsdf@gmail.com</StockTableItem>
-                <StockTableItem>小扇紋質感上衣</StockTableItem>
-                <StockTableItem>5</StockTableItem>
-                <StockTableItem>NT$ 9000</StockTableItem>
-              </StockTableItemGroup>
-              <StockTableItemGroup>
-                <StockTableItem>Yumy</StockTableItem>
-                <StockTableItem>0999999999</StockTableItem>
-                <StockTableItem>台北市 xx 區 xxx 路 xx 樓</StockTableItem>
-                <StockTableItem>sdfkjlsdf@gmail.com</StockTableItem>
-                <StockTableItem>小扇紋質感上衣</StockTableItem>
-                <StockTableItem>5</StockTableItem>
-                <StockTableItem>NT$ 9000</StockTableItem>
-              </StockTableItemGroup>
-              <StockTableItemGroup>
-                <StockTableItem>Yumy</StockTableItem>
-                <StockTableItem>0999999999</StockTableItem>
-                <StockTableItem>台北市 xx 區 xxx 路 xx 樓</StockTableItem>
-                <StockTableItem>sdfkjlsdf@gmail.com</StockTableItem>
-                <StockTableItem>小扇紋質感上衣</StockTableItem>
-                <StockTableItem>5</StockTableItem>
-                <StockTableItem>NT$ 9000</StockTableItem>
-              </StockTableItemGroup>
-              <StockTableItemGroup>
-                <StockTableItem>Yumy</StockTableItem>
-                <StockTableItem>0999999999</StockTableItem>
-                <StockTableItem>台北市 xx 區 xxx 路 xx 樓</StockTableItem>
+                <StockTableItem>台北市xx區 xxx 路 xx 樓</StockTableItem>
                 <StockTableItem>sdfkjlsdf@gmail.com</StockTableItem>
                 <StockTableItem>小扇紋質感上衣</StockTableItem>
                 <StockTableItem>5</StockTableItem>
