@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 const StockTitleSection = styled.div`
   background-color: ${(props) => props.backgroundColor};
@@ -31,8 +31,7 @@ export function Banner(props) {
   return (
     <StockTitleSection backgroundColor={props.backgroundColor}>
       <StockTitle>
-        Hi, {props.title}
-        <StockText>{props.message}</StockText>
+        Hi, {props.title}!<StockText>{props.message}</StockText>
       </StockTitle>
       <StockImage src={props.stock} />
     </StockTitleSection>

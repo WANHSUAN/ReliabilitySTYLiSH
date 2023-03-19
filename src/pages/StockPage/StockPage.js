@@ -114,6 +114,7 @@ const StockTableItemGroup = styled.ul`
   font-size: 10px;
   padding: 20px 0;
   text-align: center;
+  align-items: center;
   border-radius: 3px;
 `;
 
@@ -124,6 +125,10 @@ const StockTableItem = styled.li`
   &:nth-child(odd) {
     width: 220px;
   }
+`;
+
+const StockTableItemDetail = styled.ul`
+  text-align: left;
 `;
 
 const StockTableSelect = styled.select`
@@ -158,13 +163,19 @@ function Stock() {
                   <StockTableItem>0999999999</StockTableItem>
                   <StockTableItem>sdfkjlsdf@gmail.com</StockTableItem>
                   <StockTableItem>台北市xx區 xxx 路 xx 樓</StockTableItem>
-                  <StockTableItem>小扇紋質感上衣 5 件</StockTableItem>
+                  <StockTableItem>
+                    <StockTableItemDetail>
+                      1. 小扇紋質感上衣/M/5 件<br />
+                      2. 開衩扭結洋裝/L/3 件
+                    </StockTableItemDetail>
+                  </StockTableItem>
                   <StockTableItem>NT$ 9000</StockTableItem>
                   <StockTableSelect>
                     <StockTableOption>訂單已成立</StockTableOption>
-                    <StockTableOption>揀貨</StockTableOption>
-                    <StockTableOption>出貨</StockTableOption>
-                    <StockTableOption>送達</StockTableOption>
+                    <StockTableOption>揀貨中</StockTableOption>
+                    <StockTableOption>出貨中</StockTableOption>
+                    <StockTableOption>已送達</StockTableOption>
+                    <StockTableOption>訂單已完成</StockTableOption>
                   </StockTableSelect>
                 </StockTableItemGroup>
               </StockTableSection>
@@ -183,13 +194,19 @@ function Stock() {
                   <StockTableItem>0918888888</StockTableItem>
                   <StockTableItem>ekasdksjl@gmail.com</StockTableItem>
                   <StockTableItem>台北市xx區 xxx 路 xx 樓</StockTableItem>
-                  <StockTableItem>開衩扭結洋裝 3 件</StockTableItem>
+                  <StockTableItem>
+                    <StockTableItemDetail>
+                      1. 小扇紋質感上衣/M/5 件<br />
+                      2. 開衩扭結洋裝/L/3 件
+                    </StockTableItemDetail>
+                  </StockTableItem>
                   <StockTableItem>NT$ 3000</StockTableItem>
                   <StockTableSelect>
                     <StockTableOption>訂單已成立</StockTableOption>
-                    <StockTableOption>揀貨</StockTableOption>
-                    <StockTableOption>出貨</StockTableOption>
-                    <StockTableOption>送達</StockTableOption>
+                    <StockTableOption>揀貨中</StockTableOption>
+                    <StockTableOption>出貨中</StockTableOption>
+                    <StockTableOption>已送達</StockTableOption>
+                    <StockTableOption>訂單已完成</StockTableOption>
                   </StockTableSelect>
                 </StockTableItemGroup>
               </StockTableSection>
@@ -199,7 +216,7 @@ function Stock() {
       case 'PickUpGoods':
         return (
           <PickUpGoods>
-            <OrderStatus>揀貨</OrderStatus>
+            <OrderStatus>揀貨中</OrderStatus>
             <OrderSection>
               <StockTitle />
               <StockTableSection>
@@ -208,13 +225,19 @@ function Stock() {
                   <StockTableItem>0999999999</StockTableItem>
                   <StockTableItem>sdfkjlsdf@gmail.com</StockTableItem>
                   <StockTableItem>台北市xx區 xxx 路 xx 樓</StockTableItem>
-                  <StockTableItem>小扇紋質感上衣 5 件</StockTableItem>
+                  <StockTableItem>
+                    <StockTableItemDetail>
+                      1. 小扇紋質感上衣/M/5 件<br />
+                      2. 開衩扭結洋裝/L/3 件
+                    </StockTableItemDetail>
+                  </StockTableItem>
                   <StockTableItem>NT$ 9000</StockTableItem>
                   <StockTableSelect>
                     <StockTableOption>訂單已成立</StockTableOption>
-                    <StockTableOption>揀貨</StockTableOption>
-                    <StockTableOption>出貨</StockTableOption>
-                    <StockTableOption>送達</StockTableOption>
+                    <StockTableOption>揀貨中</StockTableOption>
+                    <StockTableOption>出貨中</StockTableOption>
+                    <StockTableOption>已送達</StockTableOption>
+                    <StockTableOption>訂單已完成</StockTableOption>
                   </StockTableSelect>
                 </StockTableItemGroup>
               </StockTableSection>
@@ -224,7 +247,7 @@ function Stock() {
       case 'Delivery':
         return (
           <Delivery>
-            <OrderStatus>出貨</OrderStatus>
+            <OrderStatus>出貨中</OrderStatus>
             <OrderSection>
               <StockTitle />
               <StockTableSection>
@@ -233,13 +256,19 @@ function Stock() {
                   <StockTableItem>0918888888</StockTableItem>
                   <StockTableItem>ekasdksjl@gmail.com</StockTableItem>
                   <StockTableItem>台北市xx區 xxx 路 xx 樓</StockTableItem>
-                  <StockTableItem>開衩扭結洋裝 3 件</StockTableItem>
+                  <StockTableItem>
+                    <StockTableItemDetail>
+                      1. 小扇紋質感上衣/M/5 件<br />
+                      2. 開衩扭結洋裝/L/3 件
+                    </StockTableItemDetail>
+                  </StockTableItem>
                   <StockTableItem>NT$ 3000</StockTableItem>
                   <StockTableSelect>
                     <StockTableOption>訂單已成立</StockTableOption>
-                    <StockTableOption>揀貨</StockTableOption>
-                    <StockTableOption>出貨</StockTableOption>
-                    <StockTableOption>送達</StockTableOption>
+                    <StockTableOption>揀貨中</StockTableOption>
+                    <StockTableOption>出貨中</StockTableOption>
+                    <StockTableOption>已送達</StockTableOption>
+                    <StockTableOption>訂單已完成</StockTableOption>
                   </StockTableSelect>
                 </StockTableItemGroup>
               </StockTableSection>
@@ -249,7 +278,7 @@ function Stock() {
       case 'DeliverComplete':
         return (
           <DeliverComplete>
-            <OrderStatus>送達</OrderStatus>
+            <OrderStatus>已送達</OrderStatus>
             <OrderSection>
               <StockTitle />
               <StockTableSection>
@@ -258,13 +287,19 @@ function Stock() {
                   <StockTableItem>0999999999</StockTableItem>
                   <StockTableItem>sdfkjlsdf@gmail.com</StockTableItem>
                   <StockTableItem>台北市xx區 xxx 路 xx 樓</StockTableItem>
-                  <StockTableItem>小扇紋質感上衣 5 件</StockTableItem>
+                  <StockTableItem>
+                    <StockTableItemDetail>
+                      1. 小扇紋質感上衣/M/5 件<br />
+                      2. 開衩扭結洋裝/L/3 件
+                    </StockTableItemDetail>
+                  </StockTableItem>
                   <StockTableItem>NT$ 9000</StockTableItem>
                   <StockTableSelect>
                     <StockTableOption>訂單已成立</StockTableOption>
-                    <StockTableOption>揀貨</StockTableOption>
-                    <StockTableOption>出貨</StockTableOption>
-                    <StockTableOption>送達</StockTableOption>
+                    <StockTableOption>揀貨中</StockTableOption>
+                    <StockTableOption>出貨中</StockTableOption>
+                    <StockTableOption>已送達</StockTableOption>
+                    <StockTableOption>訂單已完成</StockTableOption>
                   </StockTableSelect>
                 </StockTableItemGroup>
               </StockTableSection>
@@ -283,13 +318,19 @@ function Stock() {
                   <StockTableItem>0918888888</StockTableItem>
                   <StockTableItem>ekasdksjl@gmail.com</StockTableItem>
                   <StockTableItem>台北市xx區 xxx 路 xx 樓</StockTableItem>
-                  <StockTableItem>小扇紋質感上衣 5 件</StockTableItem>
-                  <StockTableItem>NT$ 3000</StockTableItem>
+                  <StockTableItem>
+                    <StockTableItemDetail>
+                      1. 小扇紋質感上衣/M/5 件<br />
+                      2. 開衩扭結洋裝/L/3 件
+                    </StockTableItemDetail>
+                  </StockTableItem>
+                  <StockTableItem>NT$ 5000</StockTableItem>
                   <StockTableSelect>
                     <StockTableOption>訂單已成立</StockTableOption>
-                    <StockTableOption>揀貨</StockTableOption>
-                    <StockTableOption>出貨</StockTableOption>
-                    <StockTableOption>送達</StockTableOption>
+                    <StockTableOption>揀貨中</StockTableOption>
+                    <StockTableOption>出貨中</StockTableOption>
+                    <StockTableOption>已送達</StockTableOption>
+                    <StockTableOption>訂單已完成</StockTableOption>
                   </StockTableSelect>
                 </StockTableItemGroup>
               </StockTableSection>
@@ -315,9 +356,9 @@ function Stock() {
           <StockStatus onChange={handleChange}>
             <StockOption value="AllOrder">訂單總覽</StockOption>
             <StockOption value="EstablishedOrder">訂單已成立</StockOption>
-            <StockOption value="PickUpGoods">撿貨</StockOption>
-            <StockOption value="Delivery">出貨</StockOption>
-            <StockOption value="DeliverComplete">送達</StockOption>
+            <StockOption value="PickUpGoods">揀貨中</StockOption>
+            <StockOption value="Delivery">出貨中</StockOption>
+            <StockOption value="DeliverComplete">已送達</StockOption>
             <StockOption value="CompleteOrder">訂單已完成</StockOption>
           </StockStatus>
           <StockListEdit>Edit</StockListEdit>

@@ -26,7 +26,7 @@ function StockTitle() {
       <StockTableTitleItem>聯絡電話</StockTableTitleItem>
       <StockTableTitleItem>Email</StockTableTitleItem>
       <StockTableTitleItem>聯絡地址</StockTableTitleItem>
-      <StockTableTitleItem>商品名稱 / 數量</StockTableTitleItem>
+      <StockTableTitleItem>商品內容</StockTableTitleItem>
       <StockTableTitleItem>總金額</StockTableTitleItem>
       <StockTableTitleItem>訂單狀態</StockTableTitleItem>
     </StockTableTitle>
