@@ -2,6 +2,11 @@ import styled from 'styled-components/macro';
 
 const StockTableTitleItem = styled.li`
   width: 300px;
+  line-height: 20px;
+
+  &:nth-child(odd) {
+    width: 220px;
+  }
 `;
 
 const StockTableTitle = styled.ul`
@@ -19,11 +24,11 @@ function StockTitle() {
     <StockTableTitle>
       <StockTableTitleItem>會員名稱</StockTableTitleItem>
       <StockTableTitleItem>聯絡電話</StockTableTitleItem>
-      <StockTableTitleItem>聯絡地址</StockTableTitleItem>
       <StockTableTitleItem>Email</StockTableTitleItem>
-      <StockTableTitleItem>商品名稱</StockTableTitleItem>
-      <StockTableTitleItem>商品數量</StockTableTitleItem>
+      <StockTableTitleItem>聯絡地址</StockTableTitleItem>
+      <StockTableTitleItem>商品名稱 / 數量</StockTableTitleItem>
       <StockTableTitleItem>總金額</StockTableTitleItem>
+      <StockTableTitleItem>訂單狀態</StockTableTitleItem>
     </StockTableTitle>
   );
 }
