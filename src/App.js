@@ -10,8 +10,12 @@ import { CartContextProvider } from './context/cartContext';
 const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
-  }
+    ${'' /* border: 1px solid black !important */}
 
+  }
+  .Test {
+    fill: #000; /* 黑色填充 */
+  }
   body {
     font-family: 'Noto Sans TC', sans-serif;
   }
