@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import styled from 'styled-components/macro';
 import top from './top.png';
 import down from './down.png';
@@ -9,40 +9,11 @@ import c3 from 'c3';
 import SideMenu from '../../components/SideMenu';
 import StockBanner from '../../components/StockBanner';
 import ChartCategory from './ChartCategory';
+import ChartDaily from './ChartDaily';
 
 /*/////////////Chart/////////////*/
-const Chart = () => {
-  React.useEffect(() => {
-    c3.generate({
-      bindto: '#chart',
-      data: {
-        columns: [['data1', 30, 200, 100, 400, 150, 250]],
-        type: 'area-spline',
-      },
-      color: {
-        pattern: ['#FABF62'],
-      },
-      size: {
-        height: 300,
-      },
-      legend: {
-        position: 'right',
-      },
-      grid: {
-        x: {
-          show: true,
-        },
-        y: {
-          show: true,
-        },
-      },
-    });
-  }, []);
-
-  return <div id="chart" />;
-};
 const Chart2 = () => {
-  React.useEffect(() => {
+  useEffect(() => {
     c3.generate({
       bindto: '#chart2',
       data: {
@@ -105,7 +76,7 @@ function ChartPage() {
               </ChartSelect>
             </TimeseriesHeader>
             <ChartImg>
-              <Chart />
+              <ChartDaily />
             </ChartImg>
           </Timeseries>
           <Timeseries>

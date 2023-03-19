@@ -9,22 +9,24 @@ export default function ChartCategory({ type }) {
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.data);
         const newData = data.data[type];
-        console.log(newData);
         category(newData);
       });
-  }, [type]);
+  });
 
   function category(newData) {
-    const columns = newData.slice(0, 5).map(({ name, qty }) => [name, qty]);
-    const otherTotal = newData.slice(5).reduce((acc, { qty }) => acc + qty, 0);
+    const columns = newData.slice(0, 4).map(({ name, qty }) => [name, qty]);
+    const otherTotal = newData.slice(4).reduce((acc, { qty }) => acc + qty, 0);
     const otherColumn = otherTotal > 0 ? [['Other', otherTotal]] : [];
+    // console.log([...columns, ...otherColumn]);
     c3.generate({
       bindto: `#${type}`,
       data: {
         columns: [...columns, ...otherColumn],
         type: 'donut',
+      },
+      color: {
+        pattern: ['#E68618', '#F280CA', '#26BFC7', '#5151D3', '#8DB5E5'],
       },
       donut: {
         title: type,
