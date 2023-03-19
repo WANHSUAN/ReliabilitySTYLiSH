@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro';
+import { Link } from 'react-router-dom';
 
 const MenuContainer = styled.div`
   display: flex;
@@ -26,17 +27,27 @@ const Icon = styled.img`
   margin-right: 10px;
   width: 30px;
 `;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: #000;
+
+  &:hover {
+    color: #bdbdba;
+  }
+`;
+
 const SideMenu = () => {
   return (
     <MenuContainer>
       <SideMenuListTitle>Dashboard</SideMenuListTitle>
       <SideMenuList>
         <Icon src="https://cdn-icons-png.flaticon.com/512/993/993762.png" />
-        報表總覽
+        <StyledLink to="/admin/chartpage">報表總覽</StyledLink>
       </SideMenuList>
       <SideMenuList>
         <Icon src="https://cdn-icons-png.flaticon.com/512/4947/4947506.png" />
-        庫存管理
+        <StyledLink to="/admin/stock">庫存管理</StyledLink>
       </SideMenuList>
       <SideMenuList>
         <Icon src="https://cdn-icons-png.flaticon.com/512/839/839860.png" />
