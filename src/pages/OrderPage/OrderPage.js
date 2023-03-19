@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components/macro';
 import SideMenu from '../../components/SideMenu';
-import Banner from '../../components/StockBanner';
-import BannerImg from '../StockPage/stock.png';
-import StockTitle from '../StockPage/StockTitle';
+import Banner from '../../components/Banner';
+import BannerImg from '../OrderPage/order.png';
+import OrderTitle from './OrderTitle';
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -119,7 +119,7 @@ const StockTableItemGroup = styled.ul`
 `;
 
 const StockTableItem = styled.li`
-  width: 250px;
+  width: 200px;
   line-height: 20px;
 
   &:nth-child(odd) {
@@ -133,7 +133,7 @@ const StockTableItemDetail = styled.ul`
 
 const StockTableSelect = styled.select`
   border: 1px solid #f6c43e;
-  width: 180px;
+  width: 150px;
   height: 25px;
   margin-right: 10px;
   border-radius: 8px;
@@ -156,13 +156,19 @@ function Stock() {
           <AllOrder>
             <OrderStatus>訂單總覽</OrderStatus>
             <OrderSection>
-              <StockTitle />
+              <OrderTitle />
               <StockTableSection>
                 <StockTableItemGroup>
+                  <StockTableItem>12345678</StockTableItem>
                   <StockTableItem>Yumy</StockTableItem>
-                  <StockTableItem>0999999999</StockTableItem>
+                  <StockTableItem>
+                    <StockTableItemDetail>
+                      0999999999
+                      <br />
+                      台北市xx區 xxx 路 xx 樓
+                    </StockTableItemDetail>
+                  </StockTableItem>
                   <StockTableItem>sdfkjlsdf@gmail.com</StockTableItem>
-                  <StockTableItem>台北市xx區 xxx 路 xx 樓</StockTableItem>
                   <StockTableItem>
                     <StockTableItemDetail>
                       1. 小扇紋質感上衣/M/5 件<br />
@@ -187,7 +193,7 @@ function Stock() {
           <EstablishedOrder>
             <OrderStatus>訂單已成立</OrderStatus>
             <OrderSection>
-              <StockTitle />
+              <OrderTitle />
               <StockTableSection>
                 <StockTableItemGroup>
                   <StockTableItem>Sharon</StockTableItem>
@@ -218,7 +224,7 @@ function Stock() {
           <PickUpGoods>
             <OrderStatus>揀貨中</OrderStatus>
             <OrderSection>
-              <StockTitle />
+              <OrderTitle />
               <StockTableSection>
                 <StockTableItemGroup>
                   <StockTableItem>Yumy</StockTableItem>
@@ -249,7 +255,7 @@ function Stock() {
           <Delivery>
             <OrderStatus>出貨中</OrderStatus>
             <OrderSection>
-              <StockTitle />
+              <OrderTitle />
               <StockTableSection>
                 <StockTableItemGroup>
                   <StockTableItem>Sharon</StockTableItem>
@@ -280,7 +286,7 @@ function Stock() {
           <DeliverComplete>
             <OrderStatus>已送達</OrderStatus>
             <OrderSection>
-              <StockTitle />
+              <OrderTitle />
               <StockTableSection>
                 <StockTableItemGroup>
                   <StockTableItem>Yumy</StockTableItem>
@@ -311,7 +317,7 @@ function Stock() {
           <CompleteOrder>
             <OrderStatus>訂單已完成</OrderStatus>
             <OrderSection>
-              <StockTitle />
+              <OrderTitle />
               <StockTableSection>
                 <StockTableItemGroup>
                   <StockTableItem>Sharon</StockTableItem>

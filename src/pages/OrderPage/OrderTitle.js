@@ -19,13 +19,13 @@ const StockTableTitle = styled.ul`
   border-radius: 3px 3px 0 0;
 `;
 
-function StockTitle() {
+function OrderTitle() {
   return (
     <StockTableTitle>
+      <StockTableTitleItem>訂單編號</StockTableTitleItem>
       <StockTableTitleItem>會員名稱</StockTableTitleItem>
-      <StockTableTitleItem>聯絡電話</StockTableTitleItem>
+      <StockTableTitleItem>聯絡電話 / 地址</StockTableTitleItem>
       <StockTableTitleItem>Email</StockTableTitleItem>
-      <StockTableTitleItem>聯絡地址</StockTableTitleItem>
       <StockTableTitleItem>商品內容</StockTableTitleItem>
       <StockTableTitleItem>總金額</StockTableTitleItem>
       <StockTableTitleItem>訂單狀態</StockTableTitleItem>
@@ -33,4 +33,4 @@ function StockTitle() {
   );
 }
 
-export default StockTitle;
+export default OrderTitle;

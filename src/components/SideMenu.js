@@ -47,7 +47,7 @@ const SideMenu = () => {
       </SideMenuList>
       <SideMenuList>
         <Icon src="https://cdn-icons-png.flaticon.com/512/4947/4947506.png" />
-        <StyledLink to="/admin/stock">庫存管理</StyledLink>
+        <StyledLink to="/admin/order">庫存管理</StyledLink>
       </SideMenuList>
       <SideMenuList>
         <Icon src="https://cdn-icons-png.flaticon.com/512/839/839860.png" />
