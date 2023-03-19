@@ -38,5 +38,3 @@ export function Banner(props) {
     </StockTitleSection>
   );
 }
-
-export default Banner;

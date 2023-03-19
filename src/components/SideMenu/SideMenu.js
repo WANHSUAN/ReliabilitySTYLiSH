@@ -37,7 +37,7 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const SideMenu = () => {
+export const SideMenu = () => {
   return (
     <MenuContainer>
       <SideMenuListTitle>Dashboard</SideMenuListTitle>
@@ -56,4 +56,4 @@ const SideMenu = () => {
     </MenuContainer>
   );
 };
-export default SideMenu;
+// export default SideMenu;
