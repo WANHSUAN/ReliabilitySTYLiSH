@@ -21,7 +21,7 @@ root.render(
         <Route path="checkout" element={<Checkout />} />
         <Route path="thankyou" element={<ThankYou />} />
         <Route path="profile" element={<Profile />} />
-        <Route path="chartpage" element={<ChartPage />} />
+        <Route path="admin/chartpage" element={<ChartPage />} />
         <Route path="admin/stock" element={<StockPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
