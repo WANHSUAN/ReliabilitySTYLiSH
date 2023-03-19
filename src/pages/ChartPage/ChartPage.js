@@ -129,7 +129,7 @@ const Rank = styled.div`
   border-radius: 15px;
   padding: 15px;
 `;
-const RankItem = styled.p`
+const RankItem = styled.div`
   display: flex;
   border-bottom: 1px solid #dfdfdf;
   padding-bottom: 15px;

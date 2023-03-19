@@ -7,7 +7,7 @@ const MenuContainer = styled.div`
   width: 20%;
   padding-top: 50px;
   gap: 30px;
-  font-size:18px;
+  font-size: 18px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
 `;
 
@@ -17,8 +17,8 @@ const SideMenuList = styled.p`
   letter-spacing: 1px;
   width: 150px;
   margin: 0 auto;
-  border-bottom:1px solid #BCBCBC;
-  padding:10px
+  border-bottom: 1px solid #bcbcbc;
+  padding: 10px;
 `;
 const SideMenuListTitle = styled(SideMenuList)`
   font-weight: 600;
