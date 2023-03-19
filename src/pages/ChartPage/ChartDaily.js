@@ -21,11 +21,11 @@ export default function ChartDaily() {
       columns[0].push(item.date);
       columns[1].push(item.total);
     });
-    console.log(columns);
+    // console.log(columns);
     c3.generate({
       data: {
         x: 'x',
-        columns: columns
+        columns: columns,
       },
       color: {
         pattern: ['#FABF62'],

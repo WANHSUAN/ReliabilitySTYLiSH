@@ -1,44 +1,43 @@
-import React,{useEffect} from 'react';
+import React from 'react';
 import styled from 'styled-components/macro';
 import top from './top.png';
 import down from './down.png';
 import maintain from './maintain.png';
 import bannerImg from './bannerImg.png';
-import 'c3/c3.css';
-import c3 from 'c3';
 import SideMenu from '../../components/SideMenu';
 import StockBanner from '../../components/StockBanner';
 import ChartCategory from './ChartCategory';
 import ChartDaily from './ChartDaily';
+import ChartMonth from './ChartMonth';
 
 /*/////////////Chart/////////////*/
-const Chart2 = () => {
-  useEffect(() => {
-    c3.generate({
-      bindto: '#chart2',
-      data: {
-        columns: [['data1', 30, 200, 100, 400, 150, 250]],
-        type: 'bar',
-      },
-      bar: {
-        width: {
-          ratio: 0.5,
-        },
-      },
-      color: {
-        pattern: ['#FABF62'],
-      },
-      size: {
-        height: 300,
-      },
-      legend: {
-        position: 'right',
-      },
-    });
-  }, []);
+// const Chart2 = () => {
+//   useEffect(() => {
+//     c3.generate({
+//       bindto: '#chart2',
+//       data: {
+//         columns: [['data1', 30, 200, 100, 400, 150, 250]],
+//         type: 'bar',
+//       },
+//       bar: {
+//         width: {
+//           ratio: 0.5,
+//         },
+//       },
+//       color: {
+//         pattern: ['#FABF62'],
+//       },
+//       size: {
+//         height: 300,
+//       },
+//       legend: {
+//         position: 'right',
+//       },
+//     });
+//   }, []);
 
-  return <div id="chart2" />;
-};
+//   return <div id="chart2" />;
+// };
 function ChartPage() {
   return (
     <>
@@ -82,7 +81,7 @@ function ChartPage() {
           <Timeseries>
             <ChartTitle>每月銷售金額</ChartTitle>
             <ChartImg>
-              <Chart2 />
+              <ChartMonth />
             </ChartImg>
           </Timeseries>
           <Rank>
