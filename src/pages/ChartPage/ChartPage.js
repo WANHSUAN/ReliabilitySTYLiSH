@@ -33,17 +33,25 @@ const ClickRate = styled.li`
   padding: 50px;
   display: flex;
   gap: 30px;
-  justify-content: space-between;
+  justify-content: space-around;
 `;
 const Category = styled(ClickRate)`
+  position: relative;
   padding: 0px;
   justify-content: center;
   align-items: center;
+  p {
+    position: absolute;
+    font-size: 20px;
+    top: 20px;
+    left: 20px;
+    margin-bottom: 10px;
+  }
 `;
 
 const ClickRateNumber = styled.p`
   color: ${(props) => props.color};
-  font-size: 65px;
+  font-size: 70px;
   font-weight: 600;
   display: flex;
   flex-direction: column;
@@ -54,12 +62,6 @@ const ClickRateNumber = styled.p`
     font-size: 20px;
     color: #343434;
   }
-`;
-
-const ClickRateTitle = styled.p`
-  color: ${(props) => props.color};
-  margin-top: 20px;
-  font-size: 20px;
 `;
 
 /*/////////////Main/////////////*/
@@ -104,7 +106,7 @@ const ChartSelect = styled.select`
 /*/////////////Rank/////////////*/
 const RankItems = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   padding: 0 50px;
 `;
 const RankTopItems = styled.div`
@@ -160,7 +162,7 @@ const Chart = () => {
           ['data1', 30, 200, 100, 400, 150, 250],
           ['data2', 50, 20, 10, 40, 15, 25],
         ],
-        type: 'line',
+        type: 'spline',
       },
       size: {
         height: 300,
@@ -173,7 +175,6 @@ const Chart = () => {
 
   return <div id="chart" />;
 };
-
 const Chart2 = () => {
   React.useEffect(() => {
     c3.generate({
@@ -206,12 +207,15 @@ const Chart3 = () => {
           ['衣服2', 20],
           ['衣服3', 5],
         ],
-        type: 'pie',
+        type: 'donut',
         colors: {
           衣服: '#E68618',
           衣服2: '#F280CA',
           衣服3: '#26BFC7',
         },
+      },
+      donut: {
+        title: '女裝',
       },
       size: {
         width: 280,
@@ -234,12 +238,15 @@ const Chart4 = () => {
           ['衣服2', 20],
           ['衣服3', 5],
         ],
-        type: 'pie',
+        type: 'donut',
         colors: {
           衣服: '#E68618',
           衣服2: '#F280CA',
           衣服3: '#26BFC7',
         },
+      },
+      donut: {
+        title: '男裝',
       },
       size: {
         width: 280,
@@ -262,12 +269,15 @@ const Chart5 = () => {
           ['衣服2', 20],
           ['衣服3', 5],
         ],
-        type: 'pie',
+        type: 'donut',
         colors: {
           衣服: '#E68618',
           衣服2: '#F280CA',
           衣服3: '#26BFC7',
         },
+      },
+      donut: {
+        title: '配件',
       },
       size: {
         width: 280,
