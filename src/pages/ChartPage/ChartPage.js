@@ -8,7 +8,161 @@ import 'c3/c3.css';
 import c3 from 'c3';
 import SideMenu from '../../components/SideMenu';
 import StockBanner from '../../components/StockBanner';
+import ChartCategory from './ChartCategory';
 
+/*/////////////Chart/////////////*/
+const Chart = () => {
+  React.useEffect(() => {
+    c3.generate({
+      bindto: '#chart',
+      data: {
+        columns: [['data1', 30, 200, 100, 400, 150, 250]],
+        type: 'area-spline',
+      },
+      color: {
+        pattern: ['#FABF62'],
+      },
+      size: {
+        height: 300,
+      },
+      legend: {
+        position: 'right',
+      },
+      grid: {
+        x: {
+          show: true,
+        },
+        y: {
+          show: true,
+        },
+      },
+    });
+  }, []);
+
+  return <div id="chart" />;
+};
+const Chart2 = () => {
+  React.useEffect(() => {
+    c3.generate({
+      bindto: '#chart2',
+      data: {
+        columns: [['data1', 30, 200, 100, 400, 150, 250]],
+        type: 'bar',
+      },
+      bar: {
+        width: {
+          ratio: 0.5,
+        },
+      },
+      color: {
+        pattern: ['#FABF62'],
+      },
+      size: {
+        height: 300,
+      },
+      legend: {
+        position: 'right',
+      },
+    });
+  }, []);
+
+  return <div id="chart2" />;
+};
+function ChartPage() {
+  return (
+    <>
+      <Wrapper>
+        <SideMenu />
+        <MainContainer>
+          <StockBanner stock={bannerImg} />
+          <ClickRateContainer>
+            <ClickRate>
+              <ClickRateNumber color={`#ff5733`}>
+                100<span>全站點擊率</span>
+              </ClickRateNumber>
+              <ClickRateNumber color={`#ff5733`}>
+                60%<span>轉換率</span>
+              </ClickRateNumber>
+            </ClickRate>
+            <Category>
+              <ChartCategory type="men" />
+            </Category>
+            <Category>
+              <ChartCategory type="women" />
+            </Category>
+            <Category>
+              <ChartCategory type="accessories" />
+            </Category>
+          </ClickRateContainer>
+          <Timeseries>
+            <TimeseriesHeader>
+              <ChartTitle>30 天銷售金額</ChartTitle>
+              <ChartSelect>
+                <option>30天內</option>
+                <option>60天內</option>
+                <option>90天內</option>
+                <option>120天內</option>
+              </ChartSelect>
+            </TimeseriesHeader>
+            <ChartImg>
+              <Chart />
+            </ChartImg>
+          </Timeseries>
+          <Timeseries>
+            <ChartTitle>每月銷售金額</ChartTitle>
+            <ChartImg>
+              <Chart2 />
+            </ChartImg>
+          </Timeseries>
+          <Rank>
+            <ChartTitle>銷售排行</ChartTitle>
+            <RankItems>
+              <RankTopItems>
+                <RankItem>
+                  <span>TOP1</span>前開扭結洋裝
+                  <p>40件</p>
+                  <RankImg rankUrl={top} />
+                </RankItem>
+                <RankItem>
+                  <span>TOP1</span>前開扭結洋裝
+                  <p>40件</p>
+                  <RankImg rankUrl={down} />
+                </RankItem>
+                <RankItem>
+                  <span>TOP1</span>前開扭結洋裝
+                  <p>40件</p>
+                  <RankImg rankUrl={maintain} />
+                </RankItem>
+              </RankTopItems>
+              <RankTopItems2>
+                <RankItem>
+                  <span>4</span>前開扭結洋裝
+                  <p>40件</p>
+                  <RankImg2 rankUrl={maintain} />
+                </RankItem>
+                <RankItem>
+                  <span>4</span>前開扭結洋裝
+                  <p>40件</p>
+                  <RankImg2 rankUrl={maintain} />
+                </RankItem>
+                <RankItem>
+                  <span>4</span>前開扭結洋裝
+                  <p>40件</p>
+                  <RankImg2 rankUrl={maintain} />
+                </RankItem>
+                <RankItem>
+                  <span>4</span>前開扭結洋裝
+                  <p>40件</p>
+                  <RankImg2 rankUrl={maintain} />
+                </RankItem>
+              </RankTopItems2>
+            </RankItems>
+          </Rank>
+        </MainContainer>
+      </Wrapper>
+    </>
+  );
+}
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
@@ -150,255 +304,4 @@ const RankImg2 = styled(RankImg)`
   height: 15px;
   margin-top: 3px;
 `;
-
-/*/////////////ChartPie/////////////*/
-const Chart3 = () => {
-  React.useEffect(() => {
-    c3.generate({
-      bindto: '#chart3',
-      data: {
-        columns: [
-          ['衣服', 10],
-          ['衣服2', 20],
-          ['衣服3', 5],
-        ],
-        type: 'donut',
-        colors: {
-          衣服: '#E68618',
-          衣服2: '#F280CA',
-          衣服3: '#26BFC7',
-        },
-      },
-      donut: {
-        title: '女裝',
-      },
-      size: {
-        width: 280,
-      },
-      legend: {
-        position: 'right',
-      },
-    });
-  }, []);
-
-  return <div id="chart3" />;
-};
-const Chart4 = () => {
-  React.useEffect(() => {
-    c3.generate({
-      bindto: '#chart4',
-      data: {
-        columns: [
-          ['衣服', 10],
-          ['衣服2', 20],
-          ['衣服3', 5],
-        ],
-        type: 'donut',
-        colors: {
-          衣服: '#E68618',
-          衣服2: '#F280CA',
-          衣服3: '#26BFC7',
-        },
-      },
-      donut: {
-        title: '男裝',
-      },
-      size: {
-        width: 280,
-      },
-      legend: {
-        position: 'right',
-      },
-    });
-  }, []);
-
-  return <div id="chart4" />;
-};
-const Chart5 = () => {
-  React.useEffect(() => {
-    c3.generate({
-      bindto: '#chart5',
-      data: {
-        columns: [
-          ['衣服', 10],
-          ['衣服2', 20],
-          ['衣服3', 5],
-        ],
-        type: 'donut',
-        colors: {
-          衣服: '#E68618',
-          衣服2: '#F280CA',
-          衣服3: '#26BFC7',
-        },
-      },
-      donut: {
-        title: '配件',
-      },
-      size: {
-        width: 280,
-      },
-      legend: {
-        position: 'right',
-      },
-    });
-  }, []);
-
-  return <div id="chart5" />;
-};
-
-/*/////////////Chart/////////////*/
-const Chart = () => {
-  React.useEffect(() => {
-    c3.generate({
-      bindto: '#chart',
-      data: {
-        columns: [['data1', 30, 200, 100, 400, 150, 250]],
-        type: 'area-spline',
-      },
-      color: {
-        pattern: ['#FABF62'],
-      },
-      size: {
-        height: 300,
-      },
-      legend: {
-        position: 'right',
-      },
-      grid: {
-        x: {
-          show: true,
-        },
-        y: {
-          show: true,
-        },
-      },
-    });
-  }, []);
-
-  return <div id="chart" />;
-};
-const Chart2 = () => {
-  React.useEffect(() => {
-    c3.generate({
-      bindto: '#chart2',
-      data: {
-        columns: [['data1', 30, 200, 100, 400, 150, 250]],
-        type: 'bar',
-      },
-      bar: {
-        width: {
-          ratio: 0.5,
-        },
-      },
-      color: {
-        pattern: ['#FABF62'],
-      },
-      size: {
-        height: 300,
-      },
-      legend: {
-        position: 'right',
-      },
-    });
-  }, []);
-
-  return <div id="chart2" />;
-};
-
-function ChartPage() {
-  return (
-    <>
-      <Wrapper>
-        <SideMenu />
-        <MainContainer>
-          <StockBanner stock={bannerImg} />
-          <ClickRateContainer>
-            <ClickRate>
-              <ClickRateNumber color={`#ff5733`}>
-                100<span>全站點擊率</span>
-              </ClickRateNumber>
-              <ClickRateNumber color={`#ff5733`}>
-                60%<span>轉換率</span>
-              </ClickRateNumber>
-            </ClickRate>
-            <Category>
-              <Chart3 />
-            </Category>
-            <Category>
-              <Chart4 />
-            </Category>
-            <Category>
-              <Chart5 />
-            </Category>
-          </ClickRateContainer>
-          <Timeseries>
-            <TimeseriesHeader>
-              <ChartTitle>30 天銷售金額</ChartTitle>
-              <ChartSelect>
-                <option>30天內</option>
-                <option>60天內</option>
-                <option>90天內</option>
-                <option>120天內</option>
-              </ChartSelect>
-            </TimeseriesHeader>
-            <ChartImg>
-              <Chart />
-            </ChartImg>
-          </Timeseries>
-          <Timeseries>
-            <ChartTitle>每月銷售金額</ChartTitle>
-            <ChartImg>
-              <Chart2 />
-            </ChartImg>
-          </Timeseries>
-          <Rank>
-            <ChartTitle>銷售排行</ChartTitle>
-            <RankItems>
-              <RankTopItems>
-                <RankItem>
-                  <span>TOP1</span>前開扭結洋裝
-                  <p>40件</p>
-                  <RankImg rankUrl={top} />
-                </RankItem>
-                <RankItem>
-                  <span>TOP1</span>前開扭結洋裝
-                  <p>40件</p>
-                  <RankImg rankUrl={down} />
-                </RankItem>
-                <RankItem>
-                  <span>TOP1</span>前開扭結洋裝
-                  <p>40件</p>
-                  <RankImg rankUrl={maintain} />
-                </RankItem>
-              </RankTopItems>
-              <RankTopItems2>
-                <RankItem>
-                  <span>4</span>前開扭結洋裝
-                  <p>40件</p>
-                  <RankImg2 rankUrl={maintain} />
-                </RankItem>
-                <RankItem>
-                  <span>4</span>前開扭結洋裝
-                  <p>40件</p>
-                  <RankImg2 rankUrl={maintain} />
-                </RankItem>
-                <RankItem>
-                  <span>4</span>前開扭結洋裝
-                  <p>40件</p>
-                  <RankImg2 rankUrl={maintain} />
-                </RankItem>
-                <RankItem>
-                  <span>4</span>前開扭結洋裝
-                  <p>40件</p>
-                  <RankImg2 rankUrl={maintain} />
-                </RankItem>
-              </RankTopItems2>
-            </RankItems>
-          </Rank>
-        </MainContainer>
-      </Wrapper>
-    </>
-  );
-}
-
 export default ChartPage;
