@@ -56,7 +56,10 @@ export const SideMenu = () => {
         <Icon src="https://cdn-icons-png.flaticon.com/512/839/839860.png" />
         訂單資料
       </SideMenuList>
+      <SideMenuList>
+        <Icon src="https://cdn-icons-png.flaticon.com/512/1159/1159633.png" />
+        <StyledLink to="/admin/post">發布文章</StyledLink>
+      </SideMenuList>
     </MenuContainer>
   );
 };
-// export default SideMenu;

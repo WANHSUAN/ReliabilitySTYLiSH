@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import blogImg from './blogImg.jpg';
 function Blog() {
   return (
     <>
@@ -128,8 +127,9 @@ function Blog() {
   );
 }
 const BlogTitle = styled.div`
-  background-image: url(${blogImg});
+  background-image: url(https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80);
   background-size: cover;
+  background-position: center;
   margin-bottom: 100px;
   display: flex;
   justify-content: center;
