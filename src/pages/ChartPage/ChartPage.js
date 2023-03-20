@@ -114,14 +114,14 @@ const Wrapper = styled.div`
   background-color: #f7f7f7;
 `;
 
-const ClickRateContainer = styled.ul`
+const ClickRateContainer = styled.div`
   display: grid;
   gap: 15px;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
 `;
 
-const ClickRate = styled.li`
+const ClickRate = styled.div`
   list-style: none;
   background-color: #fff;
   border-radius: 15px;
@@ -130,6 +130,9 @@ const ClickRate = styled.li`
   display: flex;
   gap: 30px;
   justify-content: space-around;
+  &:hover {
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
+  }
 `;
 const Category = styled(ClickRate)`
   position: relative;
@@ -192,6 +195,9 @@ const Timeseries = styled.div`
   background-color: #fff;
   border-radius: 15px;
   padding: 15px;
+  &:hover {
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
+  }
 `;
 const TimeseriesHeader = styled.div`
   display: flex;
@@ -234,6 +240,9 @@ const Rank = styled.div`
   background-color: #fff;
   border-radius: 15px;
   padding: 15px;
+  &:hover {
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
+  }
 `;
 const RankItem = styled.div`
   display: flex;
