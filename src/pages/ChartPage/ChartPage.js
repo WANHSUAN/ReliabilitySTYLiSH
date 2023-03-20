@@ -13,6 +13,9 @@ import ChartMonth from './ChartMonth';
 function ChartPage() {
   const url = 'https://www.saiko.world/api/1.0/admin/salesByProduct';
   const [rankData, setRankData] = useState([]);
+  const [num, setNum] = useState(1);
+  const [dayText, setDayText] = useState('');
+
   useEffect(() => {
     fetch(url)
       .then((response) => response.json())
@@ -21,7 +24,11 @@ function ChartPage() {
         setRankData(newData.sort((a, b) => b.qty - a.qty));
       });
   }, []);
-  // console.log(rankData)
+  function handleInput(e) {
+    const selectedOption = e.target.options[e.target.selectedIndex];
+    setDayText(selectedOption.text);
+    setNum(e.target.value);
+  }
   return (
     <>
       <Wrapper>
@@ -52,19 +59,15 @@ function ChartPage() {
               <ChartTitle>
                 銷售金額<span>/day</span>
               </ChartTitle>
-              <ChartSelect>
-                <input type="checkbox" name="days" />
-                <label htmlFor="days">30天內</label>
-                <input type="checkbox" name="days" />
-                <label htmlFor="days">60天內</label>
-                <input type="checkbox" name="days" />
-                <label htmlFor="days">90天內</label>
-                <input type="checkbox" name="days" />
-                <label htmlFor="days">120天內</label>
+              <ChartSelect onChange={handleInput}>
+                <option value="1">30天內</option>
+                <option value="2">60天內</option>
+                <option value="3">90天內</option>
+                <option value="4">120天內</option>
               </ChartSelect>
             </TimeseriesHeader>
             <ChartImg>
-              <ChartDaily />
+              <ChartDaily num={num} dayText={dayText} />
             </ChartImg>
           </Timeseries>
           <Timeseries>
@@ -200,7 +203,7 @@ const TimeseriesHeader = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
-const ChartSelect = styled.div`
+const ChartSelect = styled.select`
   margin-right: 50px;
   display: flex;
   gap: 5px;
