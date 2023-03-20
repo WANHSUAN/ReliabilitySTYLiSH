@@ -149,6 +149,7 @@ const Container = styled.div`
   gap: 50px;
   margin: 0px auto;
   width: 1000px;
+  margin-bottom: 100px;
 `;
 const PostCard = styled.div`
   position: relative;
