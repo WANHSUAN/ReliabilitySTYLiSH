@@ -159,7 +159,7 @@ function Order() {
   const [delivery, setDelivery] = useState([]);
   const [deliverComplete, setDeliverComplete] = useState([]);
   const [completedOrder, setCompletedOrder] = useState([]);
-  const [selectedStatus, setSelectedStatus] = useState();
+  const [selectedStatus, setSelectedStatus] = useState('0');
   const [editMode, setEditMode] = useState(false);
   const [page, setPage] = useState(1);
 
@@ -222,45 +222,6 @@ function Order() {
   }
 
   function renderSelectedComponent() {
-    // if (allOrders === [] || '0') {
-    //   return (
-    //     <AllOrder>
-    //       <OrderStatus>訂單總覽</OrderStatus>
-    //       <OrderSection>
-    //         <OrderTitle />
-    //         <StockTableSection>
-    //           {console.log(allOrders)}
-    //           {/* {allOrders.data.map((order, index) => (
-    //             <StockTableItemGroup key={index}>
-    //               <StockTableItem>{order.order_id}</StockTableItem>
-    //               <StockTableItem>{order.recipient.name}</StockTableItem>
-    //               <StockTableItem>
-    //                 {order.recipient.phone}
-    //                 <br />
-    //                 {order.recipient.address}
-    //               </StockTableItem>
-    //               <StockTableItem>{order.recipient.email}</StockTableItem>
-    //               <StockTableItem>
-    //                 {order.details.list.map((item, index) => (
-    //                   <StockTableItemDetail>
-    //                     {`${index + 1}. ${item.name} / ${item.size} / ${
-    //                       item.qty
-    //                     }`}
-    //                   </StockTableItemDetail>
-    //                 ))}
-    //               </StockTableItem>
-    //               <StockTableItem>NT$ {order.total}</StockTableItem>
-    //               <StockTableItem>
-    //                 <Checkbox disabled={!editMode} key={index} />
-    //               </StockTableItem>
-    //             </StockTableItemGroup>
-    //           ))} */}
-    //         </StockTableSection>
-    //       </OrderSection>
-    //     </AllOrder>
-    //   );
-    // }
-
     switch (selectedStatus) {
       case '0':
         return (
