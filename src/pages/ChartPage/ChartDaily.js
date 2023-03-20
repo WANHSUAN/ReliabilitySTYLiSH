@@ -5,20 +5,16 @@ import c3 from 'c3';
 export default function ChartDaily({ num, dayText }) {
   const urlTemplate = 'https://www.saiko.world/api/1.0/admin/dailyRev?paging=';
   const urls = Array.from({ length: num }, (_, i) => `${urlTemplate}${i + 1}`);
-
-  console.log(urls)
-
   useEffect(() => {
-    const fetchPromises = urls.map(url =>
-      fetch(url).then(response => response.json())
+    const fetchPromises = urls.map((url) =>
+      fetch(url).then((response) => response.json())
     );
 
-    Promise.all(fetchPromises).then(dataArray => {
-      const newData = dataArray.flatMap(data => data.data);
-      console.log(newData)
+    Promise.all(fetchPromises).then((dataArray) => {
+      const newData = dataArray.flatMap((data) => data.data);
       daily(newData);
     });
-    }, [num]);
+  }, [num]);
 
   function daily(newData) {
     const columns = [['x'], [`${dayText}`]];
@@ -26,7 +22,6 @@ export default function ChartDaily({ num, dayText }) {
       columns[0].push(item.date); //x軸
       columns[1].push(item.total);
     });
-    console.log(columns);
 
     c3.generate({
       data: {
@@ -41,7 +36,7 @@ export default function ChartDaily({ num, dayText }) {
         height: 300,
       },
       legend: {
-        show: false
+        show: false,
       },
       grid: {
         x: {
