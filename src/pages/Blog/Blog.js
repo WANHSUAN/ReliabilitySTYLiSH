@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
+import { Link } from 'react-router-dom';
+
 function Blog() {
   return (
     <>
@@ -8,119 +10,129 @@ function Blog() {
       </BlogTitle>
       <Container>
         <PostCard>
-          <PostImg>
-            <Date>
-              <p>20</p>
-              <p>Mar</p>
-            </Date>
-          </PostImg>
-          <PostContent>
-            <Content>
-              <Title>INDIA</Title>
-              <p>An upcoming superpower</p>
-            </Content>
-            <Meta>
-              <p>
-                <span class="material-symbols-outlined">schedule</span>6 mins
-                ago
-              </p>
-              <p>
-                <span class="material-symbols-outlined">chat</span>39 comments
-              </p>
-            </Meta>
-          </PostContent>
+          <Link to={'/article'}>
+            <PostImg>
+              <Date>
+                <p>20</p>
+                <p>Mar</p>
+              </Date>
+            </PostImg>
+            <PostContent>
+              <Content>
+                <Title>INDIA</Title>
+                <p>An upcoming superpower</p>
+              </Content>
+              <Meta>
+                <p>
+                  <span class="material-symbols-outlined">schedule</span>6 mins
+                  ago
+                </p>
+                <p>
+                  <span class="material-symbols-outlined">chat</span>39 comments
+                </p>
+              </Meta>
+            </PostContent>
+          </Link>
         </PostCard>
         <PostCard>
-          <PostImg>
-            <Date>
-              <p>20</p>
-              <p>Mar</p>
-            </Date>
-          </PostImg>
-          <PostContent>
-            <Content>
-              <Title>INDIA</Title>
-              <p>An upcoming superpower</p>
-            </Content>
-            <Meta>
-              <p>
-                <span class="material-symbols-outlined">schedule</span>6 mins
-                ago
-              </p>
-              <p>
-                <span class="material-symbols-outlined">chat</span>39 comments
-              </p>
-            </Meta>
-          </PostContent>
+          <Link to={'/article'}>
+            <PostImg>
+              <Date>
+                <p>20</p>
+                <p>Mar</p>
+              </Date>
+            </PostImg>
+            <PostContent>
+              <Content>
+                <Title>INDIA</Title>
+                <p>An upcoming superpower</p>
+              </Content>
+              <Meta>
+                <p>
+                  <span class="material-symbols-outlined">schedule</span>6 mins
+                  ago
+                </p>
+                <p>
+                  <span class="material-symbols-outlined">chat</span>39 comments
+                </p>
+              </Meta>
+            </PostContent>
+          </Link>
         </PostCard>
         <PostCard>
-          <PostImg>
-            <Date>
-              <p>20</p>
-              <p>Mar</p>
-            </Date>
-          </PostImg>
-          <PostContent>
-            <Content>
-              <Title>INDIA</Title>
-              <p>An upcoming superpower</p>
-            </Content>
-            <Meta>
-              <p>
-                <span class="material-symbols-outlined">schedule</span>6 mins
-                ago
-              </p>
-              <p>
-                <span class="material-symbols-outlined">chat</span>39 comments
-              </p>
-            </Meta>
-          </PostContent>
+          <Link to={'/article'}>
+            <PostImg>
+              <Date>
+                <p>20</p>
+                <p>Mar</p>
+              </Date>
+            </PostImg>
+            <PostContent>
+              <Content>
+                <Title>INDIA</Title>
+                <p>An upcoming superpower</p>
+              </Content>
+              <Meta>
+                <p>
+                  <span class="material-symbols-outlined">schedule</span>6 mins
+                  ago
+                </p>
+                <p>
+                  <span class="material-symbols-outlined">chat</span>39 comments
+                </p>
+              </Meta>
+            </PostContent>
+          </Link>
         </PostCard>
         <PostCard>
-          <PostImg>
-            <Date>
-              <p>20</p>
-              <p>Mar</p>
-            </Date>
-          </PostImg>
-          <PostContent>
-            <Content>
-              <Title>INDIA</Title>
-              <p>An upcoming superpower</p>
-            </Content>
-            <Meta>
-              <p>
-                <span class="material-symbols-outlined">schedule</span>6 mins
-                ago
-              </p>
-              <p>
-                <span class="material-symbols-outlined">chat</span>39 comments
-              </p>
-            </Meta>
-          </PostContent>
+          <Link to={'/article'}>
+            <PostImg>
+              <Date>
+                <p>20</p>
+                <p>Mar</p>
+              </Date>
+            </PostImg>
+            <PostContent>
+              <Content>
+                <Title>INDIA</Title>
+                <p>An upcoming superpower</p>
+              </Content>
+              <Meta>
+                <p>
+                  <span class="material-symbols-outlined">schedule</span>6 mins
+                  ago
+                </p>
+                <p>
+                  <span class="material-symbols-outlined">chat</span>39 comments
+                </p>
+              </Meta>
+            </PostContent>
+          </Link>
         </PostCard>
         <PostCard>
-          <PostImg>
-            <Date>
-              <p>20</p>
-              <p>Mar</p>
-            </Date>
-          </PostImg>
-          <PostContent>
-            <Content>
-              <Title>INDIA</Title>
-              <p>An upcoming superpower</p>
-            </Content>
-            <Meta>
-              <p>
-                <span class="material-symbols-outlined">schedule</span>6 mins
-                ago
-              </p>
-              <p>
-                <span class="material-symbols-outlined">chat</span>39 comments
-              </p>
-            </Meta>
-          </PostContent>
+          <Link to={'/article'}>
+            <PostImg>
+              <Date>
+                <p>20</p>
+                <p>Mar</p>
+              </Date>
+            </PostImg>
+            <PostContent>
+              <Content>
+                <Title>INDIA</Title>
+                <p>An upcoming superpower</p>
+              </Content>
+              <Meta>
+                <p>
+                  <span class="material-symbols-outlined">schedule</span>6 mins
+                  ago
+                </p>
+                <p>
+                  <span class="material-symbols-outlined">chat</span>39 comments
+                </p>
+              </Meta>
+            </PostContent>
+          </Link>
         </PostCard>
       </Container>
     </>
@@ -158,6 +170,10 @@ const PostCard = styled.div`
   border-radius: 10px;
   border: 1px solid #c7c7c8;
   overflow: hidden;
+  a {
+    text-decoration: none;
+    color: #000;
+  }
   &:hover {
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
   }
