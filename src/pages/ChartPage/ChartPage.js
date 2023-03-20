@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 import top from './top.png';
 import down from './down.png';
@@ -10,35 +10,18 @@ import ChartCategory from './ChartCategory';
 import ChartDaily from './ChartDaily';
 import ChartMonth from './ChartMonth';
 
-/*/////////////Chart/////////////*/
-// const Chart2 = () => {
-//   useEffect(() => {
-//     c3.generate({
-//       bindto: '#chart2',
-//       data: {
-//         columns: [['data1', 30, 200, 100, 400, 150, 250]],
-//         type: 'bar',
-//       },
-//       bar: {
-//         width: {
-//           ratio: 0.5,
-//         },
-//       },
-//       color: {
-//         pattern: ['#FABF62'],
-//       },
-//       size: {
-//         height: 300,
-//       },
-//       legend: {
-//         position: 'right',
-//       },
-//     });
-//   }, []);
-
-//   return <div id="chart2" />;
-// };
 function ChartPage() {
+  const url = 'https://www.saiko.world/api/1.0/admin/salesByProduct';
+  const [rankData, setRankData] = useState([]);
+  useEffect(() => {
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        const newData = data.data;
+        setRankData(newData.sort((a, b) => b.qty - a.qty));
+      });
+  }, []);
+  // console.log(rankData)
   return (
     <>
       <Wrapper>
@@ -66,12 +49,18 @@ function ChartPage() {
           </ClickRateContainer>
           <Timeseries>
             <TimeseriesHeader>
-              <ChartTitle>30 天銷售金額</ChartTitle>
+              <ChartTitle>
+                銷售金額<span>/day</span>
+              </ChartTitle>
               <ChartSelect>
-                <option>30天內</option>
-                <option>60天內</option>
-                <option>90天內</option>
-                <option>120天內</option>
+                <input type="checkbox" name="days" />
+                <label htmlFor="days">30天內</label>
+                <input type="checkbox" name="days" />
+                <label htmlFor="days">60天內</label>
+                <input type="checkbox" name="days" />
+                <label htmlFor="days">90天內</label>
+                <input type="checkbox" name="days" />
+                <label htmlFor="days">120天內</label>
               </ChartSelect>
             </TimeseriesHeader>
             <ChartImg>
@@ -79,52 +68,37 @@ function ChartPage() {
             </ChartImg>
           </Timeseries>
           <Timeseries>
-            <ChartTitle>每月銷售金額</ChartTitle>
+            <ChartTitle>
+              銷售金額<span>/month</span>
+            </ChartTitle>
             <ChartImg>
               <ChartMonth />
             </ChartImg>
           </Timeseries>
           <Rank>
-            <ChartTitle>銷售排行</ChartTitle>
+            <ChartTitle>
+              銷售排行<span>/month</span>
+            </ChartTitle>
             <RankItems>
               <RankTopItems>
-                <RankItem>
-                  <span>TOP1</span>前開扭結洋裝
-                  <p>40件</p>
-                  <RankImg rankUrl={top} />
-                </RankItem>
-                <RankItem>
-                  <span>TOP1</span>前開扭結洋裝
-                  <p>40件</p>
-                  <RankImg rankUrl={down} />
-                </RankItem>
-                <RankItem>
-                  <span>TOP1</span>前開扭結洋裝
-                  <p>40件</p>
-                  <RankImg rankUrl={maintain} />
-                </RankItem>
+                {rankData.slice(0, 3).map((item, index) => (
+                  <RankItem key={index}>
+                    <span>{`TOP${index + 1}`}</span>
+                    {item.name}
+                    <p>{`${item.qty}件`}</p>
+                    <RankImg rankUrl={top} />
+                  </RankItem>
+                ))}
               </RankTopItems>
               <RankTopItems2>
-                <RankItem>
-                  <span>4</span>前開扭結洋裝
-                  <p>40件</p>
-                  <RankImg2 rankUrl={maintain} />
-                </RankItem>
-                <RankItem>
-                  <span>4</span>前開扭結洋裝
-                  <p>40件</p>
-                  <RankImg2 rankUrl={maintain} />
-                </RankItem>
-                <RankItem>
-                  <span>4</span>前開扭結洋裝
-                  <p>40件</p>
-                  <RankImg2 rankUrl={maintain} />
-                </RankItem>
-                <RankItem>
-                  <span>4</span>前開扭結洋裝
-                  <p>40件</p>
-                  <RankImg2 rankUrl={maintain} />
-                </RankItem>
+                {rankData.slice(3, 7).map((item, index) => (
+                  <RankItem key={index}>
+                    <span>{`TOP${index + 4}`}</span>
+                    {item.name}
+                    <p>{`${item.qty}件`}</p>
+                    <RankImg rankUrl={top} />
+                  </RankItem>
+                ))}
               </RankTopItems2>
             </RankItems>
           </Rank>
@@ -208,6 +182,10 @@ const ChartTitle = styled.p`
   border-radius: 25px;
   width: 200px;
   text-align: center;
+  span {
+    font-size: 14px;
+    padding-left: 5px;
+  }
 `;
 const ChartImg = styled.div`
   padding: 20px;
@@ -222,9 +200,15 @@ const TimeseriesHeader = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
-const ChartSelect = styled.select`
-  height: 20px;
+const ChartSelect = styled.div`
   margin-right: 50px;
+  display: flex;
+  gap: 5px;
+  font-size: 14px;
+  align-items: center;
+  input {
+    margin: 0px;
+  }
 `;
 /*/////////////Rank/////////////*/
 const RankItems = styled.div`
@@ -257,13 +241,14 @@ const RankItem = styled.div`
   display: flex;
   border-bottom: 1px solid #dfdfdf;
   padding-bottom: 15px;
+  gap: 10px;
   p {
-    margin-left: 20px;
+    margin-left: auto;
   }
 `;
 const RankImg = styled.div`
   margin-top: 5px;
-  margin-left: 40px;
+  margin-left: 10px;
   background-size: contain;
   background-repeat: no-repeat;
   height: 30px;
