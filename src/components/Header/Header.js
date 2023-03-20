@@ -61,7 +61,7 @@ const CategoryLinks = styled.div`
 
 const CategoryLink = styled.a`
   font-size: 20px;
-  letter-spacing: 30px;
+  letter-spacing: 15px;
   padding-left: 39px;
   padding-right: 11px;
   position: relative;
@@ -240,10 +240,19 @@ const categories = [
     displayText: '配件',
   },
 ];
-
+const WeekTitle = styled(Link)`
+  font-size: 18px;
+  padding: 0px 10px;
+  text-decoration: none;
+  letter-spacing: 2px;
+  color: #fff;
+  background-color: #3f3a3a;
+  border-radius: 25px;
+  padding: 5px 15px;
+`;
 function Header() {
   const [inputValue, setInputValue] = useState('');
-  const { user } = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
   const { cartCount } = useContext(CartContext);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -267,11 +276,11 @@ function Header() {
                 behavior: 'smooth',
               });
               navigate(`/?category=${name}`);
-            }}
-          >
+            }}>
             {displayText}
           </CategoryLink>
         ))}
+        <WeekTitle to="/blog">一週穿搭</WeekTitle>
       </CategoryLinks>
       <SearchInput
         onKeyPress={(e) => {

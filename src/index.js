@@ -11,6 +11,7 @@ import ChartPage from './pages/ChartPage/ChartPage';
 import StockPage from './pages/StockPage/StockPage';
 import Blog from './pages/Blog/Blog';
 import Post from './pages/Blog/Post';
+import Article from './pages/Blog/Article';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -27,6 +28,7 @@ root.render(
         <Route path="admin/stock" element={<StockPage />} />
         <Route path="admin/post" element={<Post />} />
         <Route path="blog" element={<Blog />} />
+        <Route path="article" element={<Article />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
