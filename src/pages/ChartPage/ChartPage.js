@@ -35,10 +35,11 @@ function ChartPage() {
           <ClickRateContainer>
             <ClickRate>
               <ClickRateNumber color={`#ff5733`}>
-                100<span>全站點擊率</span>
+                {Math.floor(Math.random() * 891 + 100)}
+                <span>全站點擊率</span>
               </ClickRateNumber>
               <ClickRateNumber color={`#ff5733`}>
-                60%<span>轉換率</span>
+                {Math.floor(Math.random() * 90 + 10)}%<span>轉換率</span>
               </ClickRateNumber>
             </ClickRate>
             <Category>
