@@ -49,7 +49,7 @@ export default function ChartMonth() {
         height: 300,
       },
       legend: {
-        position: 'right',
+        show: false,
       },
     });
   }
