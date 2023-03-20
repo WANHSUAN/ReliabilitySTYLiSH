@@ -3,17 +3,22 @@ import 'c3/c3.css';
 import c3 from 'c3';
 
 export default function ChartDaily({ num, dayText }) {
-  const url = `https://www.saiko.world/api/1.0/admin/dailyRev?paging=${num}`;
+  const urlTemplate = 'https://www.saiko.world/api/1.0/admin/dailyRev?paging=';
+  const urls = Array.from({ length: num }, (_, i) => `${urlTemplate}${i + 1}`);
+
+  console.log(urls)
+
   useEffect(() => {
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        const newData = data.data;
-        console.log(newData);
-        daily(newData);
-      });
+    const fetchPromises = urls.map(url =>
+      fetch(url).then(response => response.json())
+    );
+
+    Promise.all(fetchPromises).then(dataArray => {
+      const newData = dataArray.flatMap(data => data.data);
+      console.log(newData)
+      daily(newData);
+    });
     }, [num]);
-  console.log(dayText);
 
   function daily(newData) {
     const columns = [['x'], [`${dayText}`]];

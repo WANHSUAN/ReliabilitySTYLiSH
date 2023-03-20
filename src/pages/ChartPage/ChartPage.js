@@ -118,7 +118,6 @@ const Wrapper = styled.div`
   background-color: #f7f7f7;
 `;
 
-/*/////////////Pie/////////////*/
 const ClickRateContainer = styled.ul`
   display: grid;
   gap: 15px;
