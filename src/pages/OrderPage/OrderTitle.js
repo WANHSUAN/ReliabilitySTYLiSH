@@ -3,10 +3,6 @@ import styled from 'styled-components/macro';
 const StockTableTitleItem = styled.li`
   width: 300px;
   line-height: 20px;
-
-  &:nth-child(odd) {
-    width: 220px;
-  }
 `;
 
 const StockTableTitle = styled.ul`

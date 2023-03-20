@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import SideMenu from '../../components/SideMenu';
 import Banner from '../../components/Banner';
@@ -100,10 +100,6 @@ const OrderSection = styled.div`
 `;
 
 const StockTableSection = styled.div`
-  ul:nth-child(odd) {
-    background-color: white;
-  }
-
   ul:nth-child(even) {
     background-color: #fcf6e7;
   }
@@ -119,32 +115,132 @@ const StockTableItemGroup = styled.ul`
 `;
 
 const StockTableItem = styled.li`
-  width: 200px;
+  width: 300px;
   line-height: 20px;
-
-  &:nth-child(odd) {
-    width: 220px;
-  }
 `;
 
-const StockTableItemDetail = styled.ul`
-  text-align: left;
+const StockTableItemDetail = styled.div`
+  text-align: start;
+  padding-left: 10px;
 `;
 
-const StockTableSelect = styled.select`
+const Checkbox = styled.input.attrs({ type: 'checkbox' })`
+  appearance: none;
+
+  width: 17px;
+  height: 17px;
+
   border: 1px solid #f6c43e;
-  width: 150px;
-  height: 25px;
-  margin-right: 10px;
-  border-radius: 8px;
-  background-color: #faf8e9;
-  text-align: center;
+  border-radius: 4px;
+  background-color: #fff;
+  transition: all 150ms;
+
+  &:checked {
+    background-color: #f3cc68;
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 5px;
+      height: 5px;
+      background-color: #fff;
+      border-radius: 2px;
+    }
+  }
+
+  /* & :checked {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  & :checked[selected] {
+    pointer-events: auto;
+    opacity: 1;
+  } */
 `;
 
-const StockTableOption = styled.option``;
-
-function Stock() {
+function Order() {
+  const [allOrders, setAllOrders] = useState(null);
+  const [establishedOrder, setEstablishedOrder] = useState(null);
+  const [pickUpGoods, setPickUpGoods] = useState(null);
+  const [delivery, setDelivery] = useState(null);
+  const [deliverComplete, setDeliverComplete] = useState(null);
+  const [completedOrder, setCompletedOrder] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState();
+  const [editMode, setEditMode] = useState(false);
+  const [page, setPage] = useState(1);
+
+  // const [saveStatus, setSaveStatus] = useState('請先點擊 Edit 按鈕');
+
+  useEffect(() => {
+    fetch(
+      `https://www.saiko.world/api/1.0/admin/newestOrder/allOrder?paging=${page}`
+    )
+      .then((res) => res.json())
+      .then((data) => setAllOrders(data));
+  }, [page]);
+
+  useEffect(() => {
+    fetch(
+      `https://www.saiko.world/api/1.0/admin/newestOrder/establishedOrder=${page}`
+    )
+      .then((res) => res.json())
+      .then((data) => setEstablishedOrder(data));
+  }, [page]);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const res1 = await fetch(
+  //         `https://www.saiko.world/api/1.0/admin/newestOrder/allOrder?paging=${page}`
+  //       );
+
+  //       const result1 = await res1.json();
+  //       setAllOrders(result1);
+
+  //       const res2 = await fetch(
+  //         `https://www.saiko.world/api/1.0/admin/newestOrder/establishedOrder=${page}`
+  //       );
+  //       const result2 = await res2.json();
+  //       setEstablishedOrder(result2);
+
+  //       const res3 = await fetch(
+  //         `https://www.saiko.world/api/1.0/admin/newestOrder/pickUpGoods=${page}`
+  //       );
+  //       const result3 = await res3.json();
+  //       setPickUpGoods(result3);
+
+  //       const res4 = await fetch(
+  //         `https://www.saiko.world/api/1.0/admin/newestOrder/delivery=${page}`
+  //       );
+  //       const result4 = await res4.json();
+  //       setDelivery(result4);
+
+  //       const res5 = await fetch(
+  //         `https://www.saiko.world/api/1.0/admin/newestOrder/deliverComplete${page}`
+  //       );
+  //       const result5 = await res5.json();
+  //       setDeliverComplete(result5);
+
+  //       const res6 = await fetch(
+  //         `https://www.saiko.world/api/1.0/admin/newestOrder/completedOrder=${page}`
+  //       );
+  //       const result6 = await res6.json();
+  //       setCompletedOrder(result6);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [page]);
+
+  function handleNextPage() {
+    setPage(page + 1);
+  }
+
   function handleChange(e) {
     setSelectedStatus(e.target.value);
   }
@@ -158,32 +254,31 @@ function Stock() {
             <OrderSection>
               <OrderTitle />
               <StockTableSection>
-                <StockTableItemGroup>
-                  <StockTableItem>12345678</StockTableItem>
-                  <StockTableItem>Yumy</StockTableItem>
-                  <StockTableItem>
-                    <StockTableItemDetail>
-                      0999999999
+                {allOrders.data.map((order, index) => (
+                  <StockTableItemGroup key={index}>
+                    <StockTableItem>{order.order_id}</StockTableItem>
+                    <StockTableItem>{order.recipient.name}</StockTableItem>
+                    <StockTableItem>
+                      {order.recipient.phone}
                       <br />
-                      台北市xx區 xxx 路 xx 樓
-                    </StockTableItemDetail>
-                  </StockTableItem>
-                  <StockTableItem>sdfkjlsdf@gmail.com</StockTableItem>
-                  <StockTableItem>
-                    <StockTableItemDetail>
-                      1. 小扇紋質感上衣/M/5 件<br />
-                      2. 開衩扭結洋裝/L/3 件
-                    </StockTableItemDetail>
-                  </StockTableItem>
-                  <StockTableItem>NT$ 9000</StockTableItem>
-                  <StockTableSelect>
-                    <StockTableOption>訂單已成立</StockTableOption>
-                    <StockTableOption>揀貨中</StockTableOption>
-                    <StockTableOption>出貨中</StockTableOption>
-                    <StockTableOption>已送達</StockTableOption>
-                    <StockTableOption>訂單已完成</StockTableOption>
-                  </StockTableSelect>
-                </StockTableItemGroup>
+                      {order.recipient.address}
+                    </StockTableItem>
+                    <StockTableItem>{order.recipient.email}</StockTableItem>
+                    <StockTableItem>
+                      {order.details.list.map((item, index) => (
+                        <StockTableItemDetail>
+                          {`${index + 1}. ${item.name} / ${item.size} / ${
+                            item.qty
+                          }`}
+                        </StockTableItemDetail>
+                      ))}
+                    </StockTableItem>
+                    <StockTableItem>NT$ {order.total}</StockTableItem>
+                    <StockTableItem>
+                      <Checkbox disabled={!editMode} key={index} />
+                    </StockTableItem>
+                  </StockTableItemGroup>
+                ))}
               </StockTableSection>
             </OrderSection>
           </AllOrder>
@@ -195,26 +290,31 @@ function Stock() {
             <OrderSection>
               <OrderTitle />
               <StockTableSection>
-                <StockTableItemGroup>
-                  <StockTableItem>Sharon</StockTableItem>
-                  <StockTableItem>0918888888</StockTableItem>
-                  <StockTableItem>ekasdksjl@gmail.com</StockTableItem>
-                  <StockTableItem>台北市xx區 xxx 路 xx 樓</StockTableItem>
-                  <StockTableItem>
-                    <StockTableItemDetail>
-                      1. 小扇紋質感上衣/M/5 件<br />
-                      2. 開衩扭結洋裝/L/3 件
-                    </StockTableItemDetail>
-                  </StockTableItem>
-                  <StockTableItem>NT$ 3000</StockTableItem>
-                  <StockTableSelect>
-                    <StockTableOption>訂單已成立</StockTableOption>
-                    <StockTableOption>揀貨中</StockTableOption>
-                    <StockTableOption>出貨中</StockTableOption>
-                    <StockTableOption>已送達</StockTableOption>
-                    <StockTableOption>訂單已完成</StockTableOption>
-                  </StockTableSelect>
-                </StockTableItemGroup>
+                {establishedOrder.data.map((order, index) => (
+                  <StockTableItemGroup key={index}>
+                    <StockTableItem>{order.order_id}</StockTableItem>
+                    <StockTableItem>{order.recipient.name}</StockTableItem>
+                    <StockTableItem>
+                      {order.recipient.phone}
+                      <br />
+                      {order.recipient.address}
+                    </StockTableItem>
+                    <StockTableItem>{order.recipient.email}</StockTableItem>
+                    <StockTableItem>
+                      {order.details.list.map((item, index) => (
+                        <StockTableItemDetail>
+                          {`${index + 1}. ${item.name} / ${item.size} / ${
+                            item.qty
+                          }`}
+                        </StockTableItemDetail>
+                      ))}
+                    </StockTableItem>
+                    <StockTableItem>NT$ {order.total}</StockTableItem>
+                    <StockTableItem>
+                      <Checkbox disabled={!editMode} key={index} />
+                    </StockTableItem>
+                  </StockTableItemGroup>
+                ))}
               </StockTableSection>
             </OrderSection>
           </EstablishedOrder>
@@ -226,26 +326,31 @@ function Stock() {
             <OrderSection>
               <OrderTitle />
               <StockTableSection>
-                <StockTableItemGroup>
-                  <StockTableItem>Yumy</StockTableItem>
-                  <StockTableItem>0999999999</StockTableItem>
-                  <StockTableItem>sdfkjlsdf@gmail.com</StockTableItem>
-                  <StockTableItem>台北市xx區 xxx 路 xx 樓</StockTableItem>
-                  <StockTableItem>
-                    <StockTableItemDetail>
-                      1. 小扇紋質感上衣/M/5 件<br />
-                      2. 開衩扭結洋裝/L/3 件
-                    </StockTableItemDetail>
-                  </StockTableItem>
-                  <StockTableItem>NT$ 9000</StockTableItem>
-                  <StockTableSelect>
-                    <StockTableOption>訂單已成立</StockTableOption>
-                    <StockTableOption>揀貨中</StockTableOption>
-                    <StockTableOption>出貨中</StockTableOption>
-                    <StockTableOption>已送達</StockTableOption>
-                    <StockTableOption>訂單已完成</StockTableOption>
-                  </StockTableSelect>
-                </StockTableItemGroup>
+                {pickUpGoods.data.map((order, index) => (
+                  <StockTableItemGroup key={index}>
+                    <StockTableItem>{order.order_id}</StockTableItem>
+                    <StockTableItem>{order.recipient.name}</StockTableItem>
+                    <StockTableItem>
+                      {order.recipient.phone}
+                      <br />
+                      {order.recipient.address}
+                    </StockTableItem>
+                    <StockTableItem>{order.recipient.email}</StockTableItem>
+                    <StockTableItem>
+                      {order.details.list.map((item, index) => (
+                        <StockTableItemDetail>
+                          {`${index + 1}. ${item.name} / ${item.size} / ${
+                            item.qty
+                          }`}
+                        </StockTableItemDetail>
+                      ))}
+                    </StockTableItem>
+                    <StockTableItem>NT$ {order.total}</StockTableItem>
+                    <StockTableItem>
+                      <Checkbox disabled={!editMode} key={index} />
+                    </StockTableItem>
+                  </StockTableItemGroup>
+                ))}
               </StockTableSection>
             </OrderSection>
           </PickUpGoods>
@@ -257,26 +362,31 @@ function Stock() {
             <OrderSection>
               <OrderTitle />
               <StockTableSection>
-                <StockTableItemGroup>
-                  <StockTableItem>Sharon</StockTableItem>
-                  <StockTableItem>0918888888</StockTableItem>
-                  <StockTableItem>ekasdksjl@gmail.com</StockTableItem>
-                  <StockTableItem>台北市xx區 xxx 路 xx 樓</StockTableItem>
-                  <StockTableItem>
-                    <StockTableItemDetail>
-                      1. 小扇紋質感上衣/M/5 件<br />
-                      2. 開衩扭結洋裝/L/3 件
-                    </StockTableItemDetail>
-                  </StockTableItem>
-                  <StockTableItem>NT$ 3000</StockTableItem>
-                  <StockTableSelect>
-                    <StockTableOption>訂單已成立</StockTableOption>
-                    <StockTableOption>揀貨中</StockTableOption>
-                    <StockTableOption>出貨中</StockTableOption>
-                    <StockTableOption>已送達</StockTableOption>
-                    <StockTableOption>訂單已完成</StockTableOption>
-                  </StockTableSelect>
-                </StockTableItemGroup>
+                {delivery.data.map((order, index) => (
+                  <StockTableItemGroup key={index}>
+                    <StockTableItem>{order.order_id}</StockTableItem>
+                    <StockTableItem>{order.recipient.name}</StockTableItem>
+                    <StockTableItem>
+                      {order.recipient.phone}
+                      <br />
+                      {order.recipient.address}
+                    </StockTableItem>
+                    <StockTableItem>{order.recipient.email}</StockTableItem>
+                    <StockTableItem>
+                      {order.details.list.map((item, index) => (
+                        <StockTableItemDetail>
+                          {`${index + 1}. ${item.name} / ${item.size} / ${
+                            item.qty
+                          }`}
+                        </StockTableItemDetail>
+                      ))}
+                    </StockTableItem>
+                    <StockTableItem>NT$ {order.total}</StockTableItem>
+                    <StockTableItem>
+                      <Checkbox disabled={!editMode} key={index} />
+                    </StockTableItem>
+                  </StockTableItemGroup>
+                ))}
               </StockTableSection>
             </OrderSection>
           </Delivery>
@@ -288,26 +398,31 @@ function Stock() {
             <OrderSection>
               <OrderTitle />
               <StockTableSection>
-                <StockTableItemGroup>
-                  <StockTableItem>Yumy</StockTableItem>
-                  <StockTableItem>0999999999</StockTableItem>
-                  <StockTableItem>sdfkjlsdf@gmail.com</StockTableItem>
-                  <StockTableItem>台北市xx區 xxx 路 xx 樓</StockTableItem>
-                  <StockTableItem>
-                    <StockTableItemDetail>
-                      1. 小扇紋質感上衣/M/5 件<br />
-                      2. 開衩扭結洋裝/L/3 件
-                    </StockTableItemDetail>
-                  </StockTableItem>
-                  <StockTableItem>NT$ 9000</StockTableItem>
-                  <StockTableSelect>
-                    <StockTableOption>訂單已成立</StockTableOption>
-                    <StockTableOption>揀貨中</StockTableOption>
-                    <StockTableOption>出貨中</StockTableOption>
-                    <StockTableOption>已送達</StockTableOption>
-                    <StockTableOption>訂單已完成</StockTableOption>
-                  </StockTableSelect>
-                </StockTableItemGroup>
+                {deliverComplete.data.map((order, index) => (
+                  <StockTableItemGroup key={index}>
+                    <StockTableItem>{order.order_id}</StockTableItem>
+                    <StockTableItem>{order.recipient.name}</StockTableItem>
+                    <StockTableItem>
+                      {order.recipient.phone}
+                      <br />
+                      {order.recipient.address}
+                    </StockTableItem>
+                    <StockTableItem>{order.recipient.email}</StockTableItem>
+                    <StockTableItem>
+                      {order.details.list.map((item, index) => (
+                        <StockTableItemDetail>
+                          {`${index + 1}. ${item.name} / ${item.size} / ${
+                            item.qty
+                          }`}
+                        </StockTableItemDetail>
+                      ))}
+                    </StockTableItem>
+                    <StockTableItem>NT$ {order.total}</StockTableItem>
+                    <StockTableItem>
+                      <Checkbox disabled={!editMode} key={index} />
+                    </StockTableItem>
+                  </StockTableItemGroup>
+                ))}
               </StockTableSection>
             </OrderSection>
           </DeliverComplete>
@@ -319,26 +434,31 @@ function Stock() {
             <OrderSection>
               <OrderTitle />
               <StockTableSection>
-                <StockTableItemGroup>
-                  <StockTableItem>Sharon</StockTableItem>
-                  <StockTableItem>0918888888</StockTableItem>
-                  <StockTableItem>ekasdksjl@gmail.com</StockTableItem>
-                  <StockTableItem>台北市xx區 xxx 路 xx 樓</StockTableItem>
-                  <StockTableItem>
-                    <StockTableItemDetail>
-                      1. 小扇紋質感上衣/M/5 件<br />
-                      2. 開衩扭結洋裝/L/3 件
-                    </StockTableItemDetail>
-                  </StockTableItem>
-                  <StockTableItem>NT$ 5000</StockTableItem>
-                  <StockTableSelect>
-                    <StockTableOption>訂單已成立</StockTableOption>
-                    <StockTableOption>揀貨中</StockTableOption>
-                    <StockTableOption>出貨中</StockTableOption>
-                    <StockTableOption>已送達</StockTableOption>
-                    <StockTableOption>訂單已完成</StockTableOption>
-                  </StockTableSelect>
-                </StockTableItemGroup>
+                {completedOrder.data.map((order, index) => (
+                  <StockTableItemGroup key={index}>
+                    <StockTableItem>{order.order_id}</StockTableItem>
+                    <StockTableItem>{order.recipient.name}</StockTableItem>
+                    <StockTableItem>
+                      {order.recipient.phone}
+                      <br />
+                      {order.recipient.address}
+                    </StockTableItem>
+                    <StockTableItem>{order.recipient.email}</StockTableItem>
+                    <StockTableItem>
+                      {order.details.list.map((item, index) => (
+                        <StockTableItemDetail>
+                          {`${index + 1}. ${item.name} / ${item.size} / ${
+                            item.qty
+                          }`}
+                        </StockTableItemDetail>
+                      ))}
+                    </StockTableItem>
+                    <StockTableItem>NT$ {order.total}</StockTableItem>
+                    <StockTableItem>
+                      <Checkbox disabled={!editMode} key={index} />
+                    </StockTableItem>
+                  </StockTableItemGroup>
+                ))}
               </StockTableSection>
             </OrderSection>
           </CompleteOrder>
@@ -346,6 +466,28 @@ function Stock() {
       default:
         return;
     }
+  }
+
+  function handleEditClick() {
+    setEditMode(true);
+  }
+  function handleSaveClick() {
+    //   // TODO
+    //   fetch('', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({ saveStatus }),
+    //   })
+    //     .then((response) => {
+    //       if (!response.ok) {
+    //         throw new Error('API Error');
+    //       }
+    //     })
+    //     .catch((error) => {
+    //       console.error(error);
+    //     });
   }
 
   return (
@@ -367,8 +509,9 @@ function Stock() {
             <StockOption value="DeliverComplete">已送達</StockOption>
             <StockOption value="CompleteOrder">訂單已完成</StockOption>
           </StockStatus>
-          <StockListEdit>Edit</StockListEdit>
-          <StockListSave>Save</StockListSave>
+          <StockListEdit onClick={handleEditClick}>Edit</StockListEdit>
+          <StockListSave onClick={handleSaveClick}>Save</StockListSave>
+          <StockListSave onClick={handleNextPage}>Next</StockListSave>
         </StockStatusSection>
         {renderSelectedComponent()}
       </Container>
@@ -376,4 +519,4 @@ function Stock() {
   );
 }
 
-export default Stock;
+export default Order;
