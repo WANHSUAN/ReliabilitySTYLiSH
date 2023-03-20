@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
-import top from './top.png';
-import down from './down.png';
-import maintain from './maintain.png';
 import bannerImg from './bannerImg.png';
 import SideMenu from '../../components/SideMenu';
 import StockBanner from '../../components/StockBanner';
@@ -89,7 +86,6 @@ function ChartPage() {
                     <span>{`TOP${index + 1}`}</span>
                     {item.name}
                     <p>{`${item.qty}件`}</p>
-                    <RankImg rankUrl={top} />
                   </RankItem>
                 ))}
               </RankTopItems>
@@ -99,7 +95,6 @@ function ChartPage() {
                     <span>{`TOP${index + 4}`}</span>
                     {item.name}
                     <p>{`${item.qty}件`}</p>
-                    <RankImg rankUrl={top} />
                   </RankItem>
                 ))}
               </RankTopItems2>
@@ -247,18 +242,5 @@ const RankItem = styled.div`
   p {
     margin-left: auto;
   }
-`;
-const RankImg = styled.div`
-  margin-top: 5px;
-  margin-left: 10px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  height: 30px;
-  width: 30px;
-  background-image: url(${(props) => props.rankUrl});
-`;
-const RankImg2 = styled(RankImg)`
-  height: 15px;
-  margin-top: 3px;
 `;
 export default ChartPage;
