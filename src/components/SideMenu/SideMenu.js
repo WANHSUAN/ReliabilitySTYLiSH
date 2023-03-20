@@ -46,7 +46,7 @@ export const SideMenu = () => {
       <SideMenuListTitle>Dashboard</SideMenuListTitle>
       <SideMenuList>
         <Icon src="https://cdn-icons-png.flaticon.com/512/993/993762.png" />
-        <StyledLink to="/admin/chartpage">報表總覽</StyledLink>
+        <StyledLink to="/admin/chart">報表總覽</StyledLink>
       </SideMenuList>
       <SideMenuList>
         <Icon src="https://cdn-icons-png.flaticon.com/512/4947/4947506.png" />

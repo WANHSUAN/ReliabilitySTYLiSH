@@ -32,7 +32,7 @@ export function Banner(props) {
     <StockTitleSection>
       <StockTitle>
         Hi, Sharon!
-        <StockText>準備好管理您的訂單了嗎？</StockText>
+        <StockText>歡迎來到STYLiSH報表總覽</StockText>
       </StockTitle>
       <StockImage src={props.stock} />
     </StockTitleSection>
