@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import SideMenu from '../../components/SideMenu';
 import bannerImg from './blogImg.png';
-import StockBanner from '../../components/StockBanner';
+import Banner from '../../components/Banner';
 
 function Post() {
   const [article, setArticle] = useState({
@@ -47,7 +47,12 @@ function Post() {
     <Container>
       <SideMenu />
       <Wrapper>
-        <StockBanner stock={bannerImg} />
+        <Banner
+          backgroundColor={`#f5eef8`}
+          title={'Yumy'}
+          message={'準備發布一篇一周穿搭~'}
+          stock={bannerImg}
+        />
         <Form>
           <p>Create Article</p>
           <ArticleTitle

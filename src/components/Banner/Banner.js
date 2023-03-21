@@ -5,6 +5,7 @@ const StockTitleSection = styled.div`
   border-radius: 10px;
   height: 200px;
   position: relative;
+  margin-top: 100px;
 `;
 
 const StockImage = styled.img`

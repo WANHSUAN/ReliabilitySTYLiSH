@@ -47,7 +47,7 @@ function Profile() {
           <Content>{user.name}</Content>
           <Content>{user.email}</Content>
           <LogoutButton onClick={logout}>登出</LogoutButton>
-          <Link to="/admin/stock">
+          <Link to="/admin/chart">
             <LogoutButton>管理</LogoutButton>
           </Link>
         </>

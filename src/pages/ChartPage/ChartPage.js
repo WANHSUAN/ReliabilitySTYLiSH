@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 import bannerImg from './bannerImg.png';
 import SideMenu from '../../components/SideMenu';
-import StockBanner from '../../components/StockBanner';
+import Banner from '../../components/Banner';
 import ChartCategory from './ChartCategory';
 import ChartDaily from './ChartDaily';
 import ChartMonth from './ChartMonth';
@@ -31,7 +31,12 @@ function ChartPage() {
       <Wrapper>
         <SideMenu />
         <MainContainer>
-          <StockBanner stock={bannerImg} />
+        <Banner
+          backgroundColor={`#f5eef8`}
+          title={'Yumy'}
+          message={'來看看 STYLiSH 的營收狀況吧!'}
+          stock={bannerImg}
+        />
           <ClickRateContainer>
             <ClickRate>
               <ClickRateNumber color={`#ff5733`}>
