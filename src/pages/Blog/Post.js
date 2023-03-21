@@ -5,44 +5,50 @@ import bannerImg from './blogImg.png';
 import Banner from '../../components/Banner';
 
 function Post() {
-  const [article, setArticle] = useState({
-    title: '',
-    content: '',
-    images: [],
-  });
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [images, setImages] = useState([]);
 
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+  };
+
+  const handleContentChange = (event) => {
+    setContent(event.target.value);
+  };
+
+  const handleImageChange = (event) => {
+    setImages(event.target.files);
+  };
   const handleSubmit = () => {
-    if (article.title && article.content && article.images.length > 0) {
-      postAricle(article);
+    if (title && content && images.length === 7) {
+      PostData();
+      setTitle('');
+      setContent('');
     } else {
-      alert('請填寫欄位');
+      alert('請加入完整文章內容');
     }
   };
-  const handleInput = (e) => {
-    const { name, value, files } = e.target;
-    if (name === 'images') {
-      const imageUrls = Array.from(files).map((file) =>
-        URL.createObjectURL(file)
-      );
-      setArticle({ ...article, [name]: imageUrls });
-    } else {
-      setArticle({ ...article, [name]: value });
+  const PostData = () => {
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('content', content);
+    for (let i = 0; i < images.length; i++) {
+      formData.append('images', images[i]);
     }
-  };
-  function postAricle(article) {
-    let headers = {
-      'Content-Type': 'application/json',
-    };
-    const url = 'https://www.saiko.world/api/1.0/admin/createBlog';
-    fetch(url, {
+
+    fetch('https://www.saiko.world/api/1.0/admin/createBlog', {
       method: 'POST',
-      headers: headers,
-      body: JSON.stringify(article),
+      body: formData,
     })
-      .then((response) => response.text())
-      .then((text) => console.log(text));
-  }
-  console.log(article);
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   return (
     <Container>
       <SideMenu />
@@ -59,18 +65,20 @@ function Post() {
             type="text"
             name="title"
             placeholder="Title"
-            onChange={handleInput}
+            onChange={handleTitleChange}
+            value={title}
           />
           <textarea
             name="content"
             placeholder="Content"
-            onChange={handleInput}
+            onChange={handleContentChange}
+            value={content}
           />
           <ArticleImg
             type="file"
             accept="image/*"
             multiple="multiple"
-            onChange={handleInput}
+            onChange={handleImageChange}
             name="images"
           />
           <Button onClick={handleSubmit} type="button" value="Submit" />
