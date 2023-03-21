@@ -62,6 +62,21 @@ const StockListSave = styled.button`
   }
 `;
 
+const StockListNextPage = styled.button`
+  width: 60px;
+  height: 30px;
+  border: 1px solid #faf8e9;
+  border-radius: 5px;
+  background-color: #f5d990;
+  margin-left: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f9bb15;
+    color: #fff;
+  }
+`;
+
 const StockOption = styled.option``;
 
 const AllOrder = styled.div`
@@ -159,50 +174,47 @@ function Order() {
   const [delivery, setDelivery] = useState([]);
   const [deliverComplete, setDeliverComplete] = useState([]);
   const [completedOrder, setCompletedOrder] = useState([]);
-  const [selectedStatus, setSelectedStatus] = useState('0');
+  const [selectedKey, setSelectedKey] = useState('allOrder');
   const [editMode, setEditMode] = useState(false);
   const [page, setPage] = useState(1);
-
-  // const [saveStatus, setSaveStatus] = useState('請先點擊 Edit 按鈕');
+  const [saveStatus, setSaveStatus] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const urls = [
-          `https://www.saiko.world/api/1.0/admin/newestOrder/allOrder?paging=${page}`,
-          `https://www.saiko.world/api/1.0/admin/newestOrder/establishedOrder?paging=${page}`,
-          `https://www.saiko.world/api/1.0/admin/newestOrder/pickUpGoods?paging=${page}`,
-          `https://www.saiko.world/api/1.0/admin/newestOrder/delivery?paging=${page}`,
-          `https://www.saiko.world/api/1.0/admin/newestOrder/deliverComplete?paging=${page}`,
-          `https://www.saiko.world/api/1.0/admin/newestOrder/completedOrder?paging=${page}`,
-        ];
-
-        const currentUrl = urls[selectedStatus];
-        const res = await fetch(currentUrl);
+        const urls = {
+          allOrder: `https://www.saiko.world/api/1.0/admin/newestOrder/allOrder?paging=${page}`,
+          establishedOrder: `https://www.saiko.world/api/1.0/admin/newestOrder/establishedOrder?paging=${page}`,
+          pickUpGoods: `https://www.saiko.world/api/1.0/admin/newestOrder/pickUpGoods?paging=${page}`,
+          delivery: `https://www.saiko.world/api/1.0/admin/newestOrder/delivery?paging=${page}`,
+          deliverComplete: `https://www.saiko.world/api/1.0/admin/newestOrder/deliverComplete?paging=${page}`,
+          completedOrder: `https://www.saiko.world/api/1.0/admin/newestOrder/completedOrder?paging=${page}`,
+        };
+        const res = await fetch(urls[selectedKey]);
         const result = await res.json();
         const newData = result.data;
 
-        switch (selectedStatus) {
-          case '0':
+        switch (selectedKey) {
+          case 'allOrder':
             setAllOrders(newData);
             break;
-          case '1':
+          case 'establishedOrder':
             setEstablishedOrder(newData);
             break;
-          case '2':
+          case 'pickUpGoods':
             setPickUpGoods(newData);
             break;
-          case '3':
+          case 'delivery':
             setDelivery(newData);
             break;
-          case '4':
+          case 'deliverComplete':
             setDeliverComplete(newData);
             break;
-          case '5':
+          case 'completedOrder':
             setCompletedOrder(newData);
             break;
           default:
-            console.error(`Invalid selectedStatus: ${selectedStatus}`);
+            console.error(`Invalid selectedStatus: ${selectedKey}`);
             break;
         }
       } catch (error) {
@@ -211,19 +223,19 @@ function Order() {
     };
 
     fetchData();
-  }, [page, selectedStatus]);
+  }, [page, selectedKey]);
 
   function handleNextPage() {
     setPage(page + 1);
   }
 
   function handleChange(e) {
-    setSelectedStatus(e.target.value);
+    setSelectedKey(e.target.value);
   }
 
   function renderSelectedComponent() {
-    switch (selectedStatus) {
-      case '0':
+    switch (selectedKey) {
+      case 'allOrder':
         return (
           <AllOrder>
             <OrderStatus>訂單總覽</OrderStatus>
@@ -251,9 +263,7 @@ function Order() {
                         ))}
                       </StockTableItem>
                       <StockTableItem>NT$ {order.total}</StockTableItem>
-                      <StockTableItem>
-                        <Checkbox disabled={!editMode} key={index} />
-                      </StockTableItem>
+                      <StockTableItem>{order.status}</StockTableItem>
                     </StockTableItemGroup>
                   ))
                 ) : (
@@ -263,7 +273,7 @@ function Order() {
             </OrderSection>
           </AllOrder>
         );
-      case '1':
+      case 'establishedOrder':
         return (
           <EstablishedOrder>
             <OrderStatus>訂單已成立</OrderStatus>
@@ -292,7 +302,11 @@ function Order() {
                       </StockTableItem>
                       <StockTableItem>NT$ {order.total}</StockTableItem>
                       <StockTableItem>
-                        <Checkbox disabled={!editMode} key={index} />
+                        <Checkbox
+                          disabled={!editMode}
+                          key={index}
+                          status={saveStatus}
+                        />
                       </StockTableItem>
                     </StockTableItemGroup>
                   ))
@@ -303,7 +317,7 @@ function Order() {
             </OrderSection>
           </EstablishedOrder>
         );
-      case '2':
+      case 'pickUpGoods':
         return (
           <PickUpGoods>
             <OrderStatus>揀貨中</OrderStatus>
@@ -339,7 +353,7 @@ function Order() {
             </OrderSection>
           </PickUpGoods>
         );
-      case '3':
+      case 'delivery':
         return (
           <Delivery>
             <OrderStatus>出貨中</OrderStatus>
@@ -375,7 +389,7 @@ function Order() {
             </OrderSection>
           </Delivery>
         );
-      case '4':
+      case 'deliverComplete':
         return (
           <DeliverComplete>
             <OrderStatus>已送達</OrderStatus>
@@ -411,7 +425,7 @@ function Order() {
             </OrderSection>
           </DeliverComplete>
         );
-      case '5':
+      case 'completedOrder':
         return (
           <CompleteOrder>
             <OrderStatus>訂單已完成</OrderStatus>
@@ -456,22 +470,31 @@ function Order() {
     setEditMode(true);
   }
   function handleSaveClick() {
-    //   // TODO
-    //   fetch('', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({ saveStatus }),
-    //   })
-    //     .then((response) => {
-    //       if (!response.ok) {
-    //         throw new Error('API Error');
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       console.error(error);
-    //     });
+    setSaveStatus(true);
+    const data = {
+      expectedStatus: 'establishedOrder',
+      orders: [
+        {
+          id: 4693,
+          order_id: '2023320246858494918',
+          status: 1,
+        },
+      ],
+    };
+    fetch('https://www.saiko.world/api/1.0/admin/updateOrdersStatus', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   }
 
   return (
@@ -486,16 +509,16 @@ function Order() {
         />
         <StockStatusSection>
           <StockStatus onChange={handleChange}>
-            <StockOption value="0">訂單總覽</StockOption>
-            <StockOption value="1">訂單已成立</StockOption>
-            <StockOption value="2">揀貨中</StockOption>
-            <StockOption value="3">出貨中</StockOption>
-            <StockOption value="4">已送達</StockOption>
-            <StockOption value="5">訂單已完成</StockOption>
+            <StockOption value="allOrder">訂單總覽</StockOption>
+            <StockOption value="establishedOrder">訂單已成立</StockOption>
+            <StockOption value="pickUpGoods">揀貨中</StockOption>
+            <StockOption value="delivery">出貨中</StockOption>
+            <StockOption value="deliverComplete">已送達</StockOption>
+            <StockOption value="completedOrder">訂單已完成</StockOption>
           </StockStatus>
           <StockListEdit onClick={handleEditClick}>Edit</StockListEdit>
           <StockListSave onClick={handleSaveClick}>Save</StockListSave>
-          <StockListSave onClick={handleNextPage}>Next</StockListSave>
+          <StockListNextPage onClick={handleNextPage}>Next</StockListNextPage>
         </StockStatusSection>
         {renderSelectedComponent()}
       </Container>
