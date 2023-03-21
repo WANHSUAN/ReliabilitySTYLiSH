@@ -34,12 +34,12 @@ function Post() {
 
   const handleSubmit = () => {
     if (formData.title && formData.content && formData.images.length === 5) {
-      formData.content = formData.content.join('<br/>')
+      formData.content = formData.content.join('<br/>');
       console.log(formData);
       postData();
       setFormData({
         title: '',
-        content: ['','','','',''],
+        content: ['', '', '', '', ''],
         images: [],
       });
     } else {

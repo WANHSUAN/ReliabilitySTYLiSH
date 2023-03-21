@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
-
 function Article() {
   const [blogData, setBlogData] = useState(null);
+  const [allComments, setAllComments] = useState(null);
+  const [comment, setComment] = useState({
+    blog_id: '',
+    username: '',
+    content: '',
+    floor: null,
+  });
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get('id');
+  
   useEffect(() => {
     const getBlogData = async () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const id = urlParams.get('id');
       try {
         const res = await fetch(
           `https://www.saiko.world/api/1.0/blog?id=${id}`
@@ -20,12 +27,49 @@ function Article() {
       }
     };
     getBlogData();
+    const getComments = async () => {
+      try {
+        const res = await fetch(
+          `https://saiko.world/api/1.0/blogs/${id}/Comments`
+        );
+        const resData = await res.json();
+        setAllComments(resData.data);
+      } catch {
+        console.log('沒有抓到');
+      }
+    };
+    getComments();
   }, []);
 
-  console.log(blogData);
+  const commentPost = () => {
+    fetch(`https://saiko.world/api/1.0/blogs/${id}/comments`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(comment),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(comment);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+  const handleInputChange = (e) => {
+    setComment({
+      ...comment,
+      blog_id: id,
+      [e.target.name]: e.target.value,
+      floor: allComments.length + 1,
+    });
+  };
   if (!blogData) {
     return;
   }
+  console.log(comment)
   return (
     <>
       <Wrapper>
@@ -99,43 +143,54 @@ function Article() {
       </Wrapper>
       <Comment>
         <CommentTitle>留言</CommentTitle>
-        <GuestComment>
-          <div>
-            <h4>暱稱 | 小狗</h4>
-            <p>留言 | 挖好好抗 全部都想買!</p>
-          </div>
-          <span>2023/02/22 8:00</span>
-        </GuestComment>
-        <GuestComment>
-          <div>
-            <h4>暱稱 | 小狗</h4>
-            <p>留言 | 挖好好抗 全部都想買!</p>
-          </div>
-          <span>2023/02/22 8:00</span>
-        </GuestComment>
-        <GuestComment>
-          <div>
-            <h4>暱稱 | 小狗</h4>
-            <p>留言 | 挖好好抗 全部都想買!</p>
-          </div>
-          <span>2023/02/22 8:00</span>
-        </GuestComment>
-        <GuestComment>
-          <div>
-            <h4>暱稱 | 小狗</h4>
-            <p>留言 | 挖好好抗 全部都想買!</p>
-          </div>
-          <span>2023/02/22 8:00</span>
-        </GuestComment>
+        {allComments == null ? (
+          <NoComment>尚無留言</NoComment>
+        ) : (
+          allComments.map((allComments, i) => (
+            <GuestComment key={i}>
+              <Floor># {i + 1}</Floor>
+              <div>
+                <h4>暱稱 | {allComments.username}</h4>
+                <CommentContent>{allComments.content}</CommentContent>
+              </div>
+              <span>{allComments.commented_at}</span>
+            </GuestComment>
+          ))
+        )}
         <Form>
-          <ArticleTitle type="text" name="Name" placeholder="Name" />
-          <textarea name="Content" placeholder="Content"></textarea>
-          <Button type="button" value="Submit" />
+          <ArticleTitle
+            type="text"
+            name="username"
+            placeholder="Your Name"
+            onChange={handleInputChange}
+          />
+          <textarea
+            name="content"
+            placeholder="Content"
+            onChange={handleInputChange}></textarea>
+          <Button type="button" value="Submit" onClick={commentPost} />
         </Form>
       </Comment>
     </>
   );
 }
+const NoComment = styled.p`
+  text-align: center;
+`;
+const CommentContent = styled.p`
+  width: 300px;
+`;
+const Floor = styled.p`
+  align-self: center;
+  margin-right: 20px;
+  background-color: #000;
+  height: 25px;
+  border-radius: 25px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+`;
 const CommentTitle = styled.p`
   font-size: 20px;
   text-align: center;
@@ -153,6 +208,7 @@ const GuestComment = styled.div`
   padding: 30px;
   max-width: 600px;
   margin: 0 auto;
+
   h4 {
     margin-bottom: 10px;
   }
