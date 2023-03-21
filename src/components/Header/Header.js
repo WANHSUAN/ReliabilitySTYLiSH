@@ -280,7 +280,7 @@ function Header() {
             {displayText}
           </CategoryLink>
         ))}
-        <WeekTitle to="/blog">一週穿搭</WeekTitle>
+        <WeekTitle to="/blogs">一週穿搭</WeekTitle>
       </CategoryLinks>
       <SearchInput
         onKeyPress={(e) => {
