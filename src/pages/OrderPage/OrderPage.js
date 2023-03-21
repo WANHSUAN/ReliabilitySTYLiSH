@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useReducer } from 'react';
 import styled from 'styled-components/macro';
 import SideMenu from '../../components/SideMenu';
 import Banner from '../../components/Banner';
@@ -180,6 +180,12 @@ function Order() {
   const [editMode, setEditMode] = useState(false);
   const [page, setPage] = useState(1);
   const [saveStatus, setSaveStatus] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+  const [id, setId] = useState(0);
+  const [orderId, setOrderId] = useState('');
+  const [data, setData] = useState({});
+
+  // console.log(id, orderId);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -312,7 +318,8 @@ function Order() {
                         <Checkbox
                           disabled={!editMode}
                           key={index}
-                          status={saveStatus}
+                          isChecked={isChecked}
+                          onClick={(e) => handleCheckStatus(e, order.id)}
                         />
                       </StockTableItem>
                     </StockTableItemGroup>
@@ -475,22 +482,34 @@ function Order() {
     setEditMode(true);
   }
 
-  function handleSaveClick() {
-    setSaveStatus(true);
+  function handleCheckStatus(e, data_id) {
+    console.log(data_id);
+    const isChecked = e.target.checked;
 
-    allOrders.map((order) => order.id);
-
-    const data = {
+    console.log(isChecked);
+    setIsChecked(isChecked);
+    if (isChecked === true) {
+      establishedOrder.forEach((order) => {
+        if (order.id === id) {
+          console.log('success!!!');
+        } else {
+          console.log('fail!!!');
+        }
+      });
+    }
+    setData({
+      ...data,
       expectedStatus: expectedStatus,
-
       orders: [
         {
-          id: 4693,
-          order_id: allOrders.map((order) => order.order_id),
+          id: data_id,
+          order_id: orderId,
           status: selectedKey,
         },
       ],
-    };
+    });
+  }
+  function handleSaveClick() {
     fetch('https://www.saiko.world/api/1.0/admin/updateOrdersStatus', {
       method: 'POST',
       headers: {
@@ -528,7 +547,9 @@ function Order() {
           </StockStatus>
           <StockListEdit onClick={handleEditClick}>Edit</StockListEdit>
           <StockListSave onClick={handleSaveClick}>Save</StockListSave>
-          <StockListNextPage onClick={handleNextPage}>Next</StockListNextPage>
+          <StockListNextPage onClick={(e) => handleNextPage(e)}>
+            Next
+          </StockListNextPage>
         </StockStatusSection>
         {renderSelectedComponent()}
       </Container>
