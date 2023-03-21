@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import SideMenu from '../../components/SideMenu';
 import Banner from '../../components/Banner';
@@ -178,14 +178,10 @@ function Order() {
   const [selectedKey, setSelectedKey] = useState('allOrder');
   const [expectedStatus, setExpectedStatus] = useState('');
   const [editMode, setEditMode] = useState(false);
-  const [page, setPage] = useState(1);
-  const [saveStatus, setSaveStatus] = useState(false);
+  const [page, setPage] = useState(0);
   const [isChecked, setIsChecked] = useState(false);
-  const [id, setId] = useState(0);
   const [orderId, setOrderId] = useState('');
   const [data, setData] = useState({});
-
-  // console.log(id, orderId);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -250,228 +246,368 @@ function Order() {
     switch (selectedKey) {
       case 'allOrder':
         return (
-          <AllOrder>
-            <OrderStatus>訂單總覽</OrderStatus>
-            <OrderSection>
-              <OrderTitle />
-              <StockTableSection>
-                {allOrders.length !== 0 ? (
-                  allOrders.map((order, index) => (
-                    <StockTableItemGroup key={index}>
-                      <StockTableItem>{order.order_id}</StockTableItem>
-                      <StockTableItem>{order.recipient.name}</StockTableItem>
-                      <StockTableItem>
-                        {order.recipient.phone}
-                        <br />
-                        {order.recipient.address}
-                      </StockTableItem>
-                      <StockTableItem>{order.recipient.email}</StockTableItem>
-                      <StockTableItem>
-                        {order.details.list.map((item, index) => (
-                          <StockTableItemDetail key={index}>
-                            {`${index + 1}. ${item.name} / ${item.size} / ${
-                              item.qty
-                            }`}
-                          </StockTableItemDetail>
-                        ))}
-                      </StockTableItem>
-                      <StockTableItem>NT$ {order.total}</StockTableItem>
-                      <StockTableItem>{order.status}</StockTableItem>
-                    </StockTableItemGroup>
-                  ))
-                ) : (
-                  <div>loading</div>
-                )}
-              </StockTableSection>
-            </OrderSection>
-          </AllOrder>
+          <>
+            <StockStatusSection>
+              <StockStatus onChange={handleChange}>
+                <StockOption value="allOrder">訂單總覽</StockOption>
+                <StockOption value="establishedOrder">訂單已成立</StockOption>
+                <StockOption value="pickUpGoods">揀貨中</StockOption>
+                <StockOption value="delivery">出貨中</StockOption>
+                <StockOption value="deliverComplete">已送達</StockOption>
+                <StockOption value="completedOrder">訂單已完成</StockOption>
+              </StockStatus>
+              <StockListEdit onClick={handleEditClick}>Edit</StockListEdit>
+              <StockListSave onClick={handleSaveClick}>Save</StockListSave>
+              <StockListNextPage onClick={(e) => handleNextPage(e)}>
+                Next
+              </StockListNextPage>
+            </StockStatusSection>
+            <AllOrder>
+              <OrderStatus>訂單總覽</OrderStatus>
+              <OrderSection>
+                <OrderTitle />
+                <StockTableSection>
+                  {allOrders.length !== 0 ? (
+                    allOrders.map((order, index) => (
+                      <StockTableItemGroup key={index}>
+                        <StockTableItem>{order.order_id}</StockTableItem>
+                        <StockTableItem>{order.recipient.name}</StockTableItem>
+                        <StockTableItem>
+                          {order.recipient.phone}
+                          <br />
+                          {order.recipient.address}
+                        </StockTableItem>
+                        <StockTableItem>{order.recipient.email}</StockTableItem>
+                        <StockTableItem>
+                          {order.details.list.map((item, index) => (
+                            <StockTableItemDetail key={index}>
+                              {`${index + 1}. ${item.name} / ${item.size} / ${
+                                item.qty
+                              }`}
+                            </StockTableItemDetail>
+                          ))}
+                        </StockTableItem>
+                        <StockTableItem>NT$ {order.total}</StockTableItem>
+                        <StockTableItem>{order.status}</StockTableItem>
+                      </StockTableItemGroup>
+                    ))
+                  ) : (
+                    <div>No Order!</div>
+                  )}
+                </StockTableSection>
+              </OrderSection>
+            </AllOrder>
+          </>
         );
       case 'establishedOrder':
         return (
-          <EstablishedOrder>
-            <OrderStatus>訂單已成立</OrderStatus>
-            <OrderSection>
-              <OrderTitle />
-              <StockTableSection>
-                {establishedOrder.length !== 0 ? (
-                  establishedOrder.map((order, index) => (
-                    <StockTableItemGroup key={index}>
-                      <StockTableItem>{order.order_id}</StockTableItem>
-                      <StockTableItem>{order.recipient.name}</StockTableItem>
-                      <StockTableItem>
-                        {order.recipient.phone}
-                        <br />
-                        {order.recipient.address}
-                      </StockTableItem>
-                      <StockTableItem>{order.recipient.email}</StockTableItem>
-                      <StockTableItem>
-                        {order.details.list.map((item, index) => (
-                          <StockTableItemDetail key={index}>
-                            {`${index + 1}. ${item.name} / ${item.size} / ${
-                              item.qty
-                            }`}
-                          </StockTableItemDetail>
-                        ))}
-                      </StockTableItem>
-                      <StockTableItem>NT$ {order.total}</StockTableItem>
-                      <StockTableItem>
-                        <Checkbox
-                          disabled={!editMode}
-                          key={index}
-                          isChecked={isChecked}
-                          onClick={(e) => handleCheckStatus(e, order.id)}
-                        />
-                      </StockTableItem>
-                    </StockTableItemGroup>
-                  ))
-                ) : (
-                  <div>loading</div>
-                )}
-              </StockTableSection>
-            </OrderSection>
-          </EstablishedOrder>
+          <>
+            <StockStatusSection>
+              <StockStatus onChange={handleChange}>
+                <StockOption value="allOrder">訂單總覽</StockOption>
+                <StockOption value="establishedOrder">訂單已成立</StockOption>
+                <StockOption value="pickUpGoods">揀貨中</StockOption>
+                <StockOption value="delivery">出貨中</StockOption>
+                <StockOption value="deliverComplete">已送達</StockOption>
+                <StockOption value="completedOrder">訂單已完成</StockOption>
+              </StockStatus>
+              <StockListEdit onClick={handleEditClick}>Edit</StockListEdit>
+              <StockListSave onClick={handleSaveClick}>Save</StockListSave>
+              <StockListNextPage onClick={(e) => handleNextPage(e)}>
+                Next
+              </StockListNextPage>
+            </StockStatusSection>
+            <EstablishedOrder>
+              <OrderStatus>訂單已成立</OrderStatus>
+              <OrderSection>
+                <OrderTitle />
+                <StockTableSection>
+                  {establishedOrder.length !== 0 ? (
+                    establishedOrder.map((order, index) => (
+                      <StockTableItemGroup key={index}>
+                        <StockTableItem>{order.order_id}</StockTableItem>
+                        <StockTableItem>{order.recipient.name}</StockTableItem>
+                        <StockTableItem>
+                          {order.recipient.phone}
+                          <br />
+                          {order.recipient.address}
+                        </StockTableItem>
+                        <StockTableItem>{order.recipient.email}</StockTableItem>
+                        <StockTableItem>
+                          {order.details.list.map((item, index) => (
+                            <StockTableItemDetail key={index}>
+                              {`${index + 1}. ${item.name} / ${item.size} / ${
+                                item.qty
+                              }`}
+                            </StockTableItemDetail>
+                          ))}
+                        </StockTableItem>
+                        <StockTableItem>NT$ {order.total}</StockTableItem>
+                        <StockTableItem>
+                          <Checkbox
+                            disabled={!editMode}
+                            key={index}
+                            isChecked={isChecked}
+                            onClick={(e) => handleCheckStatus(e, order.id)}
+                          />
+                        </StockTableItem>
+                      </StockTableItemGroup>
+                    ))
+                  ) : (
+                    <div>No Order!</div>
+                  )}
+                </StockTableSection>
+              </OrderSection>
+            </EstablishedOrder>
+          </>
         );
       case 'pickUpGoods':
         return (
-          <PickUpGoods>
-            <OrderStatus>揀貨中</OrderStatus>
-            <OrderSection>
-              <OrderTitle />
-              <StockTableSection>
-                {pickUpGoods.map((order, index) => (
-                  <StockTableItemGroup key={index}>
-                    <StockTableItem>{order.order_id}</StockTableItem>
-                    <StockTableItem>{order.recipient.name}</StockTableItem>
-                    <StockTableItem>
-                      {order.recipient.phone}
-                      <br />
-                      {order.recipient.address}
-                    </StockTableItem>
-                    <StockTableItem>{order.recipient.email}</StockTableItem>
-                    <StockTableItem>
-                      {order.details.list.map((item, index) => (
-                        <StockTableItemDetail key={index}>
-                          {`${index + 1}. ${item.name} / ${item.size} / ${
-                            item.qty
-                          }`}
-                        </StockTableItemDetail>
-                      ))}
-                    </StockTableItem>
-                    <StockTableItem>NT$ {order.total}</StockTableItem>
-                    <StockTableItem>
-                      <Checkbox disabled={!editMode} key={index} />
-                    </StockTableItem>
-                  </StockTableItemGroup>
-                ))}
-              </StockTableSection>
-            </OrderSection>
-          </PickUpGoods>
+          <>
+            <StockStatusSection>
+              <StockStatus onChange={handleChange}>
+                <StockOption value="allOrder">訂單總覽</StockOption>
+                <StockOption value="establishedOrder">訂單已成立</StockOption>
+                <StockOption value="pickUpGoods">揀貨中</StockOption>
+                <StockOption value="delivery">出貨中</StockOption>
+                <StockOption value="deliverComplete">已送達</StockOption>
+                <StockOption value="completedOrder">訂單已完成</StockOption>
+              </StockStatus>
+              <StockListEdit onClick={handleEditClick}>Edit</StockListEdit>
+              <StockListSave onClick={handleSaveClick}>Save</StockListSave>
+              <StockListNextPage onClick={(e) => handleNextPage(e)}>
+                Next
+              </StockListNextPage>
+            </StockStatusSection>
+            <PickUpGoods>
+              <OrderStatus>揀貨中</OrderStatus>
+              <OrderSection>
+                <OrderTitle />
+                <StockTableSection>
+                  {pickUpGoods.length !== 0 ? (
+                    pickUpGoods.map((order, index) => (
+                      <StockTableItemGroup key={index}>
+                        <StockTableItem>{order.order_id}</StockTableItem>
+                        <StockTableItem>{order.recipient.name}</StockTableItem>
+                        <StockTableItem>
+                          {order.recipient.phone}
+                          <br />
+                          {order.recipient.address}
+                        </StockTableItem>
+                        <StockTableItem>{order.recipient.email}</StockTableItem>
+                        <StockTableItem>
+                          {order.details.list.map((item, index) => (
+                            <StockTableItemDetail key={index}>
+                              {`${index + 1}. ${item.name} / ${item.size} / ${
+                                item.qty
+                              }`}
+                            </StockTableItemDetail>
+                          ))}
+                        </StockTableItem>
+                        <StockTableItem>NT$ {order.total}</StockTableItem>
+                        <StockTableItem>
+                          <Checkbox
+                            disabled={!editMode}
+                            key={index}
+                            isChecked={isChecked}
+                            onClick={(e) => handleCheckStatus(e, order.id)}
+                          />
+                        </StockTableItem>
+                      </StockTableItemGroup>
+                    ))
+                  ) : (
+                    <div>No Order!</div>
+                  )}
+                </StockTableSection>
+              </OrderSection>
+            </PickUpGoods>
+          </>
         );
       case 'delivery':
         return (
-          <Delivery>
-            <OrderStatus>出貨中</OrderStatus>
-            <OrderSection>
-              <OrderTitle />
-              <StockTableSection>
-                {delivery.map((order, index) => (
-                  <StockTableItemGroup key={index}>
-                    <StockTableItem>{order.order_id}</StockTableItem>
-                    <StockTableItem>{order.recipient.name}</StockTableItem>
-                    <StockTableItem>
-                      {order.recipient.phone}
-                      <br />
-                      {order.recipient.address}
-                    </StockTableItem>
-                    <StockTableItem>{order.recipient.email}</StockTableItem>
-                    <StockTableItem>
-                      {order.details.list.map((item, index) => (
-                        <StockTableItemDetail key={index}>
-                          {`${index + 1}. ${item.name} / ${item.size} / ${
-                            item.qty
-                          }`}
-                        </StockTableItemDetail>
-                      ))}
-                    </StockTableItem>
-                    <StockTableItem>NT$ {order.total}</StockTableItem>
-                    <StockTableItem>
-                      <Checkbox disabled={!editMode} key={index} />
-                    </StockTableItem>
-                  </StockTableItemGroup>
-                ))}
-              </StockTableSection>
-            </OrderSection>
-          </Delivery>
+          <>
+            <StockStatusSection>
+              <StockStatus onChange={handleChange}>
+                <StockOption value="allOrder">訂單總覽</StockOption>
+                <StockOption value="establishedOrder">訂單已成立</StockOption>
+                <StockOption value="pickUpGoods">揀貨中</StockOption>
+                <StockOption value="delivery">出貨中</StockOption>
+                <StockOption value="deliverComplete">已送達</StockOption>
+                <StockOption value="completedOrder">訂單已完成</StockOption>
+              </StockStatus>
+              <StockListEdit onClick={handleEditClick}>Edit</StockListEdit>
+              <StockListSave onClick={handleSaveClick}>Save</StockListSave>
+              <StockListNextPage onClick={(e) => handleNextPage(e)}>
+                Next
+              </StockListNextPage>
+            </StockStatusSection>
+            <Delivery>
+              <OrderStatus>出貨中</OrderStatus>
+              <OrderSection>
+                <OrderTitle />
+                <StockTableSection>
+                  {delivery.length !== 0 ? (
+                    delivery.map((order, index) => (
+                      <StockTableItemGroup key={index}>
+                        <StockTableItem>{order.order_id}</StockTableItem>
+                        <StockTableItem>{order.recipient.name}</StockTableItem>
+                        <StockTableItem>
+                          {order.recipient.phone}
+                          <br />
+                          {order.recipient.address}
+                        </StockTableItem>
+                        <StockTableItem>{order.recipient.email}</StockTableItem>
+                        <StockTableItem>
+                          {order.details.list.map((item, index) => (
+                            <StockTableItemDetail key={index}>
+                              {`${index + 1}. ${item.name} / ${item.size} / ${
+                                item.qty
+                              }`}
+                            </StockTableItemDetail>
+                          ))}
+                        </StockTableItem>
+                        <StockTableItem>NT$ {order.total}</StockTableItem>
+                        <StockTableItem>
+                          <Checkbox
+                            disabled={!editMode}
+                            key={index}
+                            isChecked={isChecked}
+                            onClick={(e) => handleCheckStatus(e, order.id)}
+                          />
+                        </StockTableItem>
+                      </StockTableItemGroup>
+                    ))
+                  ) : (
+                    <div>No Order!</div>
+                  )}
+                </StockTableSection>
+              </OrderSection>
+            </Delivery>
+          </>
         );
       case 'deliverComplete':
         return (
-          <DeliverComplete>
-            <OrderStatus>已送達</OrderStatus>
-            <OrderSection>
-              <OrderTitle />
-              <StockTableSection>
-                {deliverComplete.map((order, index) => (
-                  <StockTableItemGroup key={index}>
-                    <StockTableItem>{order.order_id}</StockTableItem>
-                    <StockTableItem>{order.recipient.name}</StockTableItem>
-                    <StockTableItem>
-                      {order.recipient.phone}
-                      <br />
-                      {order.recipient.address}
-                    </StockTableItem>
-                    <StockTableItem>{order.recipient.email}</StockTableItem>
-                    <StockTableItem>
-                      {order.details.list.map((item, index) => (
-                        <StockTableItemDetail key={index}>
-                          {`${index + 1}. ${item.name} / ${item.size} / ${
-                            item.qty
-                          }`}
-                        </StockTableItemDetail>
-                      ))}
-                    </StockTableItem>
-                    <StockTableItem>NT$ {order.total}</StockTableItem>
-                    <StockTableItem>
-                      <Checkbox disabled={!editMode} key={index} />
-                    </StockTableItem>
-                  </StockTableItemGroup>
-                ))}
-              </StockTableSection>
-            </OrderSection>
-          </DeliverComplete>
+          <>
+            <StockStatusSection>
+              <StockStatus onChange={handleChange}>
+                <StockOption value="allOrder">訂單總覽</StockOption>
+                <StockOption value="establishedOrder">訂單已成立</StockOption>
+                <StockOption value="pickUpGoods">揀貨中</StockOption>
+                <StockOption value="delivery">出貨中</StockOption>
+                <StockOption value="deliverComplete">已送達</StockOption>
+                <StockOption value="completedOrder">訂單已完成</StockOption>
+              </StockStatus>
+              <StockListEdit onClick={handleEditClick}>Edit</StockListEdit>
+              <StockListSave onClick={handleSaveClick}>Save</StockListSave>
+              <StockListNextPage onClick={(e) => handleNextPage(e)}>
+                Next
+              </StockListNextPage>
+            </StockStatusSection>
+            <DeliverComplete>
+              <OrderStatus>已送達</OrderStatus>
+              <OrderSection>
+                <OrderTitle />
+                <StockTableSection>
+                  {deliverComplete.length !== 0 ? (
+                    deliverComplete.map((order, index) => (
+                      <StockTableItemGroup key={index}>
+                        <StockTableItem>{order.order_id}</StockTableItem>
+                        <StockTableItem>{order.recipient.name}</StockTableItem>
+                        <StockTableItem>
+                          {order.recipient.phone}
+                          <br />
+                          {order.recipient.address}
+                        </StockTableItem>
+                        <StockTableItem>{order.recipient.email}</StockTableItem>
+                        <StockTableItem>
+                          {order.details.list.map((item, index) => (
+                            <StockTableItemDetail key={index}>
+                              {`${index + 1}. ${item.name} / ${item.size} / ${
+                                item.qty
+                              }`}
+                            </StockTableItemDetail>
+                          ))}
+                        </StockTableItem>
+                        <StockTableItem>NT$ {order.total}</StockTableItem>
+                        <StockTableItem>
+                          <Checkbox
+                            disabled={!editMode}
+                            key={index}
+                            isChecked={isChecked}
+                            onClick={(e) => handleCheckStatus(e, order.id)}
+                          />
+                        </StockTableItem>
+                      </StockTableItemGroup>
+                    ))
+                  ) : (
+                    <div>No Order!</div>
+                  )}
+                </StockTableSection>
+              </OrderSection>
+            </DeliverComplete>
+          </>
         );
       case 'completedOrder':
         return (
-          <CompleteOrder>
-            <OrderStatus>訂單已完成</OrderStatus>
-            <OrderSection>
-              <OrderTitle />
-              <StockTableSection>
-                {completedOrder.map((order, index) => (
-                  <StockTableItemGroup key={index}>
-                    <StockTableItem>{order.order_id}</StockTableItem>
-                    <StockTableItem>{order.recipient.name}</StockTableItem>
-                    <StockTableItem>
-                      {order.recipient.phone}
-                      <br />
-                      {order.recipient.address}
-                    </StockTableItem>
-                    <StockTableItem>{order.recipient.email}</StockTableItem>
-                    <StockTableItem>
-                      {order.details.list.map((item, index) => (
-                        <StockTableItemDetail key={index}>
-                          {`${index + 1}. ${item.name} / ${item.size} / ${
-                            item.qty
-                          }`}
-                        </StockTableItemDetail>
-                      ))}
-                    </StockTableItem>
-                    <StockTableItem>NT$ {order.total}</StockTableItem>
-                    <StockTableItem>訂單已完成</StockTableItem>
-                  </StockTableItemGroup>
-                ))}
-              </StockTableSection>
-            </OrderSection>
-          </CompleteOrder>
+          <>
+            <StockStatusSection>
+              <StockStatus onChange={handleChange}>
+                <StockOption value="allOrder">訂單總覽</StockOption>
+                <StockOption value="establishedOrder">訂單已成立</StockOption>
+                <StockOption value="pickUpGoods">揀貨中</StockOption>
+                <StockOption value="delivery">出貨中</StockOption>
+                <StockOption value="deliverComplete">已送達</StockOption>
+                <StockOption value="completedOrder">訂單已完成</StockOption>
+              </StockStatus>
+              <StockListEdit onClick={handleEditClick}>Edit</StockListEdit>
+              <StockListSave onClick={handleSaveClick}>Save</StockListSave>
+              <StockListNextPage onClick={(e) => handleNextPage(e)}>
+                Next
+              </StockListNextPage>
+            </StockStatusSection>
+            <CompleteOrder>
+              <OrderStatus>訂單已完成</OrderStatus>
+              <OrderSection>
+                <OrderTitle />
+                <StockTableSection>
+                  {completedOrder.length !== 0 ? (
+                    completedOrder.map((order, index) => (
+                      <StockTableItemGroup key={index}>
+                        <StockTableItem>{order.order_id}</StockTableItem>
+                        <StockTableItem>{order.recipient.name}</StockTableItem>
+                        <StockTableItem>
+                          {order.recipient.phone}
+                          <br />
+                          {order.recipient.address}
+                        </StockTableItem>
+                        <StockTableItem>{order.recipient.email}</StockTableItem>
+                        <StockTableItem>
+                          {order.details.list.map((item, index) => (
+                            <StockTableItemDetail key={index}>
+                              {`${index + 1}. ${item.name} / ${item.size} / ${
+                                item.qty
+                              }`}
+                            </StockTableItemDetail>
+                          ))}
+                        </StockTableItem>
+                        <StockTableItem>NT$ {order.total}</StockTableItem>
+                        <StockTableItem>
+                          <Checkbox
+                            disabled={!editMode}
+                            key={index}
+                            isChecked={isChecked}
+                            onClick={(e) => handleCheckStatus(e, order.id)}
+                          />
+                        </StockTableItem>
+                      </StockTableItemGroup>
+                    ))
+                  ) : (
+                    <div>No Order!</div>
+                  )}
+                </StockTableSection>
+              </OrderSection>
+            </CompleteOrder>
+          </>
         );
       default:
         return;
@@ -483,20 +619,18 @@ function Order() {
   }
 
   function handleCheckStatus(e, data_id) {
-    console.log(data_id);
     const isChecked = e.target.checked;
-
-    console.log(isChecked);
     setIsChecked(isChecked);
-    if (isChecked === true) {
-      establishedOrder.forEach((order) => {
-        if (order.id === id) {
-          console.log('success!!!');
-        } else {
-          console.log('fail!!!');
-        }
-      });
-    }
+    // if (isChecked === false) {
+    //   establishedOrder.forEach((order) => {
+    //     const index = establishedOrder.findIndex(
+    //       (order) => order.id === data_id
+    //     );
+    //     if (index !== -1) {
+    //       establishedOrder.splice(index, 1);
+    //     }
+    //   });
+    // }
     setData({
       ...data,
       expectedStatus: expectedStatus,
@@ -536,21 +670,6 @@ function Order() {
           message={'準備好管理您的訂單了嗎？'}
           stock={BannerImg}
         />
-        <StockStatusSection>
-          <StockStatus onChange={handleChange}>
-            <StockOption value="allOrder">訂單總覽</StockOption>
-            <StockOption value="establishedOrder">訂單已成立</StockOption>
-            <StockOption value="pickUpGoods">揀貨中</StockOption>
-            <StockOption value="delivery">出貨中</StockOption>
-            <StockOption value="deliverComplete">已送達</StockOption>
-            <StockOption value="completedOrder">訂單已完成</StockOption>
-          </StockStatus>
-          <StockListEdit onClick={handleEditClick}>Edit</StockListEdit>
-          <StockListSave onClick={handleSaveClick}>Save</StockListSave>
-          <StockListNextPage onClick={(e) => handleNextPage(e)}>
-            Next
-          </StockListNextPage>
-        </StockStatusSection>
         {renderSelectedComponent()}
       </Container>
     </Wrapper>
