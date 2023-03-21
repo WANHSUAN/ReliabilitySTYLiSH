@@ -1,11 +1,10 @@
 import styled from 'styled-components/macro';
 
 const StockTitleSection = styled.div`
-  background-color: #f5eef8;
+  background-color: ${(props) => props.backgroundColor};
   border-radius: 10px;
   height: 200px;
   position: relative;
-  margin-top: 100px;
 `;
 
 const StockImage = styled.img`
@@ -29,10 +28,9 @@ const StockText = styled.p`
 
 export function Banner(props) {
   return (
-    <StockTitleSection>
+    <StockTitleSection backgroundColor={props.backgroundColor}>
       <StockTitle>
-        Hi, Sharon!
-        <StockText>歡迎來到STYLiSH報表總覽</StockText>
+        Hi, {props.title}!<StockText>{props.message}</StockText>
       </StockTitle>
       <StockImage src={props.stock} />
     </StockTitleSection>
