@@ -86,6 +86,7 @@ const AllOrder = styled.div`
 const EstablishedOrder = styled.div`
   padding: 10px 0 40px 0;
 `;
+
 const PickUpGoods = styled.div`
   padding: 10px 0 40px 0;
 `;
@@ -175,6 +176,7 @@ function Order() {
   const [deliverComplete, setDeliverComplete] = useState([]);
   const [completedOrder, setCompletedOrder] = useState([]);
   const [selectedKey, setSelectedKey] = useState('allOrder');
+  const [expectedStatus, setExpectedStatus] = useState('');
   const [editMode, setEditMode] = useState(false);
   const [page, setPage] = useState(1);
   const [saveStatus, setSaveStatus] = useState(false);
@@ -197,21 +199,27 @@ function Order() {
         switch (selectedKey) {
           case 'allOrder':
             setAllOrders(newData);
+            setExpectedStatus('establishedOrder');
             break;
           case 'establishedOrder':
             setEstablishedOrder(newData);
+            setExpectedStatus('pickUpGoods');
             break;
           case 'pickUpGoods':
             setPickUpGoods(newData);
+            setExpectedStatus('delivery');
             break;
           case 'delivery':
             setDelivery(newData);
+            setExpectedStatus('deliverComplete');
             break;
           case 'deliverComplete':
             setDeliverComplete(newData);
+            setExpectedStatus('completedOrder');
             break;
           case 'completedOrder':
             setCompletedOrder(newData);
+            setExpectedStatus('');
             break;
           default:
             console.error(`Invalid selectedStatus: ${selectedKey}`);
@@ -221,7 +229,6 @@ function Order() {
         console.error(error);
       }
     };
-
     fetchData();
   }, [page, selectedKey]);
 
@@ -452,9 +459,7 @@ function Order() {
                       ))}
                     </StockTableItem>
                     <StockTableItem>NT$ {order.total}</StockTableItem>
-                    <StockTableItem>
-                      <Checkbox disabled={!editMode} key={index} />
-                    </StockTableItem>
+                    <StockTableItem>訂單已完成</StockTableItem>
                   </StockTableItemGroup>
                 ))}
               </StockTableSection>
@@ -469,15 +474,20 @@ function Order() {
   function handleEditClick() {
     setEditMode(true);
   }
+
   function handleSaveClick() {
     setSaveStatus(true);
+
+    allOrders.map((order) => order.id);
+
     const data = {
-      expectedStatus: 'establishedOrder',
+      expectedStatus: expectedStatus,
+
       orders: [
         {
           id: 4693,
-          order_id: '2023320246858494918',
-          status: 1,
+          order_id: allOrders.map((order) => order.order_id),
+          status: selectedKey,
         },
       ],
     };
