@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
 
 function Article() {
-  const [blogData, setBlogData] = useState([]);
+  const [blogData, setBlogData] = useState(null);
   useEffect(() => {
     const getBlogData = async () => {
       const urlParams = new URLSearchParams(window.location.search);
@@ -23,6 +23,9 @@ function Article() {
   }, []);
 
   console.log(blogData);
+  if (!blogData) {
+    return;
+  }
   return (
     <>
       <Wrapper>

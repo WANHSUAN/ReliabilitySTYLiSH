@@ -45,7 +45,7 @@ function Blog() {
         {blogData.map((card, i) => (
           <PostCard key={i}>
             <Link to={`/blog?id=${card.id}`}>
-              <PostImg imageUrl={card.images[1]}>
+              <PostImg imageUrl={card.images[0]}>
                 <Day>
                   <p>{new Date(card.posted_at).getDate()}</p>
                   <p>
