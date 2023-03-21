@@ -1,10 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import SideMenu from '../../components/SideMenu';
 import bannerImg from './blogImg.png';
 import StockBanner from '../../components/StockBanner';
 
 function Post() {
+  const [article, setArticle] = useState({
+    title: '',
+    content: '',
+    images: [],
+  });
+
+  const handleSubmit = () => {
+    if (article.title && article.content && article.images.length > 0) {
+      postAricle(article);
+    } else {
+      alert('請填寫欄位');
+    }
+  };
+  const handleInput = (e) => {
+    const { name, value, files } = e.target;
+    if (name === 'images') {
+      const imageUrls = Array.from(files).map((file) =>
+        URL.createObjectURL(file)
+      );
+      setArticle({ ...article, [name]: imageUrls });
+    } else {
+      setArticle({ ...article, [name]: value });
+    }
+  };
+  function postAricle(article) {
+    let headers = {
+      'Content-Type': 'application/json',
+    };
+    const url = 'https://www.saiko.world/api/1.0/admin/createBlog';
+    fetch(url, {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify(article),
+    })
+      .then((response) => response.text())
+      .then((text) => console.log(text));
+  }
+  console.log(article);
   return (
     <Container>
       <SideMenu />
@@ -12,10 +50,25 @@ function Post() {
         <StockBanner stock={bannerImg} />
         <Form>
           <p>Create Article</p>
-          <ArticleTitle type="text" name="title" placeholder="Title" />
-          <textarea name="address" placeholder="Content"></textarea>
-          <ArticleImg type="file" accept="image/*" multiple="multiple" />
-          <Button type="button" value="Submit" />
+          <ArticleTitle
+            type="text"
+            name="title"
+            placeholder="Title"
+            onChange={handleInput}
+          />
+          <textarea
+            name="content"
+            placeholder="Content"
+            onChange={handleInput}
+          />
+          <ArticleImg
+            type="file"
+            accept="image/*"
+            multiple="multiple"
+            onChange={handleInput}
+            name="images"
+          />
+          <Button onClick={handleSubmit} type="button" value="Submit" />
         </Form>
       </Wrapper>
     </Container>

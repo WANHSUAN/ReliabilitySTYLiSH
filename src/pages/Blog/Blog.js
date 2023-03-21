@@ -1,139 +1,71 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 import { Link } from 'react-router-dom';
 
 function Blog() {
+  const [blogData, setBlogData] = useState([]);
+
+  useEffect(() => {
+    const getBlogData = async () => {
+      try {
+        const res = await fetch(`https://www.saiko.world/api/1.0/blogs`);
+        const resData = await res.json();
+        const data = resData.data;
+        setBlogData(data);
+      } catch {
+        console.log('沒有抓到');
+      }
+    };
+    getBlogData();
+  }, []);
+
+  function cardDay(time) {
+    const now = new Date();
+    const timestamp = new Date(time);
+
+    const diffTime = Math.abs(now - timestamp);
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+    let result = '';
+    if (diffDays === 0) {
+      result = 'today';
+    } else {
+      result = `${diffDays} days ago`;
+    }
+    return result;
+  }
   return (
     <>
       <BlogTitle>
         <p>STYLiSH一週穿搭給你時尚新靈感</p>
       </BlogTitle>
       <Container>
-        <PostCard>
-          <Link to={'/article'}>
-            <PostImg>
-              <Date>
-                <p>20</p>
-                <p>Mar</p>
-              </Date>
-            </PostImg>
-            <PostContent>
-              <Content>
-                <Title>INDIA</Title>
-                <p>An upcoming superpower</p>
-              </Content>
-              <Meta>
-                <p>
-                  <span class="material-symbols-outlined">schedule</span>6 mins
-                  ago
-                </p>
-                <p>
-                  <span class="material-symbols-outlined">chat</span>39 comments
-                </p>
-              </Meta>
-            </PostContent>
-          </Link>
-        </PostCard>
-        <PostCard>
-          <Link to={'/article'}>
-            <PostImg>
-              <Date>
-                <p>20</p>
-                <p>Mar</p>
-              </Date>
-            </PostImg>
-            <PostContent>
-              <Content>
-                <Title>INDIA</Title>
-                <p>An upcoming superpower</p>
-              </Content>
-              <Meta>
-                <p>
-                  <span class="material-symbols-outlined">schedule</span>6 mins
-                  ago
-                </p>
-                <p>
-                  <span class="material-symbols-outlined">chat</span>39 comments
-                </p>
-              </Meta>
-            </PostContent>
-          </Link>
-        </PostCard>
-        <PostCard>
-          <Link to={'/article'}>
-            <PostImg>
-              <Date>
-                <p>20</p>
-                <p>Mar</p>
-              </Date>
-            </PostImg>
-            <PostContent>
-              <Content>
-                <Title>INDIA</Title>
-                <p>An upcoming superpower</p>
-              </Content>
-              <Meta>
-                <p>
-                  <span class="material-symbols-outlined">schedule</span>6 mins
-                  ago
-                </p>
-                <p>
-                  <span class="material-symbols-outlined">chat</span>39 comments
-                </p>
-              </Meta>
-            </PostContent>
-          </Link>
-        </PostCard>
-        <PostCard>
-          <Link to={'/article'}>
-            <PostImg>
-              <Date>
-                <p>20</p>
-                <p>Mar</p>
-              </Date>
-            </PostImg>
-            <PostContent>
-              <Content>
-                <Title>INDIA</Title>
-                <p>An upcoming superpower</p>
-              </Content>
-              <Meta>
-                <p>
-                  <span class="material-symbols-outlined">schedule</span>6 mins
-                  ago
-                </p>
-                <p>
-                  <span class="material-symbols-outlined">chat</span>39 comments
-                </p>
-              </Meta>
-            </PostContent>
-          </Link>
-        </PostCard>
-        <PostCard>
-          <Link to={'/article'}>
-            <PostImg>
-              <Date>
-                <p>20</p>
-                <p>Mar</p>
-              </Date>
-            </PostImg>
-            <PostContent>
-              <Content>
-                <Title>INDIA</Title>
-                <p>An upcoming superpower</p>
-              </Content>
-              <Meta>
-                <p>
-                  <span class="material-symbols-outlined">schedule</span>6 mins
-                  ago
-                </p>
-                <p>
-                  <span class="material-symbols-outlined">chat</span>39 comments
-                </p>
-              </Meta>
-            </PostContent>
-          </Link>
-        </PostCard>
+        {blogData.map((card, i) => (
+          <PostCard key={i}>
+            <Link to={'/article'}>
+              <PostImg imageUrl={card.images[1]}>
+                <Day>
+                  <p>{new Date(card.posted_at).getDate()}</p>
+                  <p>
+                    {new Date(card.posted_at).toLocaleString('en-US', {
+                      month: 'short',
+                    })}
+                  </p>
+                </Day>
+              </PostImg>
+              <PostContent>
+                <Content>
+                  <Title>{card.title}</Title>
+                  <p>{card.content}</p>
+                </Content>
+                <Meta>
+                  <span className="material-symbols-outlined">schedule</span>
+                  {cardDay(card.posted_at)}
+                </Meta>
+              </PostContent>
+            </Link>
+          </PostCard>
+        ))}
       </Container>
     </>
   );
@@ -179,12 +111,12 @@ const PostCard = styled.div`
   }
 `;
 const PostImg = styled.div`
-  background-image: url('https://images.unsplash.com/photo-1597253702831-d6a6d0be4f21?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=736&q=80');
+  background-image: url(${(props) => props.imageUrl});
   background-size: cover;
   height: 300px;
   position: relative;
 `;
-const Date = styled.div`
+const Day = styled.div`
   width: 60px;
   height: 60px;
   display: flex;
@@ -205,7 +137,7 @@ const PostContent = styled.div`
   flex-direction: column;
 `;
 const Content = styled.div`
-  height: 120px;
+  height: 100px;
   p {
     font-size: 18px;
     letter-spacing: 1.2px;
@@ -217,16 +149,12 @@ const Title = styled.h3`
   font-weight: 600;
   margin-bottom: 15px;
 `;
-const Meta = styled.div`
+const Meta = styled.p`
   font-size: 14px;
   color: gray;
   line-height: 1.3;
   margin-top: auto;
   display: flex;
-  gap: 10px;
-  p {
-    display: flex;
-  }
   span {
     margin-right: 5px;
     font-size: 18px;
