@@ -5,6 +5,7 @@ const StockTitleSection = styled.div`
   border-radius: 10px;
   height: 200px;
   position: relative;
+  margin-top: 100px;
 `;
 
 const StockImage = styled.img`
@@ -19,7 +20,6 @@ const StockTitle = styled.div`
   font-size: 40px;
   font-weight: 500;
   padding: 70px;
-  margin-top: 100px;
 `;
 
 const StockText = styled.p`
@@ -37,5 +37,3 @@ export function Banner(props) {
     </StockTitleSection>
   );
 }
-
-export default Banner;

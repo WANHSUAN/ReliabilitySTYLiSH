@@ -9,7 +9,10 @@ import Product from './pages/Product/Product';
 import Profile from './pages/Profile/Profile';
 import ChartPage from './pages/ChartPage/ChartPage';
 import OrderPage from './pages/OrderPage/OrderPage';
-
+import Blog from './pages/Blog/Blog';
+import Post from './pages/Blog/Post';
+import Article from './pages/Blog/Article';
+import Live from './pages/Live';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
@@ -21,8 +24,12 @@ root.render(
         <Route path="checkout" element={<Checkout />} />
         <Route path="thankyou" element={<ThankYou />} />
         <Route path="profile" element={<Profile />} />
-        <Route path="admin/chartpage" element={<ChartPage />} />
+        <Route path="admin/chart" element={<ChartPage />} />
         <Route path="admin/order" element={<OrderPage />} />
+        <Route path="admin/post" element={<Post />} />
+        <Route path="blog" element={<Blog />} />
+        <Route path="live" element={<Live />} />
+        <Route path="article" element={<Article />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>

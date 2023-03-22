@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
 import ReactLoading from 'react-loading';
-
+import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/authContext';
 
 const Wrapper = styled.div`
@@ -40,22 +40,20 @@ function Profile() {
 
   const renderContent = () => {
     if (loading) return <Loading type="spinningBubbles" color="#313538" />;
-    if (isLogin) return (
-      <>
-        <Photo src={user.picture} />
-        <Content>{user.name}</Content>
-        <Content>{user.email}</Content>
-        <LogoutButton
-          onClick={logout}
-        >
-          登出
-        </LogoutButton>
-      </>
-    );
-    return (
-      <LogoutButton onClick={login}>登入</LogoutButton>
-    );
-  }
+    if (isLogin)
+      return (
+        <>
+          <Photo src={user.picture} />
+          <Content>{user.name}</Content>
+          <Content>{user.email}</Content>
+          <LogoutButton onClick={logout}>登出</LogoutButton>
+          <Link to="/admin/chart">
+            <LogoutButton>管理</LogoutButton>
+          </Link>
+        </>
+      );
+    return <LogoutButton onClick={login}>登入</LogoutButton>;
+  };
   return (
     <Wrapper>
       <Title>會員基本資訊</Title>

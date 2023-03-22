@@ -10,6 +10,7 @@ import profile from './profile.png';
 import profileMobile from './profile-mobile.png';
 import { AuthContext } from '../../context/authContext';
 import { CartContext } from '../../context/cartContext';
+import Live from './live.png';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -61,7 +62,7 @@ const CategoryLinks = styled.div`
 
 const CategoryLink = styled.a`
   font-size: 20px;
-  letter-spacing: 30px;
+  letter-spacing: 15px;
   padding-left: 39px;
   padding-right: 11px;
   position: relative;
@@ -240,10 +241,29 @@ const categories = [
     displayText: '配件',
   },
 ];
+const WeekTitle = styled(Link)`
+  font-size: 18px;
+  padding: 0px 10px;
+  text-decoration: none;
+  letter-spacing: 2px;
+  color: #fff;
+  background-color: #3f3a3a;
+  border-radius: 25px;
+  padding: 5px 15px;
+`;
+
+const LiveLink = styled(Link)``;
+
+const LiveIcon = styled.img`
+  width: 50px;
+  height: 50px;
+  margin-left: 25px;
+  margin-top: 15px;
+`;
 
 function Header() {
   const [inputValue, setInputValue] = useState('');
-  const { user } = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
   const { cartCount } = useContext(CartContext);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -272,7 +292,11 @@ function Header() {
             {displayText}
           </CategoryLink>
         ))}
+        <WeekTitle to="/blog">一週穿搭</WeekTitle>
       </CategoryLinks>
+      <LiveLink to="/live">
+        <LiveIcon src={Live}></LiveIcon>
+      </LiveLink>
       <SearchInput
         onKeyPress={(e) => {
           if (e.key === 'Enter') {

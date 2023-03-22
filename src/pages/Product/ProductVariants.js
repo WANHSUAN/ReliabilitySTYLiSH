@@ -183,6 +183,7 @@ function ProductVariants({ product }) {
             (color) => color.code === selectedColorCode
           ),
           id: product.id,
+          category: product.category,
           image: product.main_image,
           name: product.title,
           price: product.price,

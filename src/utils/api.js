@@ -21,24 +21,30 @@ const api = {
     return await response.json();
   },
   async checkout(data, jwtToken) {
-    const response = await fetch(`${this.hostname}/order/checkout`, {
-      body: JSON.stringify(data),
-      headers: new Headers({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${jwtToken}`,
-      }),
-      method: 'POST',
-    });
+    const response = await fetch(
+      `https://www.saiko.world/api/1.0/order/checkout`,
+      {
+        body: JSON.stringify(data),
+        headers: new Headers({
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${jwtToken}`,
+        }),
+        method: 'POST',
+      }
+    );
     return await response.json();
   },
   async signin(data) {
-    const response = await fetch(`${this.hostname}/user/signin`, {
-      body: JSON.stringify(data),
-      headers: new Headers({
-        'Content-Type': 'application/json',
-      }),
-      method: 'POST',
-    });
+    const response = await fetch(
+      `https://www.saiko.world/api/1.0/user/signin`,
+      {
+        body: JSON.stringify(data),
+        headers: new Headers({
+          'Content-Type': 'application/json',
+        }),
+        method: 'POST',
+      }
+    );
     return await response.json();
   },
   async getProfile(jwtToken) {

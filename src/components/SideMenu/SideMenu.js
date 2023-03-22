@@ -7,6 +7,7 @@ const MenuContainer = styled.div`
   width: 20%;
   padding-top: 50px;
   gap: 30px;
+  font-size: 18px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
 `;
 
@@ -16,6 +17,8 @@ const SideMenuList = styled.p`
   letter-spacing: 1px;
   width: 150px;
   margin: 0 auto;
+  border-bottom: 1px solid #bcbcbc;
+  padding: 10px;
 `;
 const SideMenuListTitle = styled(SideMenuList)`
   font-weight: 600;
@@ -37,13 +40,13 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const SideMenu = () => {
+export const SideMenu = () => {
   return (
     <MenuContainer>
       <SideMenuListTitle>Dashboard</SideMenuListTitle>
       <SideMenuList>
         <Icon src="https://cdn-icons-png.flaticon.com/512/993/993762.png" />
-        <StyledLink to="/admin/chartpage">報表總覽</StyledLink>
+        <StyledLink to="/admin/chart">報表總覽</StyledLink>
       </SideMenuList>
       <SideMenuList>
         <Icon src="https://cdn-icons-png.flaticon.com/512/4947/4947506.png" />
@@ -53,7 +56,10 @@ const SideMenu = () => {
         <Icon src="https://cdn-icons-png.flaticon.com/512/839/839860.png" />
         <StyledLink to="/admin/order">訂單資料</StyledLink>
       </SideMenuList>
+      <SideMenuList>
+        <Icon src="https://cdn-icons-png.flaticon.com/512/1159/1159633.png" />
+        <StyledLink to="/admin/post">發布文章</StyledLink>
+      </SideMenuList>
     </MenuContainer>
   );
 };
-export default SideMenu;
