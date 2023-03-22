@@ -7,37 +7,22 @@ export default function ChartMonth() {
   const url = 'https://www.saiko.world/api/1.0/admin/monthlyRev';
   const { jwtToken } = useContext(AuthContext);
 
-  console.log(jwtToken);
   useEffect(() => {
-    // fetch(url, {
-    //   headers: {
-    //     Authorization: `Bearer ${jwtToken}`,
-    //   },
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     const newData = data.data;
-    //     setData(newData);
-    //     console.log(newData);
-    //     month(newData);
-    //   });
-
-    if (jwtToken) {
-      fetch(url, {
-        headers: {
-          Authentication: `Bearer ${jwtToken}`,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
+    if(!jwtToken){
+    console.log(jwtToken);
+    return
+  }
+    fetch(url, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
           const newData = data.data;
-          if(newData!==undefined){
-            month(newData);
-          }
+          console.log(newData);
+          month(newData);
         });
-    } else {
-      console.log('JWT token is not available.');
-    }
   }, [jwtToken]);
 
   function month(newData) {
