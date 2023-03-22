@@ -4,6 +4,7 @@ import SideMenu from '../../components/SideMenu';
 import Banner from '../../components/Banner';
 import BannerImg from '../OrderPage/order.png';
 import OrderTitle from './OrderTitle';
+import process from '../OrderPage/process.jpg';
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -18,8 +19,13 @@ const Container = styled.div`
 `;
 
 const StockStatusSection = styled.div`
-  text-align: right;
+  display: flex;
   margin-top: 50px;
+`;
+
+const StockProcess = styled.img`
+  width: 50%;
+  height: 50%;
 `;
 
 const StockStatus = styled.select`
@@ -29,7 +35,7 @@ const StockStatus = styled.select`
   border-radius: 8px;
   background-color: #faf8e9;
   text-align: center;
-  margin-top: 30px;
+  margin: 25px 20px 0 200px;
 `;
 
 const StockListEdit = styled.button`
@@ -38,7 +44,7 @@ const StockListEdit = styled.button`
   border: 1px solid #faf8e9;
   border-radius: 5px;
   background-color: #f5d990;
-  margin-left: 10px;
+  margin: 25px 0 0 10px;
   cursor: pointer;
 
   &:hover {
@@ -53,7 +59,7 @@ const StockListSave = styled.button`
   border: 1px solid #faf8e9;
   border-radius: 5px;
   background-color: #f5d990;
-  margin-left: 10px;
+  margin: 25px 0 0 10px;
   cursor: pointer;
 
   &:hover {
@@ -68,7 +74,7 @@ const StockListNextPage = styled.button`
   border: 1px solid #faf8e9;
   border-radius: 5px;
   background-color: #f5d990;
-  margin-left: 10px;
+  margin: 25px 0 0 10px;
   cursor: pointer;
 
   &:hover {
@@ -106,7 +112,7 @@ const CompleteOrder = styled.div`
 const OrderStatus = styled.div`
   font-size: 20px;
   font-weight: 700;
-  margin: 50px 0 20px 0;
+  margin: 30px 0 20px 0;
   padding: 25px 0;
   color: #d46304;
 `;
@@ -123,7 +129,7 @@ const StockTableSection = styled.div`
 
 const StockTableItemGroup = styled.ul`
   display: flex;
-  font-size: 10px;
+  font-size: 13px;
   padding: 20px 0;
   text-align: center;
   align-items: center;
@@ -270,6 +276,7 @@ function Order() {
         return (
           <>
             <StockStatusSection>
+              <StockProcess src={process} />
               <StockStatus onChange={handleChange}>
                 <StockOption value="allOrder">訂單總覽</StockOption>
                 <StockOption value="establishedOrder">訂單已成立</StockOption>
