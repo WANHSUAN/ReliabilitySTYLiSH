@@ -58,7 +58,9 @@ function Blog() {
               <PostContent>
                 <Content>
                   <Title>{card.title}</Title>
-                  <p>{card.content.substring(0, 10)}...</p>
+                  <p>
+                    {card.content.replace(/<br\/>/g, '').substring(0, 10)}...
+                  </p>
                 </Content>
                 <Meta>
                   <span className="material-symbols-outlined">schedule</span>
