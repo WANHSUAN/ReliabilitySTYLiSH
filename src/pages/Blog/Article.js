@@ -5,16 +5,15 @@ import io from 'socket.io-client';
 const socket = io('https://www.saiko.world');
 function Article() {
   const [blogData, setBlogData] = useState(null);
-  const [allComments, setAllComments] = useState(null);
+  const [allComments, setAllComments] = useState([]);
   const [comment, setComment] = useState({
     blog_id: '',
     username: '',
     content: '',
-    floor: null,
+    floor: 1,
   });
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get('id');
-
   useEffect(() => {
     const getBlogData = async () => {
       try {
@@ -43,7 +42,6 @@ function Article() {
     };
     getComments();
     socket.on('chat message', (newComment) => {
-      console.log(newComment);
       setAllComments((prevComments) => [...prevComments, newComment]);
     });
     return () => {
@@ -75,14 +73,14 @@ function Article() {
       ...comment,
       blog_id: id,
       [e.target.name]: e.target.value,
-      floor: allComments.length + 1,
+      floor: allComments.length+1,
       commented_at: commented_at,
     });
   };
   if (!blogData) {
     return;
   }
-  console.log(comment);
+  // console.log(comment);
   return (
     <>
       <Wrapper>
@@ -156,7 +154,7 @@ function Article() {
       </Wrapper>
       <Comment>
         <CommentTitle>留言</CommentTitle>
-        {allComments == null ? (
+        {allComments ===undefined ? (
           <NoComment>尚無留言</NoComment>
         ) : (
           allComments.map((allComments, i) => (
@@ -182,7 +180,8 @@ function Article() {
             name="content"
             placeholder="Content"
             onChange={handleInputChange}
-            value={comment.content}></textarea>
+            value={comment.content}
+            ></textarea>
           <Button type="button" value="Submit" onClick={commentPost} />
         </Form>
       </Comment>
