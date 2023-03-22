@@ -42,7 +42,7 @@ function Article() {
     };
     getComments();
     socket.on('chat message', (newComment) => {
-      setAllComments((prevComments) => [...prevComments, newComment]);
+      setAllComments((prevComments) => prevComments==null||undefined?newComment:[...prevComments, newComment]);
     });
     return () => {
       socket.disconnect();
@@ -59,7 +59,7 @@ function Article() {
       .then((response) => response.json())
       .then((data) => {
         socket.emit('chat message', comment);
-        setComment({ blog_id: '', username: '', content: '', floor: null });
+        setComment({ blog_id: '', username: '', content: '', floor: allComments===undefined?1: allComments.length+1});
         console.log(data);
       })
       .catch((error) => {
@@ -73,7 +73,7 @@ function Article() {
       ...comment,
       blog_id: id,
       [e.target.name]: e.target.value,
-      floor: allComments.length+1,
+      floor: allComments===undefined?1: allComments.length+1,
       commented_at: commented_at,
     });
   };
@@ -154,7 +154,7 @@ function Article() {
       </Wrapper>
       <Comment>
         <CommentTitle>留言</CommentTitle>
-        {allComments ===undefined ? (
+        {allComments ===undefined ||allComments ===null? (
           <NoComment>尚無留言</NoComment>
         ) : (
           allComments.map((allComments, i) => (
