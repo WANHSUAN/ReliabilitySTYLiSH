@@ -67,7 +67,6 @@ function Post() {
       });
   };
 
-  console.log(formData);
   return (
     <Container>
       <SideMenu />

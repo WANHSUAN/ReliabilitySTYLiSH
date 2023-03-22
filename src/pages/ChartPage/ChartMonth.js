@@ -1,18 +1,44 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
+import { AuthContext } from '../../context/authContext';
 import 'c3/c3.css';
 import c3 from 'c3';
 
 export default function ChartMonth() {
   const url = 'https://www.saiko.world/api/1.0/admin/monthlyRev';
+  const { jwtToken } = useContext(AuthContext);
 
+  console.log(jwtToken);
   useEffect(() => {
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        const newData = data.data;
-        month(newData);
-      });
-  });
+    // fetch(url, {
+    //   headers: {
+    //     Authorization: `Bearer ${jwtToken}`,
+    //   },
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     const newData = data.data;
+    //     setData(newData);
+    //     console.log(newData);
+    //     month(newData);
+    //   });
+
+    if (jwtToken) {
+      fetch(url, {
+        headers: {
+          Authentication: `Bearer ${jwtToken}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const newData = data.data;
+          if(newData!==undefined){
+            month(newData);
+          }
+        });
+    } else {
+      console.log('JWT token is not available.');
+    }
+  }, [jwtToken]);
 
   function month(newData) {
     const columns = [['data1']];
