@@ -10,6 +10,7 @@ import profile from './profile.png';
 import profileMobile from './profile-mobile.png';
 import { AuthContext } from '../../context/authContext';
 import { CartContext } from '../../context/cartContext';
+import Live from './live.png';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -250,6 +251,16 @@ const WeekTitle = styled(Link)`
   border-radius: 25px;
   padding: 5px 15px;
 `;
+
+const LiveLink = styled(Link)``;
+
+const LiveIcon = styled.img`
+  width: 50px;
+  height: 50px;
+  margin-left: 25px;
+  margin-top: 15px;
+`;
+
 function Header() {
   const [inputValue, setInputValue] = useState('');
   const { user } = useContext(AuthContext);
@@ -276,12 +287,16 @@ function Header() {
                 behavior: 'smooth',
               });
               navigate(`/?category=${name}`);
-            }}>
+            }}
+          >
             {displayText}
           </CategoryLink>
         ))}
         <WeekTitle to="/blog">一週穿搭</WeekTitle>
       </CategoryLinks>
+      <LiveLink to="/live">
+        <LiveIcon src={Live}></LiveIcon>
+      </LiveLink>
       <SearchInput
         onKeyPress={(e) => {
           if (e.key === 'Enter') {
