@@ -5,44 +5,68 @@ import bannerImg from './blogImg.png';
 import Banner from '../../components/Banner';
 
 function Post() {
-  const [article, setArticle] = useState({
+  const [formData, setFormData] = useState({
     title: '',
-    content: '',
+    content: ['', '', '', '', ''],
     images: [],
   });
+  const handleInputChange = (event) => {
+    const name = event.target.name;
+    const value = name === 'images' ? event.target.files : event.target.value;
+
+    if (name === 'content') {
+      const index = event.target.dataset.index;
+      setFormData((prevFormData) => {
+        const updatedContent = [...prevFormData.content];
+        updatedContent[index] = value;
+        return {
+          ...prevFormData,
+          content: updatedContent,
+        };
+      });
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+      }));
+    }
+  };
 
   const handleSubmit = () => {
-    if (article.title && article.content && article.images.length > 0) {
-      postAricle(article);
+    if (formData.title && formData.content && formData.images.length === 5) {
+      formData.content = formData.content.join('<br/>');
+      console.log(formData);
+      postData();
+      setFormData({
+        title: '',
+        content: ['', '', '', '', ''],
+        images: [],
+      });
     } else {
-      alert('請填寫欄位');
+      alert('請加入完整文章內容');
     }
   };
-  const handleInput = (e) => {
-    const { name, value, files } = e.target;
-    if (name === 'images') {
-      const imageUrls = Array.from(files).map((file) =>
-        URL.createObjectURL(file)
-      );
-      setArticle({ ...article, [name]: imageUrls });
-    } else {
-      setArticle({ ...article, [name]: value });
+
+  const postData = () => {
+    const form = new FormData();
+    form.append('title', formData.title);
+    form.append('content', formData.content);
+    for (let i = 0; i < formData.images.length; i++) {
+      form.append('images', formData.images[i]);
     }
-  };
-  function postAricle(article) {
-    let headers = {
-      'Content-Type': 'application/json',
-    };
-    const url = 'https://www.saiko.world/api/1.0/admin/createBlog';
-    fetch(url, {
+    fetch('https://www.saiko.world/api/1.0/admin/createBlog', {
       method: 'POST',
-      headers: headers,
-      body: JSON.stringify(article),
+      body: form,
     })
-      .then((response) => response.text())
-      .then((text) => console.log(text));
-  }
-  console.log(article);
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   return (
     <Container>
       <SideMenu />
@@ -55,22 +79,59 @@ function Post() {
         />
         <Form>
           <p>Create Article</p>
+          <label>本周文章標題</label>
           <ArticleTitle
             type="text"
             name="title"
             placeholder="Title"
-            onChange={handleInput}
+            onChange={handleInputChange}
+            value={formData.title}
           />
+          <label>Day1</label>
           <textarea
             name="content"
             placeholder="Content"
-            onChange={handleInput}
+            onChange={handleInputChange}
+            value={formData.content[0]}
+            data-index={0}
+          />
+          <label>Day2</label>
+          <textarea
+            name="content"
+            placeholder="Content"
+            onChange={handleInputChange}
+            value={formData.content[1]}
+            data-index={1}
+          />
+          <label>Day3</label>
+          <textarea
+            name="content"
+            placeholder="Content"
+            onChange={handleInputChange}
+            value={formData.content[2]}
+            data-index={2}
+          />
+          <label>Day4</label>
+          <textarea
+            name="content"
+            placeholder="Content"
+            onChange={handleInputChange}
+            value={formData.content[3]}
+            data-index={3}
+          />
+          <label>Day5</label>
+          <textarea
+            name="content"
+            placeholder="Content"
+            onChange={handleInputChange}
+            value={formData.content[4]}
+            data-index={4}
           />
           <ArticleImg
             type="file"
             accept="image/*"
             multiple="multiple"
-            onChange={handleInput}
+            onChange={handleInputChange}
             name="images"
           />
           <Button onClick={handleSubmit} type="button" value="Submit" />
@@ -90,7 +151,6 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   gap: 20px;
   margin: 80px auto;
   padding: 40px;
@@ -107,9 +167,10 @@ const Form = styled.form`
     font-size: 24px;
     padding-bottom: 15px;
     border-bottom: 1px solid black;
+    align-self: center;
   }
   textarea {
-    height: 200px;
+    height: 80px;
     width: 100%;
     padding: 5px;
     border: 1px solid #373737;

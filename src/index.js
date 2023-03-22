@@ -27,9 +27,14 @@ root.render(
         <Route path="admin/chart" element={<ChartPage />} />
         <Route path="admin/order" element={<OrderPage />} />
         <Route path="admin/post" element={<Post />} />
+<<<<<<< HEAD
         <Route path="blog" element={<Blog />} />
         <Route path="live" element={<Live />} />
         <Route path="article" element={<Article />} />
+=======
+        <Route path="blogs" element={<Blog />} />
+        <Route path="blog" element={<Article />} />
+>>>>>>> feature/blogPage
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>

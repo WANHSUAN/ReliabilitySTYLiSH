@@ -34,6 +34,8 @@ function Blog() {
     }
     return result;
   }
+
+  console.log(blogData);
   return (
     <>
       <BlogTitle>
@@ -42,8 +44,8 @@ function Blog() {
       <Container>
         {blogData.map((card, i) => (
           <PostCard key={i}>
-            <Link to={'/article'}>
-              <PostImg imageUrl={card.images[1]}>
+            <Link to={`/blog?id=${card.id}`}>
+              <PostImg imageUrl={card.images[0]}>
                 <Day>
                   <p>{new Date(card.posted_at).getDate()}</p>
                   <p>
@@ -56,7 +58,9 @@ function Blog() {
               <PostContent>
                 <Content>
                   <Title>{card.title}</Title>
-                  <p>{card.content}</p>
+                  <p>
+                    {card.content.replace(/<br\/>/g, '').substring(0, 10)}...
+                  </p>
                 </Content>
                 <Meta>
                   <span className="material-symbols-outlined">schedule</span>

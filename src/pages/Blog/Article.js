@@ -1,28 +1,139 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
+import io from 'socket.io-client';
 
+const socket = io('https://www.saiko.world');
 function Article() {
+  const [blogData, setBlogData] = useState(null);
+  const [allComments, setAllComments] = useState(null);
+  const [comment, setComment] = useState({
+    blog_id: '',
+    username: '',
+    content: '',
+    floor: null,
+  });
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get('id');
+
+  useEffect(() => {
+    const getBlogData = async () => {
+      try {
+        const res = await fetch(
+          `https://www.saiko.world/api/1.0/blog?id=${id}`
+        );
+        const resData = await res.json();
+        const data = resData.data;
+        data.content = data.content.split('<br/>');
+        setBlogData(data);
+      } catch {
+        console.log('沒有抓到');
+      }
+    };
+    getBlogData();
+    const getComments = async () => {
+      try {
+        const res = await fetch(
+          `https://saiko.world/api/1.0/blogs/${id}/Comments`
+        );
+        const resData = await res.json();
+        setAllComments(resData.data);
+      } catch {
+        console.log('沒有抓到');
+      }
+    };
+    getComments();
+    socket.on('chat message', (newComment) => {
+      console.log(newComment);
+      setAllComments((prevComments) => [...prevComments, newComment]);
+    });
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+  const commentPost = () => {
+    fetch(`https://saiko.world/api/1.0/blogs/${id}/comments`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(comment),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        socket.emit('chat message', comment);
+        setComment({ blog_id: '', username: '', content: '', floor: null });
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+  const handleInputChange = (e) => {
+    const commented_at_unix = Date.now();
+    const commented_at = new Date(commented_at_unix).toLocaleString('zh');
+    setComment({
+      ...comment,
+      blog_id: id,
+      [e.target.name]: e.target.value,
+      floor: allComments.length + 1,
+      commented_at: commented_at,
+    });
+  };
+  if (!blogData) {
+    return;
+  }
+  console.log(comment);
   return (
     <>
       <Wrapper>
         <Title>
-          <h3>清新約會 | 一週穿搭 分享</h3>
-          <p>2023 0320</p>
+          <h3>{`${blogData.title}分享`}</h3>
+          <p>{new Date(blogData.posted_at).toLocaleDateString('en-US')}</p>
         </Title>
         <DayCards>
           <DayCard>
-            <Img></Img>
+            <Img img={blogData.images[0]}></Img>
             <Text>
               <Day>DAY 1</Day>
-              <p>
-                牛仔外套老樣子，20
-                度上下穿很舒服，再冷一點，可以當成中間層搭配。很好用~
-              </p>
+              <p>{blogData.content[0]}</p>
+              <Description>
+                帽子：Urban Research <br />
+                外搭：plain-me水洗鬆身丹寧夾克 <br />
+              </Description>
+            </Text>
+          </DayCard>
+          <DayCard>
+            <Img img={blogData.images[1]}></Img>
+            <Text>
+              <Day>DAY 2</Day>
+              <p>{blogData.content[1]}</p>
+              <Description>
+                帽子：Urban Research <br />
+                鞋子/襪子：Vans Era Vans World Code <br />
+                休閒鞋 包包：N/A 手錶/配件：N/A
+              </Description>
+            </Text>
+          </DayCard>
+          <DayCard>
+            <Img img={blogData.images[2]}></Img>
+            <Text>
+              <Day>DAY 3</Day>
+              <p>{blogData.content[2]}</p>
               <Description>
                 帽子：Urban Research <br />
                 外搭：plain-me水洗鬆身丹寧夾克 <br />
                 內搭： 論理 x 刃牙
                 <br />
+                休閒鞋 包包：N/A 手錶/配件：N/A
+              </Description>
+            </Text>
+          </DayCard>
+          <DayCard>
+            <Img img={blogData.images[3]}></Img>
+            <Text>
+              <Day>DAY 4</Day>
+              <p>{blogData.content[3]}</p>
+              <Description>
                 褲子：plain-me Billy Pants 比例神褲 <br />
                 鞋子/襪子：Vans Era Vans World Code <br />
                 休閒鞋 包包：N/A 手錶/配件：N/A
@@ -30,78 +141,14 @@ function Article() {
             </Text>
           </DayCard>
           <DayCard>
-            <Img></Img>
+            <Img img={blogData.images[4]}></Img>
             <Text>
-              <Day>DAY 1</Day>
-              <p>
-                牛仔外套老樣子，20
-                度上下穿很舒服，再冷一點，可以當成中間層搭配。很好用~
-              </p>
+              <Day>DAY 5</Day>
+              <p>{blogData.content[4]}</p>
               <Description>
                 帽子：Urban Research <br />
                 外搭：plain-me水洗鬆身丹寧夾克 <br />
-                內搭： 論理 x 刃牙
-                <br />
-                褲子：plain-me Billy Pants 比例神褲 <br />
-                鞋子/襪子：Vans Era Vans World Code <br />
-                休閒鞋 包包：N/A 手錶/配件：N/A
-              </Description>
-            </Text>
-          </DayCard>
-          <DayCard>
-            <Img></Img>
-            <Text>
-              <Day>DAY 1</Day>
-              <p>
-                牛仔外套老樣子，20
-                度上下穿很舒服，再冷一點，可以當成中間層搭配。很好用~
-              </p>
-              <Description>
-                帽子：Urban Research <br />
-                外搭：plain-me水洗鬆身丹寧夾克 <br />
-                內搭： 論理 x 刃牙
-                <br />
-                褲子：plain-me Billy Pants 比例神褲 <br />
-                鞋子/襪子：Vans Era Vans World Code <br />
-                休閒鞋 包包：N/A 手錶/配件：N/A
-              </Description>
-            </Text>
-          </DayCard>
-          <DayCard>
-            <Img></Img>
-            <Text>
-              <Day>DAY 1</Day>
-              <p>
-                牛仔外套老樣子，20
-                度上下穿很舒服，再冷一點，可以當成中間層搭配。很好用~
-              </p>
-              <Description>
-                帽子：Urban Research <br />
-                外搭：plain-me水洗鬆身丹寧夾克 <br />
-                內搭： 論理 x 刃牙
-                <br />
-                褲子：plain-me Billy Pants 比例神褲 <br />
-                鞋子/襪子：Vans Era Vans World Code <br />
-                休閒鞋 包包：N/A 手錶/配件：N/A
-              </Description>
-            </Text>
-          </DayCard>
-          <DayCard>
-            <Img></Img>
-            <Text>
-              <Day>DAY 1</Day>
-              <p>
-                牛仔外套老樣子，20
-                度上下穿很舒服，再冷一點，可以當成中間層搭配。很好用~
-              </p>
-              <Description>
-                帽子：Urban Research <br />
-                外搭：plain-me水洗鬆身丹寧夾克 <br />
-                內搭： 論理 x 刃牙
-                <br />
-                褲子：plain-me Billy Pants 比例神褲 <br />
-                鞋子/襪子：Vans Era Vans World Code <br />
-                休閒鞋 包包：N/A 手錶/配件：N/A
+                內搭： 論理 x 刃牙 休閒鞋 包包：N/A 手錶/配件：N/A
               </Description>
             </Text>
           </DayCard>
@@ -109,43 +156,56 @@ function Article() {
       </Wrapper>
       <Comment>
         <CommentTitle>留言</CommentTitle>
-        <GuestComment>
-          <div>
-            <h4>暱稱 | 小狗</h4>
-            <p>留言 | 挖好好抗 全部都想買!</p>
-          </div>
-          <span>2023/02/22 8:00</span>
-        </GuestComment>
-        <GuestComment>
-          <div>
-            <h4>暱稱 | 小狗</h4>
-            <p>留言 | 挖好好抗 全部都想買!</p>
-          </div>
-          <span>2023/02/22 8:00</span>
-        </GuestComment>
-        <GuestComment>
-          <div>
-            <h4>暱稱 | 小狗</h4>
-            <p>留言 | 挖好好抗 全部都想買!</p>
-          </div>
-          <span>2023/02/22 8:00</span>
-        </GuestComment>
-        <GuestComment>
-          <div>
-            <h4>暱稱 | 小狗</h4>
-            <p>留言 | 挖好好抗 全部都想買!</p>
-          </div>
-          <span>2023/02/22 8:00</span>
-        </GuestComment>
+        {allComments == null ? (
+          <NoComment>尚無留言</NoComment>
+        ) : (
+          allComments.map((allComments, i) => (
+            <GuestComment key={i}>
+              <Floor># {i + 1}</Floor>
+              <div>
+                <h4>暱稱 | {allComments.username}</h4>
+                <CommentContent>{allComments.content}</CommentContent>
+              </div>
+              <span>{allComments.commented_at}</span>
+            </GuestComment>
+          ))
+        )}
         <Form>
-          <ArticleTitle type="text" name="Name" placeholder="Name" />
-          <textarea name="Content" placeholder="Content"></textarea>
-          <Button type="button" value="Submit" />
+          <ArticleTitle
+            type="text"
+            name="username"
+            placeholder="Your Name"
+            onChange={handleInputChange}
+            value={comment.username}
+          />
+          <textarea
+            name="content"
+            placeholder="Content"
+            onChange={handleInputChange}
+            value={comment.content}></textarea>
+          <Button type="button" value="Submit" onClick={commentPost} />
         </Form>
       </Comment>
     </>
   );
 }
+const NoComment = styled.p`
+  text-align: center;
+`;
+const CommentContent = styled.p`
+  width: 300px;
+`;
+const Floor = styled.p`
+  align-self: center;
+  margin-right: 20px;
+  background-color: #000;
+  height: 25px;
+  border-radius: 25px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+`;
 const CommentTitle = styled.p`
   font-size: 20px;
   text-align: center;
@@ -163,6 +223,7 @@ const GuestComment = styled.div`
   padding: 30px;
   max-width: 600px;
   margin: 0 auto;
+
   h4 {
     margin-bottom: 10px;
   }
@@ -227,6 +288,7 @@ const DayCards = styled.div`
 const DayCard = styled.div`
   display: flex;
   border-radius: 15px;
+  justify-content: space-between;
   overflow: hidden;
   border: 1px solid #c3c3c3;
   &:hover {
@@ -248,7 +310,7 @@ const Title = styled.div`
   }
 `;
 const Img = styled.div`
-  background-image: url('https://images.unsplash.com/photo-1543405075-f0d9e0457476?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80');
+  background-image: url(${(props) => props.img});
   background-size: cover;
   width: 500px;
   height: 300px;
@@ -257,6 +319,7 @@ const Text = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
+  width: 500px;
   p {
     line-height: 1.3;
   }
@@ -274,4 +337,5 @@ const Description = styled.p`
   font-size: 14px;
   color: #2f2f2f;
 `;
+
 export default Article;
