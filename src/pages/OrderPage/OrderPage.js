@@ -141,17 +141,19 @@ const StockTableItemDetail = styled.div`
 `;
 
 const Checkbox = styled.input.attrs({ type: 'checkbox' })`
-  appearance: none;
+  input[type='checkbox'] {
+    appearance: none;
 
-  width: 17px;
-  height: 17px;
+    width: 17px;
+    height: 17px;
 
-  border: 1px solid #f6c43e;
-  border-radius: 4px;
-  background-color: #fff;
-  transition: all 150ms;
+    border: 1px solid #f6c43e;
+    border-radius: 4px;
+    background-color: #fff;
+    transition: all 150ms;
+  }
 
-  &:checked {
+  input[type='checkbox']:checked {
     background-color: #f3cc68;
 
     &:after {
@@ -166,6 +168,10 @@ const Checkbox = styled.input.attrs({ type: 'checkbox' })`
       border-radius: 2px;
     }
   }
+  /* &:not(:checked) {
+    background-color: #fff;
+    border: 1px solid #ccc;
+  } */
 `;
 
 function Order() {
@@ -204,8 +210,10 @@ function Order() {
             setExpectedStatus('establishedOrder');
             break;
           case 'establishedOrder':
+            setIsChecked(false);
             setEstablishedOrder(newData);
             setExpectedStatus('pickUpGoods');
+
             break;
           case 'pickUpGoods':
             setPickUpGoods(newData);
@@ -346,9 +354,10 @@ function Order() {
                         <StockTableItem>
                           <Checkbox
                             disabled={!editMode}
-                            key={index}
-                            isChecked={isChecked}
-                            onClick={(e) => handleCheckStatus(e, order.id)}
+                            key={order.id}
+                            onClick={(e) => {
+                              handleCheckStatus(e, order.id);
+                            }}
                           />
                         </StockTableItem>
                       </StockTableItemGroup>
@@ -408,8 +417,7 @@ function Order() {
                         <StockTableItem>
                           <Checkbox
                             disabled={!editMode}
-                            key={index}
-                            isChecked={isChecked}
+                            key={order.id}
                             onClick={(e) => handleCheckStatus(e, order.id)}
                           />
                         </StockTableItem>
@@ -470,8 +478,7 @@ function Order() {
                         <StockTableItem>
                           <Checkbox
                             disabled={!editMode}
-                            key={index}
-                            isChecked={isChecked}
+                            key={order.id}
                             onClick={(e) => handleCheckStatus(e, order.id)}
                           />
                         </StockTableItem>
@@ -532,8 +539,7 @@ function Order() {
                         <StockTableItem>
                           <Checkbox
                             disabled={!editMode}
-                            key={index}
-                            isChecked={isChecked}
+                            key={order.id}
                             onClick={(e) => handleCheckStatus(e, order.id)}
                           />
                         </StockTableItem>
@@ -614,7 +620,6 @@ function Order() {
   function handleCheckStatus(e, data_id) {
     const isChecked = e.target.checked;
     setIsChecked(isChecked);
-
     setData({
       ...data,
       expectedStatus: expectedStatus,
@@ -667,7 +672,9 @@ function Order() {
           }
           return true;
         });
+
         setDeliverComplete(newDeliverComplete);
+        setIsChecked(false);
       })
       .catch((error) => {
         console.error('Error:', error);
