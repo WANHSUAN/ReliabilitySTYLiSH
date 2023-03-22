@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
+import io from 'socket.io-client';
+
+const socket = io('https://www.saiko.world');
 function Article() {
   const [blogData, setBlogData] = useState(null);
   const [allComments, setAllComments] = useState(null);
@@ -11,7 +14,7 @@ function Article() {
   });
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get('id');
-  
+
   useEffect(() => {
     const getBlogData = async () => {
       try {
@@ -39,8 +42,14 @@ function Article() {
       }
     };
     getComments();
+    socket.on('chat message', (newComment) => {
+      console.log(newComment);
+      setAllComments((prevComments) => [...prevComments, newComment]);
+    });
+    return () => {
+      socket.disconnect();
+    };
   }, []);
-
   const commentPost = () => {
     fetch(`https://saiko.world/api/1.0/blogs/${id}/comments`, {
       method: 'POST',
@@ -51,7 +60,8 @@ function Article() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(comment);
+        socket.emit('chat message', comment);
+        setComment({ blog_id: '', username: '', content: '', floor: null });
         console.log(data);
       })
       .catch((error) => {
@@ -59,17 +69,20 @@ function Article() {
       });
   };
   const handleInputChange = (e) => {
+    const commented_at_unix = Date.now();
+    const commented_at = new Date(commented_at_unix).toLocaleString('zh');
     setComment({
       ...comment,
       blog_id: id,
       [e.target.name]: e.target.value,
       floor: allComments.length + 1,
+      commented_at: commented_at,
     });
   };
   if (!blogData) {
     return;
   }
-  console.log(comment)
+  console.log(comment);
   return (
     <>
       <Wrapper>
@@ -163,11 +176,13 @@ function Article() {
             name="username"
             placeholder="Your Name"
             onChange={handleInputChange}
+            value={comment.username}
           />
           <textarea
             name="content"
             placeholder="Content"
-            onChange={handleInputChange}></textarea>
+            onChange={handleInputChange}
+            value={comment.content}></textarea>
           <Button type="button" value="Submit" onClick={commentPost} />
         </Form>
       </Comment>
@@ -322,4 +337,5 @@ const Description = styled.p`
   font-size: 14px;
   color: #2f2f2f;
 `;
+
 export default Article;
