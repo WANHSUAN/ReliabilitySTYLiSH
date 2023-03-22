@@ -591,14 +591,7 @@ function Order() {
                           ))}
                         </StockTableItem>
                         <StockTableItem>NT$ {order.total}</StockTableItem>
-                        <StockTableItem>
-                          <Checkbox
-                            disabled={!editMode}
-                            key={index}
-                            isChecked={isChecked}
-                            onClick={(e) => handleCheckStatus(e, order.id)}
-                          />
-                        </StockTableItem>
+                        <StockTableItem>訂單已完成</StockTableItem>
                       </StockTableItemGroup>
                     ))
                   ) : (
@@ -621,16 +614,7 @@ function Order() {
   function handleCheckStatus(e, data_id) {
     const isChecked = e.target.checked;
     setIsChecked(isChecked);
-    // if (isChecked === false) {
-    //   establishedOrder.forEach((order) => {
-    //     const index = establishedOrder.findIndex(
-    //       (order) => order.id === data_id
-    //     );
-    //     if (index !== -1) {
-    //       establishedOrder.splice(index, 1);
-    //     }
-    //   });
-    // }
+
     setData({
       ...data,
       expectedStatus: expectedStatus,
@@ -643,7 +627,9 @@ function Order() {
       ],
     });
   }
+
   function handleSaveClick() {
+    let number = data.orders[0].id;
     fetch('https://www.saiko.world/api/1.0/admin/updateOrdersStatus', {
       method: 'POST',
       headers: {
@@ -654,6 +640,34 @@ function Order() {
       .then((response) => response.json())
       .then((data) => {
         console.log('Success:', data);
+        const newEstablishedOrderList = establishedOrder.filter((order) => {
+          if (order.id === number) {
+            return false;
+          }
+          return true;
+        });
+        setEstablishedOrder(newEstablishedOrderList);
+        const newPickUpGoods = pickUpGoods.filter((order) => {
+          if (order.id === number) {
+            return false;
+          }
+          return true;
+        });
+        setPickUpGoods(newPickUpGoods);
+        const newDelivery = delivery.filter((order) => {
+          if (order.id === number) {
+            return false;
+          }
+          return true;
+        });
+        setDelivery(newDelivery);
+        const newDeliverComplete = deliverComplete.filter((order) => {
+          if (order.id === number) {
+            return false;
+          }
+          return true;
+        });
+        setDeliverComplete(newDeliverComplete);
       })
       .catch((error) => {
         console.error('Error:', error);
