@@ -174,6 +174,13 @@ const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   } */
 `;
 
+const NoOrder = styled.div`
+  height: 90px;
+  font-size: 30px;
+  text-align: center;
+  padding-top: 30px;
+`;
+
 function Order() {
   const [allOrders, setAllOrders] = useState([]);
   const [establishedOrder, setEstablishedOrder] = useState([]);
@@ -202,7 +209,16 @@ function Order() {
         };
         const res = await fetch(urls[selectedKey]);
         const result = await res.json();
-        const newData = result.data;
+        let newData = result.data;
+
+        if (newData === undefined) {
+          newData =
+            establishedOrder ||
+            pickUpGoods ||
+            delivery ||
+            deliverComplete ||
+            completedOrder;
+        }
 
         switch (selectedKey) {
           case 'allOrder':
@@ -210,10 +226,8 @@ function Order() {
             setExpectedStatus('establishedOrder');
             break;
           case 'establishedOrder':
-            setIsChecked(false);
             setEstablishedOrder(newData);
             setExpectedStatus('pickUpGoods');
-
             break;
           case 'pickUpGoods':
             setPickUpGoods(newData);
@@ -363,7 +377,7 @@ function Order() {
                       </StockTableItemGroup>
                     ))
                   ) : (
-                    <div>No Order!</div>
+                    <NoOrder>No Order!</NoOrder>
                   )}
                 </StockTableSection>
               </OrderSection>
@@ -674,7 +688,6 @@ function Order() {
         });
 
         setDeliverComplete(newDeliverComplete);
-        setIsChecked(false);
       })
       .catch((error) => {
         console.error('Error:', error);
