@@ -314,7 +314,7 @@ function Order() {
                       </StockTableItemGroup>
                     ))
                   ) : (
-                    <div>No Order!</div>
+                    <NoOrder>No Order!</NoOrder>
                   )}
                 </StockTableSection>
               </OrderSection>
@@ -438,7 +438,7 @@ function Order() {
                       </StockTableItemGroup>
                     ))
                   ) : (
-                    <div>No Order!</div>
+                    <NoOrder>No Order!</NoOrder>
                   )}
                 </StockTableSection>
               </OrderSection>
@@ -499,7 +499,7 @@ function Order() {
                       </StockTableItemGroup>
                     ))
                   ) : (
-                    <div>No Order!</div>
+                    <NoOrder>No Order!</NoOrder>
                   )}
                 </StockTableSection>
               </OrderSection>
@@ -560,7 +560,7 @@ function Order() {
                       </StockTableItemGroup>
                     ))
                   ) : (
-                    <div>No Order!</div>
+                    <NoOrder>No Order!</NoOrder>
                   )}
                 </StockTableSection>
               </OrderSection>
@@ -615,7 +615,7 @@ function Order() {
                       </StockTableItemGroup>
                     ))
                   ) : (
-                    <div>No Order!</div>
+                    <NoOrder>No Order!</NoOrder>
                   )}
                 </StockTableSection>
               </OrderSection>
