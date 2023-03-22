@@ -332,6 +332,7 @@ function Order() {
         return (
           <>
             <StockStatusSection>
+              <StockProcess src={process} />
               <StockStatus onChange={handleChange}>
                 <StockOption value="allOrder">訂單總覽</StockOption>
                 <StockOption value="establishedOrder">訂單已成立</StockOption>
@@ -395,6 +396,7 @@ function Order() {
         return (
           <>
             <StockStatusSection>
+              <StockProcess src={process} />
               <StockStatus onChange={handleChange}>
                 <StockOption value="allOrder">訂單總覽</StockOption>
                 <StockOption value="establishedOrder">訂單已成立</StockOption>
@@ -456,6 +458,7 @@ function Order() {
         return (
           <>
             <StockStatusSection>
+              <StockProcess src={process} />
               <StockStatus onChange={handleChange}>
                 <StockOption value="allOrder">訂單總覽</StockOption>
                 <StockOption value="establishedOrder">訂單已成立</StockOption>
@@ -517,6 +520,7 @@ function Order() {
         return (
           <>
             <StockStatusSection>
+              <StockProcess src={process} />
               <StockStatus onChange={handleChange}>
                 <StockOption value="allOrder">訂單總覽</StockOption>
                 <StockOption value="establishedOrder">訂單已成立</StockOption>
@@ -578,6 +582,7 @@ function Order() {
         return (
           <>
             <StockStatusSection>
+              <StockProcess src={process} />
               <StockStatus onChange={handleChange}>
                 <StockOption value="allOrder">訂單總覽</StockOption>
                 <StockOption value="establishedOrder">訂單已成立</StockOption>
